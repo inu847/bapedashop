@@ -27,146 +27,153 @@
             body {
                 font-family: 'Nunito', sans-serif;
             }
-            .m-b-4{
-                margin-bottom: 4px;
-            }
-            .m-6{
-                margin: 6px;
-            }
             a{
                 text-decoration: none;
                 color: black;
             }
+            .home-page{
+                margin-top: 10px;
+                background-image: url("images/home-page.png");
+                background-size: 100%;
+            }
+            .header{
+                background-color: red;
+                padding-bottom: 10px;
+                padding-top: 5px;
+            }
         </style>
     </head>
     <body class="antialiased">
-        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex justify-center mt-2 m-b-4 sm:items-center sm:justify-between">
-                <div class="text-center text-sm text-gray-500 sm:text-left">
-                    <div class="flex items-center">
-                        <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="-mt-px w-5 h-5 text-gray-400">
-                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-
-                        <a href="https://laravel.bigcartel.com" class="ml-1">
-                            Shop
-                        </a>
-
-                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
-                            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                        </svg>
-
-                        <a href="https://github.com/sponsors/taylorotwell" class="ml-1">
-                            Sponsor
-                        </a>
+        <div class="header">
+            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+                <div class="flex justify-center sm:items-center sm:justify-between">
+                    <div class="text-center text-sm text-gray-500 sm:text-left">
+                        <div class="flex items-center">
+                            <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="-mt-px w-5 h-5 text-gray-400">
+                                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+    
+                            <a href="https://laravel.bigcartel.com" class="ml-1">
+                                Shop
+                            </a>
+    
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
+                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+    
+                            <a href="https://github.com/sponsors/taylorotwell" class="ml-1">
+                                Sponsor
+                            </a>
+                        </div>
+                    </div>
+    
+                    <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
+                        @if (Route::has('login'))
+                        <div class="">
+                            @auth
+                                <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item dropdown">
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('/home') }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            {{ Auth::user()->name }}
+                                        </a>
+    
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>
+    
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="#">
+                                                {{ __('abfdjhadsfbvhjadf') }}
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            @else
+                                <a href="{{ route('login') }}" class="text-sm mr-2">Log in</a>
+                                <span>|</span>
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}" class="ml-2 text-sm">Register</a>
+                                @endif
+                            @endauth
+                        </div>
+                    @endif
                     </div>
                 </div>
-
-                <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                    @if (Route::has('login'))
-                    <div class="">
-                        @auth
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ url('/home') }}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }}
-                                    </a>
-
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </div>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">
-                                            {{ __('abfdjhadsfbvhjadf') }}
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        @else
-                            <a href="{{ route('login') }}" class="text-sm mr-2">Log in</a>
-                            <span>|</span>
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="ml-2 text-sm">Register</a>
-                            @endif
-                        @endauth
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <img src="{{ asset('images/logo.png')}}" width="250px" height="50px">
                     </div>
-                @endif
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3">
-                    <img src="{{ asset('images/logo.png')}}" width="250px" height="50px">
-                </div>
-                <div class="col-md-7">
-                    <form action="">
-                        <input type="text" name="keywoard" id="" class="form-control">
-                        <a class="mr-3" href="">Masker</a><a class="mr-3" href="">Masker</a><a href="" class="mr-3">Duckbill</a><a class="mr-3" href="">Tas Wanita</a>
-                        <a class="mr-3" href="">Tunik</a><a class="mr-3" href="">Tas Selempang Wanita</a><a class="mr-3" href="">Mukena</a>
-                    </form>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn btn-danger" type="submit">Search</button>
+                    <div class="col-md-7">
+                        <form action="">
+                            <input type="text" name="keywoard" id="" class="form-control">
+                            <a class="mr-3 text-white" href="">Masker</a><a class="mr-3 text-white" href="">Masker</a><a href="" class="mr-3 text-white">Duckbill</a><a class="mr-3 text-white" href="">Tas Wanita</a>
+                            <a class="mr-3 text-white" href="">Tunik</a><a class="mr-3 text-white" href="">Tas Selempang Wanita</a><a class="mr-3 text-white" href="">Mukena</a>
+                        </form>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-danger" type="submit">Search</button>
+                    </div>
                 </div>
             </div>
         </div>
+        
 
         <br>
     
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="card-title">
-                            Product
+    <div class="home-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title">
+                                Product
+                            </div>
+                            <div class="card-text">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, delectus quod? Nostrum delectus at sequi? Debitis libero voluptatum maiores ipsam, consectetur doloribus id omnis laborum velit nemo sunt! Maiores, et!
+                            </div>
+            
                         </div>
-                        <div class="card-text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, delectus quod? Nostrum delectus at sequi? Debitis libero voluptatum maiores ipsam, consectetur doloribus id omnis laborum velit nemo sunt! Maiores, et!
-                        </div>
-        
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <div class="card-title">
-                            Product
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <div class="card-title">
+                                Product
+                            </div>
+                            <div class="card-text">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, delectus quod? Nostrum delectus at sequi? Debitis libero voluptatum maiores ipsam, consectetur doloribus id omnis laborum velit nemo sunt! Maiores, et!
+                            </div>
+            
                         </div>
-                        <div class="card-text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, delectus quod? Nostrum delectus at sequi? Debitis libero voluptatum maiores ipsam, consectetur doloribus id omnis laborum velit nemo sunt! Maiores, et!
-                        </div>
-        
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <div class="card-title">
-                            Product
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <div class="card-title">
+                                Product
+                            </div>
+                            <div class="card-text">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, delectus quod? Nostrum delectus at sequi? Debitis libero voluptatum maiores ipsam, consectetur doloribus id omnis laborum velit nemo sunt! Maiores, et!
+                            </div>
+            
                         </div>
-                        <div class="card-text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, delectus quod? Nostrum delectus at sequi? Debitis libero voluptatum maiores ipsam, consectetur doloribus id omnis laborum velit nemo sunt! Maiores, et!
-                        </div>
-        
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>  
-        
 
         
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 py-4 sm:pt-0">
