@@ -18,17 +18,14 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string("nama_product");
             $table->string("deskripsi");
+            $table->string("stok");
             // product images
-            $table->string("images1");
-            $table->string("images2")->nullable();
-            $table->string("images3")->nullable();
-            $table->string("images4")->nullable();
-
+            $table->string("images");
             $table->string("price");
             $table->enum("status", ["publish", "archive"]);
             // Relationship one to many
             $table->unsignedBigInteger("user_id");
-            $table->foreign("user_id")->references("id")->on("users");
+            $table->foreign("user_id")->references("id")->on("users")->onDelete('cascade');
             $table->timestamps();
         });
     }

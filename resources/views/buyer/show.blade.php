@@ -1,7 +1,7 @@
 @extends('layouts.global')
 
 @section('title')
-    dasdasd
+    {{$user->nama_toko}}
 @endsection
 
 @section('content')

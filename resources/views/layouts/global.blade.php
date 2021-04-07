@@ -47,15 +47,15 @@
                 </svg>
             </a>
 
-            <div class="search" data-search-path="Pages.Search.html?q=">
-                <input placeholder="Search...">
-                <span class="search-icon">
-                    <i class="simple-icon-magnifier"></i>
-                </span>
-            </div>
-
-            <a class="btn btn-sm btn-outline-primary ml-3 d-none d-md-inline-block"
-                href="https://1.envato.market/5kAb">&nbsp;BUY&nbsp;</a>
+            <form action="{{ route('user.index')}}">
+                <div class="input-group">
+                    <input placeholder="Search..." value="{{Request::get('keyword')}}" name="keyword" type="text" class="form-control">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" value="Filter">Button</button>
+                    </div>
+                </div> 
+            </form>
+    
         </div>
 
 
@@ -220,7 +220,7 @@
             <div class="scroll">
                 <ul class="list-unstyled">
                     <li class="active">
-                        <a href="#dashboard">
+                        <a href="{{url('/')}}">
                             <i class="iconsminds-shop-4"></i>
                             <span>Dashboards</span>
                         </a>
@@ -232,7 +232,7 @@
                     </li>
                     <li>
                         <a href="#applications">
-                            <i class="iconsminds-air-balloon-1"></i> Applications
+                            <i class="iconsminds-air-balloon-1"></i> Manage Product
                         </a>
                     </li>
                     <li>
@@ -449,8 +449,8 @@
                 </ul>
                 <ul class="list-unstyled" data-link="applications">
                     <li>
-                        <a href="Apps.MediaLibrary.html">
-                            <i class="simple-icon-picture"></i> <span class="d-inline-block">Library</span>
+                        <a href="{{ route('manage-product.index')}}">
+                            <i class="simple-icon-picture"></i> <span class="d-inline-block">Product View</span>
                         </a>
                     </li>
                     <li>
@@ -739,24 +739,7 @@
     <footer class="page-footer">
         <div class="footer-content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 col-sm-6">
-                        <p class="mb-0 text-muted">ColoredStrategies 2019</p>
-                    </div>
-                    <div class="col-sm-6 d-none d-sm-block">
-                        <ul class="breadcrumb pt-0 pr-0 float-right">
-                            <li class="breadcrumb-item mb-0">
-                                <a href="#" class="btn-link">Review</a>
-                            </li>
-                            <li class="breadcrumb-item mb-0">
-                                <a href="#" class="btn-link">Purchase</a>
-                            </li>
-                            <li class="breadcrumb-item mb-0">
-                                <a href="#" class="btn-link">Docs</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                <p class="mb-0 text-muted text-center">© 2021 Bapedashop</p>
             </div>
         </div>
     </footer>

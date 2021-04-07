@@ -41,23 +41,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    function alamatId()
+    public function alamatId()
     {
         return $this->hasMany('App\Models\Alamat');
     }
     
-    function rekeningId()
+    public function rekeningId()
     {
         return $this->hasMany('App\Models\Rekening');
     }
 
-    function productId()
+    public function productId()
     {
         return $this->hasMany('App\Models\Product');
     }
 
-    function roleId()
-    {
-        return $this->hasMany('App\Models\Role');
-    }
+    // public function roleId()
+    // {
+    //     return $this->hasMany('App\Models\Role');
+    // }
 }

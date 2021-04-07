@@ -127,7 +127,7 @@
             <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
                 <div class="card">
                     <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="img/card-thumb-1.jpg"
+                        <a href="{{ url('detailProduct')}}"><img class="card-img-top" src="img/card-thumb-1.jpg"
                                 alt="Card image cap"></a>
                         <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
                     </div>
@@ -142,8 +142,8 @@
                                 </div>
                             </div>
                             <div class="col-10">
-                                <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Cheesecake</p>
+                                <a href="{{ url('detailProduct')}}">
+                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
                                 </a>
                                 <footer>
                                     <p class="text-muted text-small mb-0 font-weight-light">18.08.2018</p>
@@ -175,7 +175,7 @@
                             </div>
                             <div class="col-10">
                                 <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Chocolate Cake</p>
+                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
                                 </a>
                                 <footer>
                                     <p class="text-muted text-small mb-0 font-weight-light">14.06.2018</p>
@@ -206,7 +206,7 @@
                             </div>
                             <div class="col-10">
                                 <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Petit Gâteau</p>
+                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
                                 </a>
                                 <footer>
                                     <p class="text-muted text-small mb-0 font-weight-light">24.05.2018</p>
@@ -238,7 +238,7 @@
                             </div>
                             <div class="col-10">
                                 <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Napoleonshat</p>
+                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
                                 </a>
                                 <footer>
                                     <p class="text-muted text-small mb-0 font-weight-light">23.05.2018</p>
@@ -269,7 +269,7 @@
                             </div>
                             <div class="col-10">
                                 <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Napoleonshat</p>
+                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
                                 </a>
                                 <footer>
                                     <p class="text-muted text-small mb-0 font-weight-light">19.04.2018</p>
@@ -301,7 +301,7 @@
                             </div>
                             <div class="col-10">
                                 <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Petit Gâteau</p>
+                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
                                 </a>
                                 <footer>
                                     <p class="text-muted text-small mb-0 font-weight-light">01.03.2018</p>
@@ -334,7 +334,7 @@
                             </div>
                             <div class="col-10">
                                 <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Cheesecake</p>
+                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
                                 </a>
                                 <footer>
                                     <p class="text-muted text-small mb-0 font-weight-light">21.02.2018</p>
@@ -367,7 +367,7 @@
                             </div>
                             <div class="col-10">
                                 <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Chocolate Cake</p>
+                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
                                 </a>
                                 <footer>
                                     <p class="text-muted text-small mb-0 font-weight-light">18.02.2018</p>

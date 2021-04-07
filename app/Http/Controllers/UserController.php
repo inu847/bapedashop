@@ -12,9 +12,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = User::where('status', 'active')->paginate(20);
+
+        $filterKeyword = $request->get('keyword');
+        $status = $request->get('status');
+        $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->paginate(10);
+        // if($filterKeyword){
+        //     $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->paginate(10);
+        //     if($status){
+        //         $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->where('status', $status)->paginate(10);
+        //     } else {
+        //         $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->paginate(10);
+        //         }
+        //    }
+
+        return view('seller.index', ['user' => $user]);
     }
 
     /**
@@ -50,6 +64,7 @@ class UserController extends Controller
         $new_user->email = $request->get('email');
         $new_user->nama_toko = $request->get('nama_toko');
         $new_user->phone = "+62".$request->get('phone');
+        $new_user->status = "inactive";
         // $new_user->file_penunjang = $request->get('file_penunjang');
         // $new_user->ktp = $request->get('ktp');
         if($request->file('file_penunjang')){
@@ -74,7 +89,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view('seller.show', ['user' => $user]);
     }
 
     /**

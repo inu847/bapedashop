@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('file_penunjang');
             $table->string('ktp');
+            $table->enum('status', ["active", "inactive"]);
             $table->string('tanggal_lahir')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
