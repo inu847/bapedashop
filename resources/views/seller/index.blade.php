@@ -5,6 +5,13 @@
 @endsection
 
 @section('content')
+
+@if(session('status'))
+    <div class="alert alert-success">
+        {{session('status')}}
+    </div>
+@endif
+
 <div class="container-fluid library-app">
     <div class="row">
         <div class="col-12">

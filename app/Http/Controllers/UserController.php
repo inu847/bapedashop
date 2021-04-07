@@ -28,7 +28,7 @@ class UserController extends Controller
         //         }
         //    }
 
-        return view('seller.index', ['user' => $user]);
+        return view('buyer.index', ['user' => $user]);
     }
 
     /**
@@ -91,7 +91,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return view('seller.show', ['user' => $user]);
+        return view('buyer.show', ['user' => $user]);
     }
 
     /**

@@ -36,9 +36,9 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        $user = User::find($id);
+        // $user = User::find($id);
         $product = new Product();
         $product->nama_product = $request->get('nama_product');
         $product->deskripsi = $request->get('deskripsi');
@@ -46,8 +46,8 @@ class ProductController extends Controller
         $product->images = $request->get('images');
         $product->price = $request->get('price');
         $product->status = "publish";
-        $user->productId()->save($product);
-        return redirect()->route('seller.index')->with('status', 'Create Product Success!!');
+        \Auth::user()->productId()->save($product);
+        return redirect()->route('manage-product.index')->with('status', 'Create Product Success!!');
     }
 
     /**

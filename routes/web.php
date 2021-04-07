@@ -21,12 +21,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/test', function () {
-    return view('seller.create');
+    return view('layouts.global');
 });
 
+// Route::get('user/{id}', [UserController::class, 'store'])->name('seller.create');
 Route::resource('user', UserController::class);
 Route::resource('manage-product', ProductController::class);
-Route::get('addproduct', [ProductController::class, 'addproduct']);
+Route::get('addproduct/{id}', [ProductController::class, 'addproduct']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

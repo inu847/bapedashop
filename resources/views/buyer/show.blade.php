@@ -9,40 +9,29 @@
         <div class="row">
             <div class="col-12">
 
-                <div class="mb-3">
-                    <h1>Product Images</h1>
-                    <div class="text-zero top-right-button-container">
-                        <button type="button" class="btn btn-primary btn-lg top-right-button mr-1">SHOW ALL SELLER</button>
-                        <div class="btn-group">
-                            <div class="btn btn-primary btn-lg pl-4 pr-0 check-button">
-                                <label class="custom-control custom-checkbox mb-0 d-inline-block">
-                                    <input type="checkbox" class="custom-control-input" id="checkAll">
-                                    <span class="custom-control-label">&nbsp;</span>
-                                </label>
-                            </div>
-                            <button type="button"
-                                class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
+                <div class="col-lg-12">
+                    <a href="{{ route('user.show', [$user->id])}}">
+                        <div class="card mb-4 progress-banner" style="height: 120px;">
+                            <div class="card-body justify-content-between d-flex flex-row align-items-center">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <i class="iconsminds-shop-4 mr-2 text-white align-text-bottom d-inline-block"></i>
+                                    </div>
+                                    <div class="col-8">
+                                        <p class="lead text-white">{{ $user->nama_toko }}</p>
+                                        <p class="text-small text-white">{{ $user->name }}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    {{-- <div role="progressbar"
+                                        class="progress-bar-circle progress-bar-banner position-relative" data-color="white"
+                                        data-trail-color="rgba(255,255,255,0.2)" aria-valuenow="4" aria-valuemax="6"
+                                        data-show-percent="false">
+                                    </div> --}}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
-                        <ol class="breadcrumb pt-0">
-                            <li class="breadcrumb-item">
-                                <a href="#">Home</a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a href="#">Library</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Data</li>
-                        </ol>
-                    </nav>
-
+                    </a>
                 </div>
 
                 <div class="mb-2">
@@ -127,7 +116,7 @@
             <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
                 <div class="card">
                     <div class="position-relative">
-                        <a href="{{ url('detailProduct')}}"><img class="card-img-top" src="img/card-thumb-1.jpg"
+                        <a href="{{ url('detailProduct')}}"><img class="card-img-top" src="{{ asset('img/card-thumb-1.jpg')}}"
                                 alt="Card image cap"></a>
                         <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
                     </div>
@@ -157,7 +146,7 @@
             <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
                 <div class="card">
                     <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="img/card-thumb-2.jpg"
+                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-2.jpg')}}"
                                 alt="Card image cap"></a>
                         <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
                         <span
@@ -190,7 +179,7 @@
             <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
                 <div class="card">
                     <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="img/card-thumb-3.jpg"
+                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-3.jpg')}}"
                                 alt="Card image cap"></a>
                         <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
                     </div>
@@ -221,7 +210,7 @@
             <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
                 <div class="card">
                     <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="img/card-thumb-4.jpg"
+                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-4.jpg')}}"
                                 alt="Card image cap"></a>
                         <span
                             class="badge badge-pill badge-secondary position-absolute badge-top-left">TRENDING</span>
@@ -253,7 +242,7 @@
             <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
                 <div class="card">
                     <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="img/card-thumb-4.jpg"
+                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-4.jpg')}}"
                                 alt="Card image cap"></a>
                         <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
                     </div>
@@ -284,7 +273,7 @@
             <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
                 <div class="card">
                     <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="img/card-thumb-3.jpg"
+                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-3.jpg')}}"
                                 alt="Card image cap"></a>
                         <span
                             class="badge badge-pill badge-secondary position-absolute badge-top-left">TRENDING</span>
@@ -316,7 +305,7 @@
             <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
                 <div class="card">
                     <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="img/card-thumb-1.jpg"
+                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-1.jpg')}}"
                                 alt="Card image cap"></a>
                         <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
                         <span
@@ -349,7 +338,7 @@
             <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
                 <div class="card">
                     <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="img/card-thumb-2.jpg"
+                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-2.jpg')}}"
                                 alt="Card image cap"></a>
                         <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
                         <span

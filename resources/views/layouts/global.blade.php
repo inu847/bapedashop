@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ asset('css/vendor/bootstrap-datepicker3.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/vendor/component-custom-switch.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/dore.light.blue.css') }}" />
 </head>
 
 <body id="app-container" class="menu-default show-spinner">
@@ -761,7 +762,7 @@
     <script src="{{ asset('js/vendor/mousetrap.min.js') }}"></script>
     <script src="{{ asset('js/vendor/glide.min.js') }}"></script>
     <script src="{{ asset('js/dore.script.js') }}"></script>
-    <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="{{ asset('js/scripts.single.theme.js') }}"></script>
 </body>
 
 </html>
