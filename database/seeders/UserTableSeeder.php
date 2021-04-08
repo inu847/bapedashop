@@ -21,6 +21,7 @@ class UserTableSeeder extends Seeder
             'email' => 'adin72978@gmail.com',
             'file_penunjang' => 'admin',
             'ktp' => 'admin',
+            'enkripsi' => 'Semogaberkah',
             'password' =>  \Hash::make("Semogaberkah"),
             'created_at' => now(),
             'updated_at' => now(),

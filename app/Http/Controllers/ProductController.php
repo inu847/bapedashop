@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -13,11 +15,23 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+
+        $this->middleware('auth');
+
+        // $this->middleware(function($request, $next){
+
+        // if(Gate::allows('manage-order')) return $next($request);
+        //     abort(403, 'Anda tidak memiliki cukup hak akses');
+        // });
+    }
+
     public function index()
     {
-        //$product = User::find(1)->productId;
-        // return $product;
-        return view('seller.index');
+        $products = \Auth::user()->productId;
+        
+        return view('seller.index', ['products' => $products]);
     }
 
     /**
@@ -38,15 +52,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // $user = User::find($id);
-        $product = new Product();
-        $product->nama_product = $request->get('nama_product');
-        $product->deskripsi = $request->get('deskripsi');
-        $product->stok = $request->get('stok');
-        $product->images = $request->get('images');
-        $product->price = $request->get('price');
-        $product->status = "publish";
-        \Auth::user()->productId()->save($product);
+        $new_product = new Product();
+        $new_product->nama_product = $request->get('nama_product');
+        $new_product->deskripsi = $request->get('deskripsi');
+        $new_product->stok = $request->get('stok');
+        if($request->file('images')){
+            $file = $request->file('images')->store('product_images', 'public');
+            $new_product->images = $file;
+        }
+        $new_product->price = $request->get('price');
+        $new_product->status = "publish";
+        \Auth::user()->productId()->save($new_product);
         return redirect()->route('manage-product.index')->with('status', 'Create Product Success!!');
     }
 
@@ -58,7 +74,9 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        return view('seller.show', ['product' => $product]);
     }
 
     /**
@@ -69,7 +87,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        return view('seller.edit', ['product' => $product]);
     }
 
     /**
@@ -81,7 +101,33 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $edit_product = Product::findOrFail($id);
+        $edit_product->nama_product = $request->get('nama_product');
+        $edit_product->deskripsi = $request->get('deskripsi');
+        $edit_product->stok = $request->get('stok');
+        if($request->file('images')){
+            if($edit_product->images && file_exists(storage_path('app/public/' . $edit_product->images))){
+                Storage::delete('public/'.$edit_product->images);
+                $file = $request->file('images')->store('product_images', 'public');
+                $edit_product->images = $file;
+            }else{
+                if($request->file('images')){
+                    $file = $request->file('images')->store('product_images', 'public');
+                    $edit_product->images = $file;
+                }
+            }
+        }
+        $edit_product->price = $request->get('price');
+        
+        if($request->get('status')){
+            $edit_product->status = $request->get('status');
+        }else{
+            $edit_product->status = "publish";
+        }
+
+        \Auth::user()->productId()->save($edit_product);
+
+        return redirect()->route('manage-product.index')->with('status', 'Update Product Success!!');
     }
 
     /**
@@ -92,19 +138,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete_product = Product::findOrFail($id);
+
+        $delete_product->delete();
+        return redirect()->route('manage-product.index')->with('statusdel', 'Data Berhasil Dihapus!!');
     }
-    public function addProduct($id)
-    {
-        $user = User::find($id);
-        $product = new Product();
-        $product->nama_product = 'data1';
-        $product->deskripsi = 'data1';
-        $product->stok = 'data1';
-        $product->images = 'data1';
-        $product->price = 'data1';
-        $product->status = "publish";
-        $user->productId()->save($product);
-        return redirect()->route('seller.index')->with('status', 'Create Product Success!!');
-    }
+    
 }

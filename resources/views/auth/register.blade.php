@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dore jQuery</title>
+    <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <link rel="stylesheet" href="{{ asset('font/iconsmind-s/css/iconsminds.css') }}" />
@@ -66,7 +66,7 @@
                                         </span>
                                     @enderror
                                 </label>
-                                <label class="form-group has-float-label mb-4">
+                                <label class="form-group has-float-label mb-3">
                                     <input id="phone" type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus/>
                                     <span>Nomor Hp/Wa</span>
                                     @error('phone')
@@ -75,8 +75,8 @@
                                         </span>
                                     @enderror
                                 </label>
-                                <i><p class="text-muted" style="font-size: 10px;">//* berisi data toko yang didaftarkan, seperti:surat izin usaha, foto tempat usaha </p></i>
-                                <label class="form-group has-float-label mb-4">
+                                <i><small class="text-muted">//* berisi data toko yang didaftarkan, seperti:surat izin usaha, foto tempat usaha </small></i>
+                                <label class="form-group has-float-label mb-4 mt-1">
                                     <input id="file_penunjang" type="file" class="form-control @error('file_penunjang') is-invalid @enderror" name="file_penunjang" value="{{ old('file_penunjang') }}" required autocomplete="file_penunjang" autofocus/>
                                     <span>File Penunjang</span>
                                     @error('file_penunjang')

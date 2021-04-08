@@ -23,11 +23,18 @@
                                     </div>
                                 </div>
                                 <div>
-                                    {{-- <div role="progressbar"
-                                        class="progress-bar-circle progress-bar-banner position-relative" data-color="white"
-                                        data-trail-color="rgba(255,255,255,0.2)" aria-valuenow="4" aria-valuemax="6"
-                                        data-show-percent="false">
-                                    </div> --}}
+                                    <div class="col-12 col-xs-6">
+                                        <div class="form-group mb-1">
+                                            <select class="rating" data-current-rating="3" data-readonly="true">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -113,259 +120,51 @@
 
         <div class="row list disable-text-selection" data-check-all="checkAll">
 
+        @foreach ($products as $product)
             <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
                 <div class="card">
                     <div class="position-relative">
-                        <a href="{{ url('detailProduct')}}"><img class="card-img-top" src="{{ asset('img/card-thumb-1.jpg')}}"
-                                alt="Card image cap"></a>
-                        <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
+                        <a href="Pages.Product.Detail.html">
+                            @if($product->images)
+                                <div class="side_view"> 
+                                    <img src="{{asset('storage/'. $product->images)}}" alt="Card image cap" class="card-img-top" style="height: 216px;" />
+                                </div>
+                            @else
+                                No avatar
+                            @endif
+                        </a>
+                        @if ($product->created_at->format('m, y') == date('m, y'))
+                            <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
+                        @elseif ("a" == "a")
+                            <span class="badge badge-pill badge-secondary position-absolute badge-top-left">TRENDING</span>
+                        @endif
+                        
+                        
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-2">
-                                <div class="custom-control custom-checkbox pl-1">
-                                    <label class="custom-control custom-checkbox  mb-0">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-label">&nbsp;</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <a href="{{ url('detailProduct')}}">
-                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
+                            <div class="col-12">
+                                <a href="#">
+                                    <p class="list-item-heading mb-4 pt-1" style="font-size: 20px;" >{{ $product->nama_product }}</p>
                                 </a>
                                 <footer>
-                                    <p class="text-muted text-small mb-0 font-weight-light">18.08.2018</p>
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <p class="text-muted mb-0 font-weight-light" style="font-size: 15px;">Rp.{{ $product->price }}</p>
+                                        </div>
+                                        <div class="col-5">
+                                            <input type="number" class="form-control">
+                                        </div>
+                                    </div>
                                 </footer>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @endforeach
 
-            <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
-                <div class="card">
-                    <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-2.jpg')}}"
-                                alt="Card image cap"></a>
-                        <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
-                        <span
-                            class="badge badge-pill badge-secondary position-absolute badge-top-left-2">TRENDING</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="custom-control custom-checkbox pl-1">
-                                    <label class="custom-control custom-checkbox  mb-0">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-label">&nbsp;</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
-                                </a>
-                                <footer>
-                                    <p class="text-muted text-small mb-0 font-weight-light">14.06.2018</p>
-                                </footer>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
-                <div class="card">
-                    <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-3.jpg')}}"
-                                alt="Card image cap"></a>
-                        <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="custom-control custom-checkbox pl-1">
-                                    <label class="custom-control custom-checkbox  mb-0">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-label">&nbsp;</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
-                                </a>
-                                <footer>
-                                    <p class="text-muted text-small mb-0 font-weight-light">24.05.2018</p>
-                                </footer>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
-                <div class="card">
-                    <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-4.jpg')}}"
-                                alt="Card image cap"></a>
-                        <span
-                            class="badge badge-pill badge-secondary position-absolute badge-top-left">TRENDING</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="custom-control custom-checkbox pl-1">
-                                    <label class="custom-control custom-checkbox  mb-0">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-label">&nbsp;</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
-                                </a>
-                                <footer>
-                                    <p class="text-muted text-small mb-0 font-weight-light">23.05.2018</p>
-                                </footer>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
-                <div class="card">
-                    <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-4.jpg')}}"
-                                alt="Card image cap"></a>
-                        <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="custom-control custom-checkbox pl-1">
-                                    <label class="custom-control custom-checkbox  mb-0">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-label">&nbsp;</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
-                                </a>
-                                <footer>
-                                    <p class="text-muted text-small mb-0 font-weight-light">19.04.2018</p>
-                                </footer>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
-                <div class="card">
-                    <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-3.jpg')}}"
-                                alt="Card image cap"></a>
-                        <span
-                            class="badge badge-pill badge-secondary position-absolute badge-top-left">TRENDING</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="custom-control custom-checkbox pl-1">
-                                    <label class="custom-control custom-checkbox  mb-0">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-label">&nbsp;</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
-                                </a>
-                                <footer>
-                                    <p class="text-muted text-small mb-0 font-weight-light">01.03.2018</p>
-                                </footer>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
-                <div class="card">
-                    <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-1.jpg')}}"
-                                alt="Card image cap"></a>
-                        <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
-                        <span
-                            class="badge badge-pill badge-secondary position-absolute badge-top-left-2">TRENDING</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="custom-control custom-checkbox pl-1">
-                                    <label class="custom-control custom-checkbox  mb-0">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-label">&nbsp;</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
-                                </a>
-                                <footer>
-                                    <p class="text-muted text-small mb-0 font-weight-light">21.02.2018</p>
-                                </footer>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
-                <div class="card">
-                    <div class="position-relative">
-                        <a href="Pages.Product.Detail.html"><img class="card-img-top" src="{{ asset('img/card-thumb-2.jpg')}}"
-                                alt="Card image cap"></a>
-                        <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
-                        <span
-                            class="badge badge-pill badge-secondary position-absolute badge-top-left-2">TRENDING</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="custom-control custom-checkbox pl-1">
-                                    <label class="custom-control custom-checkbox  mb-0">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <span class="custom-control-label">&nbsp;</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-10">
-                                <a href="Pages.Product.Detail.html">
-                                    <p class="list-item-heading mb-4 pt-1">Cupcake</p>
-                                </a>
-                                <footer>
-                                    <p class="text-muted text-small mb-0 font-weight-light">18.02.2018</p>
-                                </footer>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
 
             <div class="col-12">
@@ -403,6 +202,7 @@
                     </ul>
                 </nav>
             </div>
+
         </div>
     </div>
 @endsection

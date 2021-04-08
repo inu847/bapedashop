@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Rating;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -90,8 +93,9 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
+        $products = User::findOrFail($id)->productId;
 
-        return view('buyer.show', ['user' => $user]);
+        return view('buyer.show', ['user' => $user, 'products' => $products]);
     }
 
     /**
@@ -126,5 +130,36 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function verivikasiPassword(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $products = User::findOrFail($id)->productId;
+
+        // if($user){
+        //     // jika hasil hash dari password yang diinput user sama dengan password di database user maka
+        //     if ($request->get('enkripsi') == $user->enkripsi) {
+        //         // generate token
+        //         $user->generateToken();
+        //         return view('buyer.show', ['user' => $user, 'products' => $products]);
+        //     }
+        //     else{
+        //         return redirect()->route('manage-product.index')->with('status', 'Password Salah!!');
+        //     }
+        // }
+        // else{
+        //     return redirect()->route('manage-product.index')->with('status', 'Password Salah!!');
+        // }
+
+        $verivikasi = $request->get('enkripsi');
+        if($verivikasi){
+            if($verivikasi == $user->enkripsi){
+                $user->generateToken();
+                return view('buyer.show', ['user' => $user, 'products' => $products]);
+            }else{
+                return redirect()->route('manage-product.index')->with('status', 'Password Salah!!');
+            }
+        }
     }
 }

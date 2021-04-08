@@ -26,6 +26,8 @@ class CreateUsersTable extends Migration
             $table->string('tanggal_lahir')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('enkripsi')->nullable();
+            $table->string('enkripsi_token', 60)->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -38,6 +40,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['api_token']);
+        });
     }
 }

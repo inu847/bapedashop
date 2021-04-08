@@ -24,13 +24,15 @@ Route::get('/test', function () {
     return view('layouts.global');
 });
 
-// Route::get('user/{id}', [UserController::class, 'store'])->name('seller.create');
 Route::resource('user', UserController::class);
-Route::resource('manage-product', ProductController::class);
-Route::get('addproduct/{id}', [ProductController::class, 'addproduct']);
-Auth::routes();
 
+Route::post('/user/{id}', [UserController::class, 'verivikasiPassword'])->name('verivikasi.password');
+Route::get('/user/{id}', [UserController::class, 'show']);
+
+Auth::routes();
+Route::resource('manage-product', ProductController::class);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/alamat', [AlamatController::class, 'index']);
 Route::get('/rekening', [RekeningController::class, 'index']);
 Route::get('/product', [ProductController::class, 'index']);

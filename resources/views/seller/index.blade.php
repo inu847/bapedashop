@@ -12,30 +12,19 @@
     </div>
 @endif
 
+@if(session('statusdel'))
+    <div class="alert alert-danger">
+        {{session('statusdel')}}
+    </div>
+@endif
+
 <div class="container-fluid library-app">
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
                 <h1>Media Library</h1>
                 <div class="text-zero top-right-button-container">
-                    <a href="{{ route('manage-product.create')}}" class="btn btn-primary btn-lg top-right-button mr-1">ADD NEW</a>
-                    <div class="btn-group">
-                        <div class="btn btn-primary btn-lg pl-4 pr-0 check-button">
-                            <label class="custom-control custom-checkbox mb-0 d-inline-block">
-                                <input type="checkbox" class="custom-control-input" id="checkAll">
-                                <span class="custom-control-label"></span>
-                            </label>
-                        </div>
-                        <button type="button"
-                            class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                        </div>
-                    </div>
+                    <a href="{{ route('manage-product.create')}}" class="btn btn-primary btn-lg top-right-button mr-1"><i class="simple-icon-plus"> Create New Product</i></a>
                 </div>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
@@ -91,300 +80,65 @@
             <div class="separator mb-5"></div>
         </div>
     </div>
-    {{-- Product --}}
+
             <div class="row">
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/bebinca-thumb.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">bebinca-thumb.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:04</p>
-                            </div>
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
+                @foreach ($products as $product)
+                    <div class="col-xxl-4 col-xl-6 col-12">
+                        <div class="card d-flex flex-row mb-4 media-thumb-container">
+                            <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
+                                @if($product->images)
+                                    <div class="side_view">
+                                        <img src="{{asset('storage/'. $product->images)}}" alt="uploaded image" class="list-media-thumbnail responsive border-0" />
+                                    {{-- <img src="{{asset('storage/'. $baju->avatar)}}" width="128px" id="myImg" alt="Baju : {{$baju->kategori}} {{$baju->title}}"/> --}}
+                                    </div>
+                                @else
+                                    No avatar
+                                @endif
+                            </a>
+                            <div class="d-flex flex-grow-1 min-width-zero">
+                                <div class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
+                                    <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
+                                        <p class="list-item-heading mb-2 truncate">{{$product->nama_product}}</p>
+                                        @if ($product->status == "publish")
+                                            <span class="badge badge-pill badge-primary mb-1">Publish</span>
+                                        @else
+                                            <span class="badge badge-pill badge-danger mb-1">Archived</span>
+                                        @endif
+                                    </a>
+                                    
+                                    <p class="mb-1 text-muted text-small w-100 truncate">Rp.{{$product->price}}</p>
+                                </div>
+                                <div class="pl-1 align-self-center">
+                                    <form
+                                        onsubmit="return confirm('Delete this order permanently?')"
+                                        class="d-inline"
+                                        action="{{route('manage-product.destroy', [$product->id])}}"
+                                        method="POST">
+                                        @csrf
+                                        <input
+                                        type="hidden"
+                                        name="_method"
+                                        value="DELETE">
+
+                                        <a href="{{route('manage-product.show', [$product->id])}}"
+                                            class="btn btn-primary btn-sm"><i class="simple-icon-list mb-2"></i></a>
+                                        <a href="{{route('manage-product.edit', [$product->id])}}"
+                                            class="btn btn-info btn-sm"><i class="simple-icon-pencil"></i></a>
+
+                                    <button type="submit" value="Delete" class="btn btn-danger btn-sm"><i class="simple-icon-trash"></i>
+                                    </button>
+                        
+                            
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container ">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/cheesecake-thumb.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">cheesecake-thumb.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:05</p>
-                            </div>
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/chocolate-cake-thumb.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">chocolate-cake-thumb.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:08</p>
-                            </div>
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/coconut-cake.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">coconut-cake.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:15</p>
-                            </div>
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/cremeschnitte-thumb.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">cremeschnitte-thumb.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:23</p>
-                            </div>
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/fat-rascal-thumb.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">fat-rascal-thumb.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:27</p>
-                            </div>
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/financier-thumb.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">financier-thumb.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:32</p>
-                            </div>
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/fruitcake-thumb.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">fruitcake-thumb.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:33</p>
-                            </div>
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/genoise-thumb.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">genoise-thumb.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:35</p>
-                            </div>
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/gingerbread-thumb.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">gingerbread-thumb.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:38</p>
-                            </div>
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/magdalena-thumb.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">magdalena-thumb.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:39</p>
-                            </div>
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-4 col-xl-4 col-12">
-                    <div class="card d-flex flex-row mb-4 media-thumb-container">
-                        <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
-                            <img src="img/parkin-thumb.jpg" alt="uploaded image"
-                                class="list-media-thumbnail responsive border-0" />
-                        </a>
-                        <div class="d-flex flex-grow-1 min-width-zero">
-                            <div
-                                class="card-body align-self-center d-flex flex-column justify-content-between min-width-zero align-items-lg-center">
-                                <a href="Apps.MediaLibrary.ViewImage.html" class="w-100">
-                                    <p class="list-item-heading mb-1 truncate">parkin-thumb.jpg</p>
-                                </a>
-                                <p class="mb-1 text-muted text-small w-100 truncate">16.09.2018 14:39</p>
-                            </div>
-
-                            <div class="pl-1 align-self-center">
-                                <label class="custom-control custom-checkbox mb-0">
-                                    <input type="checkbox" class="custom-control-input">
-                                    <span class="custom-control-label"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
     <div class="row">
-        <div class="col-12 col-xl-8 offset-0 offset-xl-4">
+        <div class="col-12 col-xl-12">
             <nav class="mt-4 mb-3">
                 <ul class="pagination justify-content-center mb-0">
                     <li class="page-item ">

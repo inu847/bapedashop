@@ -48,7 +48,7 @@
                 </svg>
             </a>
 
-            <form action="{{ route('user.index')}}">
+            <form action="{{ route('user.index')}}" class="ml-2">
                 <div class="input-group">
                     <input placeholder="Search..." value="{{Request::get('keyword')}}" name="keyword" type="text" class="form-control">
                     <div class="input-group-append">
@@ -67,52 +67,6 @@
 
         <div class="navbar-right">
             <div class="header-icons d-inline-block align-middle">
-                <div class="d-none d-md-inline-block align-text-bottom mr-3">
-                    <div class="custom-switch custom-switch-primary-inverse custom-switch-small pl-1"
-                         data-toggle="tooltip" data-placement="left" title="Dark Mode">
-                        <input class="custom-switch-input" id="switchDark" type="checkbox" checked>
-                        <label class="custom-switch-btn" for="switchDark"></label>
-                    </div>
-                </div>
-
-                <div class="position-relative d-none d-sm-inline-block">
-                    <button class="header-icon btn btn-empty" type="button" id="iconMenuButton" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="simple-icon-grid"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right mt-3  position-absolute" id="iconMenuDropdown">
-                        <a href="#" class="icon-menu-item">
-                            <i class="iconsminds-equalizer d-block"></i>
-                            <span>Settings</span>
-                        </a>
-
-                        <a href="#" class="icon-menu-item">
-                            <i class="iconsminds-male-female d-block"></i>
-                            <span>Users</span>
-                        </a>
-
-                        <a href="#" class="icon-menu-item">
-                            <i class="iconsminds-puzzle d-block"></i>
-                            <span>Components</span>
-                        </a>
-
-                        <a href="#" class="icon-menu-item">
-                            <i class="iconsminds-bar-chart-4 d-block"></i>
-                            <span>Profits</span>
-                        </a>
-
-                        <a href="#" class="icon-menu-item">
-                            <i class="iconsminds-file d-block"></i>
-                            <span>Surveys</span>
-                        </a>
-
-                        <a href="#" class="icon-menu-item">
-                            <i class="iconsminds-suitcase d-block"></i>
-                            <span>Tasks</span>
-                        </a>
-
-                    </div>
-                </div>
 
                 <div class="position-relative d-inline-block">
                     <button class="header-icon btn btn-empty" type="button" id="notificationButton"
@@ -189,7 +143,11 @@
                         aria-expanded="false">
                         <span class="name">{{ Auth::user()->name }}</span>
                         <span>
-                            <img alt="Profile Picture" src="img/profile-pic-l.jpg" />
+                            @if (Auth::user()->profil)
+                                <img alt="Profile Picture" src="{{asset('storage/'. Auth::user()->profil)}}"/>
+                            @else 
+                                <img alt="Profile Picture" src="{{ asset('img/image-not-found.png')}}" />
+                            @endif
                         </span>
                     </button>
 
@@ -220,40 +178,43 @@
         <div class="main-menu">
             <div class="scroll">
                 <ul class="list-unstyled">
-                    <li class="active">
+                    <li>
                         <a href="{{url('/')}}">
                             <i class="iconsminds-shop-4"></i>
-                            <span>Dashboards</span>
+                            <span>Home Page</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#layouts">
-                            <i class="iconsminds-digital-drawing"></i> Pages
+                        <a href="#">
+                            <i class="simple-icon-pie-chart"></i>
+                            <span>Dasboard</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#applications">
+                        <a href="">
+                        {{-- <a href="#layouts"> --}}
+                            <i class="iconsminds-shopping-cart"></i> Manage Order
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('manage-product.index')}}">
+                        {{-- <a href="#applications"> --}}
                             <i class="iconsminds-air-balloon-1"></i> Manage Product
                         </a>
                     </li>
                     <li>
-                        <a href="#ui">
-                            <i class="iconsminds-pantone"></i> UI
+                        <a href="">
+                        {{-- <a href="#ui"> --}}
+                            <i class="simple-icon-settings"></i> Account Setting
                         </a>
                     </li>
                     <li>
-                        <a href="#menu">
-                            <i class="iconsminds-three-arrow-fork"></i> Menu
-                        </a>
-                    </li>
-                    <li>
-                        <a href="Blank.Page.html">
-                            <i class="iconsminds-bucket"></i> Blank Page
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://dore-jquery-docs.coloredstrategies.com" target="_blank">
-                            <i class="iconsminds-library"></i> Docs
+                        <a class="dropdown-item" href="{{ route('logout') }}" 
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();" ><i class="simple-icon-logout"></i> Sign out</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>        
                         </a>
                     </li>
                 </ul>
