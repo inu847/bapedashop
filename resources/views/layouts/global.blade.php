@@ -193,19 +193,22 @@
                     <li>
                         <a href="">
                         {{-- <a href="#layouts"> --}}
-                            <i class="iconsminds-shopping-cart"></i> Manage Order
+                            <i class="iconsminds-shopping-cart"></i> 
+                            <span>Manage Order</span>
+                           
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('manage-product.index')}}">
                         {{-- <a href="#applications"> --}}
-                            <i class="iconsminds-air-balloon-1"></i> Manage Product
+                            <i class="iconsminds-air-balloon-1"></i>
+                            <span>Manage Product</span>
                         </a>
                     </li>
                     <li>
                         <a href="">
                         {{-- <a href="#ui"> --}}
-                            <i class="simple-icon-settings"></i> Account Setting
+                            <i class="simple-icon-settings"></i><span>Account Setting</span>
                         </a>
                     </li>
                     <li>
@@ -722,8 +725,10 @@
     <script src="{{ asset('js/vendor/Sortable.js') }}"></script>
     <script src="{{ asset('js/vendor/mousetrap.min.js') }}"></script>
     <script src="{{ asset('js/vendor/glide.min.js') }}"></script>
+    <script src="{{ asset('js/vendor/order.js') }}"></script>
     <script src="{{ asset('js/dore.script.js') }}"></script>
     <script src="{{ asset('js/scripts.single.theme.js') }}"></script>
+    <script src="https://css-tricks.foxycart.com/files/foxycart_includes.js" type="text/javascript" charset="utf-8"></script>
 </body>
 
 </html>
