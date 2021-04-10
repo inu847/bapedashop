@@ -20,11 +20,17 @@
 							</div>
 						</div>
 						<div>
-							{{-- <div role="progressbar"
-								class="progress-bar-circle progress-bar-banner position-relative" data-color="white"
-								data-trail-color="rgba(255,255,255,0.2)" aria-valuenow="4" aria-valuemax="6"
-								data-show-percent="false">
-							</div> --}}
+							<div class="col-12 col-xs-6">
+								<div class="form-group mb-1">
+									<select class="rating" data-current-rating="3" data-readonly="true">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+									</select>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

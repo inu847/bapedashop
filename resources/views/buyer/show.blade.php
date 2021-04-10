@@ -119,160 +119,113 @@
         </div>
 
         <div class="row list disable-text-selection" data-check-all="checkAll">
-
-        @foreach ($products as $product)
-            @if ($product->status == 'publish')
-                <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
-                    <div class="card">
-                        <div class="position-relative">
-                            <a href="Pages.Product.Detail.html">
-                                @if($product->images)
-                                    <div class="side_view"> 
-                                        <img src="{{asset('storage/'. $product->images)}}" alt="Card image cap" class="card-img-top" style="height: 216px;" />
-                                    </div>
-                                @else
-                                    No avatar
-                                @endif
-                            </a>
-                            @if ($product->created_at->format('m, y') == date('m, y'))
-                                <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
-                            @elseif ("a" == "a")
-                                <span class="badge badge-pill badge-secondary position-absolute badge-top-left">TRENDING</span>
-                            @endif
-                            
-                            
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <a href="#">
-                                        <p class="list-item-heading mb-4 pt-1" style="font-size: 20px;" >{{ $product->nama_product }}</p>
-                                    </a>
-                                    <footer>
-                                        <div class="row">
-                                            <div class="col-7">
-                                                <p class="price-per-pallet text-muted mb-0 font-weight-light" style="font-size: 15px;">Rp.{{ $product->price }}</p>
-                                            </div>
-                                            <div class="col-5">
-                                                <input type="number" class="num-pallets-input form-control" id="sparkle-num-pallets">
-                                            </div>
+            @foreach ($products as $product)
+                @if ($product->status == 'publish')
+                    <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
+                        <div class="card">
+                            <div class="position-relative">
+                                <a href="Pages.Product.Detail.html">
+                                    @if($product->images)
+                                        <div class="side_view"> 
+                                            <img src="{{asset('storage/'. $product->images)}}" alt="Card image cap" class="card-img-top" style="height: 216px;" />
                                         </div>
-                                    </footer>
+                                    @else
+                                        No avatar
+                                    @endif
+                                </a>
+                                @if ($product->created_at->format('m, y') == date('m, y'))
+                                    <span class="badge badge-pill badge-theme-1 position-absolute badge-top-left">NEW</span>
+                                @elseif ("a" == "a")
+                                    <span class="badge badge-pill badge-secondary position-absolute badge-top-left">TRENDING</span>
+                                @endif
+                                
+                                
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <a href="#">
+                                            <p class="list-item-heading mb-4 pt-1" style="font-size: 20px;" >{{ $product->nama_product }}</p>
+                                        </a>
+                                        <footer>
+                                            <div class="row">
+                                                <div class="col-7">
+                                                    <p class="price-per-pallet text-muted mb-0 font-weight-light" style="font-size: 15px;">Rp.{{ $product->price }}</p>
+                                                </div>
+                                            </div>
+                                        </footer>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endif
-        @endforeach
-        <table>
-            <tr>
-                <th>Product Name</th> 
-                <th>Quantity</th>
-                <th>X</th>
-                <th>Unit Price</th>
-                <th>=</th>
-                <th style="text-align: right; padding-right: 30px;">Totals</th> 
-           </tr>
-            <tr class="odd">
-                <td class="product-title">Sparkle No. 6&reg; - <em>Dry Line Marking Compound</em></td>
-                <td class="num-pallets"><input type="text" class="num-pallets-input" id="sparkle-num-pallets"></input></td>
-                <td class="times">X</td>
-                <td class="price-per-pallet">$<span>165</span></td>
-                <td class="equals">=</td>
-                <td class="row-total"><input type="text" class="row-total-input" id="sparkle-row-total" disabled="disabled"></input></td>
-            </tr>
-            <tr class="odd">
-                <td class="product-title">Sparkle No. 6&reg; - <em>Dry Line Marking Compound</em></td>
-                <td class="num-pallets"><input type="text" class="num-pallets-input" id="sparkle-num-pallets"></input></td>
-                <td class="times">X</td>
-                <td class="price-per-pallet">$<span>165</span></td>
-                <td class="equals">=</td>
-                <td class="row-total"><input type="text" class="row-total-input" id="sparkle-row-total" disabled="disabled"></input></td>
-            </tr>
-        </table>
-        
-        <tr>
-            <td colspan="6" style="text-align: right;">
-                Product SUBTOTAL: <input type="text" class="total-box" value="$0" id="product-subtotal" disabled="disabled"></input>
-            </td>
-        </tr>
-        
-        <table id="shipping-table">
-    	
-            <tr>
-                <th>Total Qty.</th>
-                <th>X</th>
-                <th>Shipping Rate</th>
-                <th>=</th>
-                <th style="text-align: right;">Shipping Total</th>
-            </tr>
-            
-            <tr>
-                <td id="total-pallets"><input id="total-pallets-input" value="0" type="text" disabled="disabled"></input></td>
-                <td>X</td>
-                <td id="shipping-rate">10.00</td>
-                <td>=</td>
-                <td style="text-align: right;"><input type="text" class="total-box" value="$0" id="shipping-subtotal" disabled="disabled"></input></td>
-            </tr>
-           
-           </table>
-           
-           <div class="clear"></div>
-           
-           <div style="text-align: right;">
-               <span>ORDER TOTAL: </span> 
-               <input type="text" class="total-box" value="$0" id="order-total" disabled="disabled"></input>
-               
-               <br />
-               
-               <form class="foxycart" action="https://css-tricks.foxycart.com/cart" method="post" accept-charset="utf-8" id="foxycart-order-form">
-                   
-                   <input type="hidden" name="name" value="Multi Product Order" />
-                   <input type="hidden" id="fc-price" name="price" value="0" />
-   
-                   <input type="submit" value="Submit Order" class="submit" />
-                   
-               </form>
-           </div>
-
-
-            <div class="col-12">
-                <nav class="mt-4 mb-3">
-                    <ul class="pagination justify-content-center mb-0">
-                        <li class="page-item ">
-                            <a class="page-link first" href="#">
-                                <i class="simple-icon-control-start"></i>
-                            </a>
-                        </li>
-                        <li class="page-item ">
-                            <a class="page-link prev" href="#">
-                                <i class="simple-icon-arrow-left"></i>
-                            </a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item ">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item ">
-                            <a class="page-link next" href="#" aria-label="Next">
-                                <i class="simple-icon-arrow-right"></i>
-                            </a>
-                        </li>
-                        <li class="page-item ">
-                            <a class="page-link last" href="#">
-                                <i class="simple-icon-control-end"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
+                @endif
+            @endforeach
         </div>
+
+        <div class="col-lg-12 col-md-12 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Form Order</h5>
+
+                    <form action="">
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Product Name</th> 
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Unit Price</th>
+                                    <th scope="col">=</th>
+                                    <th scope="col">Totals</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($products as $product)
+                                    @if ($product->status == 'publish')
+                                        <tr class="odd">
+                                            <td class="product-title">{{ $product->nama_product}}</td>
+                                            <td class="num-pallets"><input type="number" class="num-pallets-input form-control" id="sparkle-num-pallets"></td>
+                                            <td class="price-per-pallet">Rp.<span>{{ $product->price }}</span></td>
+                                            <td class="equals">=</td>
+                                            <td class="row-total"><input type="text" class="row-total-input" id="sparkle-row-total" disabled></td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-5 ml-auto">
+                                <table id="shipping-table" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Total :</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Total Quantity <span>:</span></td>
+                                            <td id="total-pallets"><input id="total-pallets-input" value="0" type="text" disabled="disabled"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Product Subtotal <span>:</span></td>
+                                            <td><input type="text" class="total-box" name="price" value="Rp.0" id="product-subtotal" disabled="disabled"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-2 ml-auto">
+                            <button class="btn btn-info" type="submit">Submit</button>
+                        </div>
+                        
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
     </div>
+    
 @endsection
