@@ -5,6 +5,7 @@ use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ChartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,10 @@ Route::get('/test', function () {
 });
 
 Route::resource('user', UserController::class);
+Route::resource('cart', ChartController::class);
+// Route::post('cart/{id}', [ChartController::class, 'cart'])->name('addcart');
 
 Route::post('/user/{id}', [UserController::class, 'verivikasiPassword'])->name('verivikasi.password');
-Route::get('/user/{id}', [UserController::class, 'show']);
 
 Auth::routes();
 Route::resource('manage-product', ProductController::class);

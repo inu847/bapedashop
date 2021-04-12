@@ -93,10 +93,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        $products = User::findOrFail($id)->productId;
-
-        return view('buyer.show', ['user' => $user, 'products' => $products]);
+        // 
     }
 
     /**
@@ -137,33 +134,19 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $products = User::findOrFail($id)->productId;
-
-        // if($user){
-        //     // jika hasil hash dari password yang diinput user sama dengan password di database user maka
-        //     if ($request->get('enkripsi') == $user->enkripsi) {
-        //         // generate token
-        //         $user->generateToken();
-        //         return view('buyer.show', ['user' => $user, 'products' => $products]);
-        //     }
-        //     else{
-        //         return redirect()->route('manage-product.index')->with('status', 'Password Salah!!');
-        //     }
-        // }
-        // else{
-        //     return redirect()->route('manage-product.index')->with('status', 'Password Salah!!');
-        // }
-
+        
+        $buyer = $request->get('buyer');
+        $_token = $request->get('_token');
         $verivikasi = $request->get('enkripsi');
-        if($verivikasi){
-            if($verivikasi == $user->enkripsi){
-                $user->generateToken();
-                return view('buyer.show', ['user' => $user, 'products' => $products]);
-            }else{
-                return redirect()->route('manage-product.index')->with('status', 'Password Salah!!');
-            }
+        if($verivikasi == $user->enkripsi){
+            $user->generateToken();
+            return view('buyer.show', ['user' => $user, 'products' => $products, 'verivikasi' => $verivikasi, 'buyer' => $buyer, '_token' => $_token]);
+        }else{
+            return redirect()->route('user.index')->with('status', 'Password Salah!!');
         }
     }
 
+    // Api
     public function getToko(Request $request)
     {
         $user = new UserResource(User::get());

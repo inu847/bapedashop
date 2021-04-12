@@ -62,6 +62,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Product');
     }
 
+    // public function cart()
+    // {
+    //     return $this->hasMany('App\Models\Cart');
+    // }
+
     public function generateToken()
     {
         $this->enkripsi_token = Str::random(60);

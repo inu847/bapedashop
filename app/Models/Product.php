@@ -13,4 +13,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    function cartProduct()
+    {
+        return $this->hasOne('App\Models\Cart');
+    }
 }

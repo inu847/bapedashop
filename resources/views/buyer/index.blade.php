@@ -35,33 +35,38 @@
 					</div>
 				</div>
 			</a>
-		</div>			
-	@endforeach
-
-	<div class="modal fade" id="exampleModalContent" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalContentLabel">Verivikasi Password</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form action="{{ route('verivikasi.password', [$data->id])}}">
-						@csrf
-						<div class="form-group">
-							<label for="recipient-name" class="col-form-label">Password Toko</label>
-							<input name="enkripsi" type="text" class="form-control" id="recipient-name">
-						</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</form>
+		</div>		
+		<div class="modal fade" id="exampleModalContent" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5>Verivikasi Password</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form action="{{ route('verivikasi.password', [$data->id])}}" method="POST">
+								@csrf
+								<div class="form-group">
+									<label for="" class="col-form-label">Nama</label>
+									<input name="buyer" type="text" class="form-control">
+								</div>
+								
+								<div class="form-group">
+									<label for="" class="col-form-label">Password Toko</label>
+									<input name="enkripsi" type="text" class="form-control">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+						</form>
 				</div>
 			</div>
-		</div>
-	</div>
+		</div>	
+	@endforeach
+
+	
 @endsection
