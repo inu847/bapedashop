@@ -8,7 +8,7 @@ function CleanNumber(value) {
 
     // Assumes string input, removes all commas, dollar signs, and spaces      
     newValue = value.replace(",","");
-    newValue = newValue.replace("$","");
+    newValue = newValue.replace("Rp.","");
     newValue = newValue.replace(/ /g,'');
     return newValue;
     
@@ -40,7 +40,7 @@ function CommaFormatted(amount) {
 	
 	n = a.join(delimiter);
 	
-	amount = "$" + minus + n;
+	amount = "Rp." + minus + n;
 	
 	return amount;
 	
@@ -146,10 +146,10 @@ $(function() {
     
     // Reset form on page load, optional
     $("#order-table input[type=text]:not('#product-subtotal')").val("");
-    $("#product-subtotal").val("$0");
-    $("#shipping-subtotal").val("$0");
-    $("#fc-price").val("$0");
-    $("#order-total").val("$0");
+    $("#product-subtotal").val("Rp.0");
+    $("#shipping-subtotal").val("Rp.0");
+    $("#fc-price").val("Rp.0");
+    $("#order-total").val("Rp.0");
     $("#total-pallets-input").val("0");
     
     // "The Math" is performed pretty much whenever anything happens in the quanity inputs

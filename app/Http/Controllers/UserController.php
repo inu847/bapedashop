@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Rating;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
 {
@@ -161,5 +162,14 @@ class UserController extends Controller
                 return redirect()->route('manage-product.index')->with('status', 'Password Salah!!');
             }
         }
+    }
+
+    public function getToko(Request $request)
+    {
+        $user = new UserResource(User::get());
+        $filterKeyword = $request->get('keyword');
+        $status = $request->get('status');
+        $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->paginate(10);
+        return $user;
     }
 }
