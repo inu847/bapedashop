@@ -231,7 +231,7 @@ Belum Masukkan Verivikasi
 @endif
 @endsection
 
-<!-- Di bawah ini Adalah basic dari javascript Ajax Silah Modifikasi sesuai dengan framework JS anda  -->
+<!-- Di bawah ini Adalah basic dari javascript Ajax Silah Modifikasi sesuai dengan framework JS anda.-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>
     $(document).on('click', '#addtocart', function(e) {
