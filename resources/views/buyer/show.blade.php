@@ -151,7 +151,7 @@
                                     <input type="" value="{{ $buyer }}" name="buyer">
                                     <input type="" value="{{ $user->enkripsi_token }}" name="enkripsi_token">
                                     <!-- <button type="submit" class="btn btn-primary btn-block mb-1"><i class="iconsminds-add-cart"></i> Add to cart</button> -->
-
+                                    <a class="btn btn-primary btn-block mb-1" href="javascript:void(0)" id="addtocart" data-id="{{ $product->id }}" data-buyer="{{ $buyer }}" data-encripsi_token="{{ $user->enkripsi_token }}"><i class="iconsminds-add-cart"></i>Add To cart </a>
                                 </form>
                             </footer>
                         </div>
@@ -230,3 +230,32 @@
 Belum Masukkan Verivikasi
 @endif
 @endsection
+
+<!-- Di bawah ini Adalah basic dari javascript Ajax Silah Modifikasi sesuai dengan framework JS anda -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+    $(document).on('click', '#addtocart', function(e) {
+        let getid = e.currentTarget.dataset.id;
+        let getbuyer = e.currentTarget.dataset.buyer;
+        let getenskripsi = e.currentTarget.dataset.encripsi_token;
+
+        $.ajax({
+            type: 'POST',
+            url: '/addtocartajax',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                id: getid,
+                buyer: getbuyer,
+                enskripsi: getenskripsi
+            },
+            async: false,
+            dataType: 'json',
+            success: function(response) {
+                alert(response.message)
+            },
+            error: function(response) {
+                console.log(response)
+            }
+        });
+    })
+</script>

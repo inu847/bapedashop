@@ -40,3 +40,6 @@ Route::resource('tools', ToolsController::class);
 
 Route::get('/alamat', [AlamatController::class, 'index']);
 Route::get('/product', [ProductController::class, 'index']);
+
+// Tambahan Route untuk memanggil controller Chart
+Route::post('/addtocartajax', [ChartController::class, 'ajaxaddtocart']);

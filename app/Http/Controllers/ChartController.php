@@ -95,4 +95,29 @@ class ChartController extends Controller
     {
         //
     }
+
+
+    // insert to database with return modified text 
+    public function ajaxaddtocart(Request $request)
+    {
+        $id = $request->post('id');
+        $buyer = $request->post('buyer');
+        $enkripsi = $request->post('enskripsi');
+
+        $product = Product::find($id);
+        $cart = new Cart();
+        $cart->buyer = $buyer;
+        $cart->enkripsi_token = $enkripsi;
+        $status = $product->cartProduct()->save($cart);
+
+        if ($status) {
+            $msg = $buyer . ", Add Product with id " . $id . " succesfully, " . ' - ' . $enkripsi;
+        } else {
+            $msg = "Add Product Failed";
+        }
+        $output = array(
+            'message' => $msg
+        );
+        return  $output;
+    }
 }
