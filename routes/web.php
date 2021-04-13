@@ -6,6 +6,7 @@ use App\Http\Controllers\RekeningController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\ToolsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +34,9 @@ Route::post('/user/{id}', [UserController::class, 'verivikasiPassword'])->name('
 
 Auth::routes();
 Route::resource('manage-product', ProductController::class);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('tools', ToolsController::class);
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/alamat', [AlamatController::class, 'index']);
-Route::get('/rekening', [RekeningController::class, 'index']);
 Route::get('/product', [ProductController::class, 'index']);

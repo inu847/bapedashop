@@ -114,7 +114,7 @@
                             </div>
                             <div class="d-flex flex-row mb-3 pb-3 ">
                                 <a href="#">
-                                    <img src="img/notification-thumb-3.jpg" alt="Notification Image"
+                                    <img src="{{ asset('img/notification-thumb-3.jpg')}}" alt="Notification Image"
                                         class="img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
                                 </a>
                                 <div class="pl-3">
@@ -193,22 +193,24 @@
                     </li>
                     <li>
                         <a href="">
-                        {{-- <a href="#layouts"> --}}
                             <i class="iconsminds-shopping-cart"></i> 
                             <span>Manage Order</span>
-                           
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('manage-product.index')}}">
-                        {{-- <a href="#applications"> --}}
                             <i class="iconsminds-air-balloon-1"></i>
                             <span>Manage Product</span>
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                        {{-- <a href="#ui"> --}}
+                        <a href="{{ route('tools.index') }}">
+                            <i class="simple-icon-diamond"></i> 
+                            <span>Tools</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('user.edit', [\Auth::user()])}}">
                             <i class="simple-icon-settings"></i><span>Account Setting</span>
                         </a>
                     </li>

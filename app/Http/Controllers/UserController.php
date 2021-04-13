@@ -104,7 +104,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view('seller.setting', ['user' => $user]);
     }
 
     /**
@@ -116,7 +118,35 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        \Validator::make($request->all(), [
+            'nama_product' => 'required', 'string', 'max:255', 'min:2',
+            'deskripsi' => 'required', 'string', 'max:255', 'min:8',
+            'stok' => 'required', 'max:1000',
+            'images' => 'file|image|mimes:jpeg,png,jpg',
+            'price' => 'required', 'max:20',
+        ])->validate();
+        
+        $edit_product = Product::findOrFail($id);
+        $edit_product->nama_product = $request->get('nama_product');
+        $edit_product->deskripsi = $request->get('deskripsi');
+        $edit_product->stok = $request->get('stok');
+        if($request->file('images')){
+            if($edit_product->images && file_exists(storage_path('app/public/' . $edit_product->images))){
+                Storage::delete('public/'.$edit_product->images);
+                $file = $request->file('images')->store('product_images', 'public');
+                $edit_product->images = $file;
+            }else{
+                if($request->file('images')){
+                    $file = $request->file('images')->store('product_images', 'public');
+                    $edit_product->images = $file;
+                }
+            }
+        }
+        $edit_product->price = $request->get('price');
+
+        \Auth::user()->productId()->save($edit_product);
+
+        return redirect()->route('manage-product.index')->with('status', 'Update Product Success!!');
     }
 
     /**

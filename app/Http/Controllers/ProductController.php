@@ -52,6 +52,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        \Validator::make($request->all(), [
+            'nama_product' => 'required', 'string', 'max:255', 'min:2',
+            'deskripsi' => 'required', 'string', 'max:255', 'min:8',
+            'stok' => 'required', 'max:1000',
+            'images' => 'file|image|mimes:jpeg,png,jpg',
+            'price' => 'required', 'max:20',
+        ])->validate();
+        
         $new_product = new Product();
         $new_product->nama_product = $request->get('nama_product');
         $new_product->deskripsi = $request->get('deskripsi');
@@ -101,6 +109,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        \Validator::make($request->all(), [
+            'nama_product' => 'required', 'string', 'max:255', 'min:2',
+            'deskripsi' => 'required', 'string', 'max:255', 'min:8',
+            'stok' => 'required', 'max:1000',
+            'images' => 'file|image|mimes:jpeg,png,jpg',
+            'price' => 'required', 'max:20',
+        ])->validate();
+        
         $edit_product = Product::findOrFail($id);
         $edit_product->nama_product = $request->get('nama_product');
         $edit_product->deskripsi = $request->get('deskripsi');

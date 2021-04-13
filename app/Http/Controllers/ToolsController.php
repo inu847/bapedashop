@@ -3,21 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Cart;
-use App\Models\Product;
 
-class ChartController extends Controller
+class ToolsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+
+        $this->middleware('auth');
+
+        // $this->middleware(function($request, $next){
+
+        // if(Gate::allows('manage-order')) return $next($request);
+        //     abort(403, 'Anda tidak memiliki cukup hak akses');
+        // });
+    }
+    
     public function index()
     {
-        $carts = Cart::latest()->get()->where('enkripsi_token');
-
-        return view('order.cart', ['carts' => $carts]);
+        return view('tools.index');
     }
 
     /**
@@ -38,17 +45,7 @@ class ChartController extends Controller
      */
     public function store(Request $request)
     {
-        $id = $request->get('id');
-        $buyer = $request->get('buyer');
-        $enkripsi = $request->get('enkripsi_token');
-
-        $product = Product::find($id);
-        $cart = new Cart();
-        $cart->buyer = $buyer;
-        $cart->enkripsi_token = $enkripsi;
-        $product->cartProduct()->save($cart);
-
-        return redirect()->route('cart.index');
+        //
     }
 
     /**
