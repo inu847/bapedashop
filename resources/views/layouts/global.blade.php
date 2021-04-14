@@ -210,7 +210,11 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('user.edit', [\Auth::user()])}}">
+                        @if (\Auth::user())
+                            <a href="{{ route('user.edit', [\Auth::user()])}}">
+                        @else
+                            <a href="#">
+                        @endif
                             <i class="simple-icon-settings"></i><span>Account Setting</span>
                         </a>
                     </li>
@@ -260,30 +264,7 @@
     <script src="{{ asset('js/dore.script.js') }}"></script>
     <script src="{{ asset('js/scripts.single.theme.js') }}"></script>
     <script src="https://css-tricks.foxycart.com/files/foxycart_includes.js" type="text/javascript" charset="utf-8"></script>
-    {{-- <script src="{{ asset('js/vue.js')}}"></script>
-    <script>
-        const InputDistance = {
-            data () {
-            return {
-                    miles: 0,
-                    totalPrice: ''
-                }
-            },
-            watch: {
-            miles (newValue, oldValue) {
-                const totalPrice = newValue * 2000
-                this.totalPrice = totalPrice
-                document.getElementById('totalPrice').value = totalPrice
-            },
-            totalPrice (newValue, oldValue) {
-                const miles = newValue > 0 ? newValue / 2000 : 0
-                this.miles = miles
-                document.getElementById('miles').value = miles
-                }
-            }
-        }
-        const vm = Vue.createApp(InputDistance).mount('#app')
-    </script>    --}}
+    <script src="{{ asset('js/vue.js')}}"></script>
 </body>
 
 </html>

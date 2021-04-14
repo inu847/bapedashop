@@ -13,9 +13,11 @@ class ChartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $carts = Cart::latest()->get()->where('enkripsi_token');
+        $enkripsi = $request->get('enkripsi');
+        $carts = Cart::where('enkripsi_token', '=', $enkripsi)->get();
+        
 
         return view('order.cart', ['carts' => $carts]);
     }

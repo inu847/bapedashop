@@ -26,9 +26,9 @@ Route::get('/test', function () {
     return view('layouts.global');
 });
 
+
 Route::resource('user', UserController::class);
 Route::resource('cart', ChartController::class);
-// Route::post('cart/{id}', [ChartController::class, 'cart'])->name('addcart');
 
 Route::post('/user/{id}', [UserController::class, 'verivikasiPassword'])->name('verivikasi.password');
 
