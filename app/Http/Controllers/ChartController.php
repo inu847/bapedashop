@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
+use App\Models\Order;
 
 class ChartController extends Controller
 {
@@ -16,10 +18,10 @@ class ChartController extends Controller
     public function index(Request $request)
     {
         $enkripsi = $request->get('enkripsi');
+        $user_id = $request->get('user_id');
         $carts = Cart::where('enkripsi_token', '=', $enkripsi)->get();
-        
 
-        return view('order.cart', ['carts' => $carts]);
+        return view('order.cart', ['carts' => $carts, 'user_id' => $user_id]);
     }
 
     /**
@@ -40,17 +42,21 @@ class ChartController extends Controller
      */
     public function store(Request $request)
     {
-        $id = $request->get('id');
-        $buyer = $request->get('buyer');
-        $enkripsi = $request->get('enkripsi_token');
+        $id = $request->get('user_id');
+        $user = User::find($id);
 
-        $product = Product::find($id);
-        $cart = new Cart();
-        $cart->buyer = $buyer;
-        $cart->enkripsi_token = $enkripsi;
-        $product->cartProduct()->save($cart);
+        $new_order = new Order();
+        $new_order->buyer = json_encode($request->get('buyer'));
+        $new_order->product_name = json_encode($request->get('product_name'));
+        $new_order->deskripsi = json_encode($request->get('deskripsi'));
+        $new_order->price = json_encode($request->get('price'));
+        $new_order->images = json_encode($request->get('images'));
+        $new_order->quantity = json_encode($request->get('quantity'));
+        $new_order->total_quantity = $request->get('total_quantity');
+        $new_order->subtotal = $request->get('subtotal');
+        $user->order()->save($new_order);
 
-        return redirect()->route('cart.index');
+        return redirect()->route('user.index');
     }
 
     /**

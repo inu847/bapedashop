@@ -117,36 +117,31 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        \Validator::make($request->all(), [
-            'nama_product' => 'required', 'string', 'max:255', 'min:2',
-            'deskripsi' => 'required', 'string', 'max:255', 'min:8',
-            'stok' => 'required', 'max:1000',
-            'images' => 'file|image|mimes:jpeg,png,jpg',
-            'price' => 'required', 'max:20',
-        ])->validate();
-        
-        $edit_product = Product::findOrFail($id);
-        $edit_product->nama_product = $request->get('nama_product');
-        $edit_product->deskripsi = $request->get('deskripsi');
-        $edit_product->stok = $request->get('stok');
-        if($request->file('images')){
-            if($edit_product->images && file_exists(storage_path('app/public/' . $edit_product->images))){
-                Storage::delete('public/'.$edit_product->images);
-                $file = $request->file('images')->store('product_images', 'public');
-                $edit_product->images = $file;
+    {       
+        $user = User::findOrFail($id);
+
+        $user->name = $request->get('name');
+        $user->nama_toko = $request->get('nama_toko');
+        $user->email = $request->get('email');
+
+        if($request->file('profil')){
+            if($user->profil && file_exists(storage_path('app/public/' . $user->profil))){
+                \Storage::delete('public/'.$user->profil);
+                $file = $request->file('profil')->store('profiles', 'public');
+                $user->profil = $file;
             }else{
-                if($request->file('images')){
-                    $file = $request->file('images')->store('product_images', 'public');
-                    $edit_product->images = $file;
+                if($request->file('profil')){
+                    $file = $request->file('profil')->store('profiles', 'public');
+                    $user->profil = $file;
                 }
             }
         }
-        $edit_product->price = $request->get('price');
 
-        \Auth::user()->productId()->save($edit_product);
+        $user->phone = $request->get('phone');
+        $user->tanggal_lahir = $request->get('tanggal_lahir');
 
-        return redirect()->route('manage-product.index')->with('status', 'Update Product Success!!');
+        $user->save();
+        return redirect()->route('user.index')->with('status', 'Update Product Success!!');
     }
 
     /**

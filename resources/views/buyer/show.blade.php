@@ -161,6 +161,7 @@
                         <div class="col-12">
                             <form action="{{ route('cart.index') }}">
                                 <input type="hidden" value="{{ $user->enkripsi_token }}" name="enkripsi">
+                                <input type="hidden" value="{{ $user->id }}" name="user_id">
                                 <button type="submit" class="btn btn-danger btn-block fw-bold" style="font-size: 20px;" value="Filter">CHECKOUT</button>
                             </form>
                         </div>
