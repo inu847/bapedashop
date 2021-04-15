@@ -52,6 +52,7 @@ class ChartController extends Controller
         $new_order->price = json_encode($request->get('price'));
         $new_order->images = json_encode($request->get('images'));
         $new_order->quantity = json_encode($request->get('quantity'));
+        $new_order->status = "process";
         $new_order->total_quantity = $request->get('total_quantity');
         $new_order->subtotal = $request->get('subtotal');
         $user->order()->save($new_order);

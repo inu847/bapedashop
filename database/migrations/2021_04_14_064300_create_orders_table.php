@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string("price");
             $table->string("images");
             // total order
+            $table->enum('status', ["on hold", "process" ,"success"]);
             $table->string("quantity");
             $table->string("total_quantity");
             $table->string("subtotal");

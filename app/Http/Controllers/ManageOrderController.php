@@ -14,8 +14,13 @@ class ManageOrderController extends Controller
     public function index()
     {
         $orders = \Auth::user()->order;
-        // dd($orders);
-        return view('manage-order.index', ['orders' => $orders]);
+        foreach($orders as $order){
+            foreach(json_decode($order->buyer) as $buyer){
+                // $product_name
+            }
+            $product_name = json_decode($order->product_name);
+        }
+        return view('manage-order.index', ['order' => $order, 'buyer' => $buyer, 'product_name' => $product_name]);
     }
 
     /**
