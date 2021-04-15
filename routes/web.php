@@ -5,6 +5,7 @@ use App\Http\Controllers\AlamatController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ManageOrderController;
 use App\Http\Controllers\ToolsController;
 
@@ -39,7 +40,7 @@ Route::resource('manage-order', ManageOrderController::class);
 Route::resource('tools', ToolsController::class);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 Route::get('/alamat', [AlamatController::class, 'index']);
 Route::get('/product', [ProductController::class, 'index']);
 

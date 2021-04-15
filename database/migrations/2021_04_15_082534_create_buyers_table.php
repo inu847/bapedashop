@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdersTable extends Migration
+class CreateBuyersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,12 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('buyers', function (Blueprint $table) {
             $table->id();
             $table->string("buyer");
-            $table->string("product_name");
-            $table->string("deskripsi");
-            $table->string("price");
-            $table->string("images");
-            // total order
-            $table->enum('status', ["on hold", "process" ,"success"]);
-            $table->string("row_total");
-            $table->string("quantity");
-            $table->string("total_quantity");
-            $table->string("subtotal");
+            $table->enum('status', ["on hold", "process" ,"success"])->nullable();
+            $table->string("total_quantity")->nullable();
+            $table->string("subtotal")->nullable();
             // Relationship one to many
             $table->unsignedBigInteger("user_id");
             $table->foreign("user_id")->references("id")->on("users")->onDelete('cascade');
@@ -40,6 +33,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('buyers');
     }
 }

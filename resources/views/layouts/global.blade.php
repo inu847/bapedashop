@@ -186,7 +186,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{ route('dashboard.index') }}">
                             <i class="simple-icon-pie-chart"></i>
                             <span>Dasboard</span>
                         </a>
@@ -219,7 +219,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('logout') }}" 
+                        <a href="{{ route('logout') }}" 
                             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();" ><i class="simple-icon-logout"></i> Sign out</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

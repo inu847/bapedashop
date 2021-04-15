@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Rating;
+use App\Models\Buyer;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\User as UserResource;
 
@@ -159,13 +159,16 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $products = User::findOrFail($id)->productId;
-        
+        $new_buyer = new Buyer;
+
         $buyer = $request->get('buyer');
         $_token = $request->get('_token');
         $verivikasi = $request->get('enkripsi');
         if($verivikasi == $user->enkripsi){
             $user->generateToken();
-            return view('buyer.show', ['user' => $user, 'products' => $products, 'verivikasi' => $verivikasi, 'buyer' => $buyer, '_token' => $_token]);
+            $new_buyer->buyer = $buyer;
+            $user->buyer()->save($new_buyer);
+            return view('buyer.show', ['user' => $user, 'products' => $products, 'verivikasi' => $verivikasi, 'new_buyer' => $new_buyer, '_token' => $_token]);
         }else{
             return redirect()->route('user.index')->with('status', 'Password Salah!!');
         }

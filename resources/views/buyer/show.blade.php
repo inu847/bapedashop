@@ -8,7 +8,7 @@
     @if ($verivikasi)
         <div class="container-fluid disable-text-selection">
             <div class="alert alert-success">
-                <div>Selamat Datang {{ $buyer }} Silahkan Memesan Di Daftar Menu Yang Tersedia!!</div>
+                <div>Selamat Datang {{ $new_buyer['buyer'] }} Silahkan Memesan Di Daftar Menu Yang Tersedia!!</div>
             </div>
             <div class="row">
                 <div class="col-12">
@@ -109,7 +109,7 @@
                     <div class="separator mb-5"></div>
                 </div>
             </div>
-
+            
             <div class="row list disable-text-selection" data-check-all="checkAll">
                 @foreach ($products as $product)
                 @if ($product->status == 'publish')
@@ -122,7 +122,7 @@
                                     <img src="{{asset('storage/'. $product->images)}}" alt="Card image cap" class="card-img-top" style="height: 216px;" />
                                 </div>
                                 @else
-                                No avatar
+                                    No avatar
                                 @endif
                             </a>
                             @if ($product->created_at->format('m, y') == date('m, y'))
@@ -145,7 +145,7 @@
                                         </div>
                                     </div>
                                     <footer>
-                                        <a class="btn btn-primary btn-block mb-1" href="javascript:void(0)" id="addtocart" data-id="{{ $product->id }}" data-buyer="{{ $buyer }}" data-encripsi_token="{{ $user->enkripsi_token }}"><i class="iconsminds-add-cart"></i>Add To cart </a>
+                                        <a class="btn btn-primary btn-block mb-1" href="javascript:void(0)" id="addtocart" data-id="{{ $product->id }}" data-buyer="{{ $new_buyer['id'] }}" data-encripsi_token="{{ $user->enkripsi_token }}"><i class="iconsminds-add-cart"></i>Add To cart </a>
                                     </footer>
                                 </div>
                             </div>
@@ -161,7 +161,7 @@
                         <div class="col-12">
                             <form action="{{ route('cart.index') }}">
                                 <input type="hidden" value="{{ $user->enkripsi_token }}" name="enkripsi">
-                                <input type="hidden" value="{{ $user->id }}" name="user_id">
+                                <input type="hidden" value="{{ $new_buyer['id'] }}" name="user_id">
                                 <button type="submit" class="btn btn-danger btn-block fw-bold" style="font-size: 20px;" value="Filter">CHECKOUT</button>
                             </form>
                         </div>

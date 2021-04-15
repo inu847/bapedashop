@@ -46,12 +46,13 @@ class ChartController extends Controller
         $user = User::find($id);
 
         $new_order = new Order();
-        $new_order->buyer = json_encode($request->get('buyer'));
+        $new_order->buyer = $request->get('buyer');
         $new_order->product_name = json_encode($request->get('product_name'));
         $new_order->deskripsi = json_encode($request->get('deskripsi'));
         $new_order->price = json_encode($request->get('price'));
         $new_order->images = json_encode($request->get('images'));
         $new_order->quantity = json_encode($request->get('quantity'));
+        $new_order->row_total = json_encode($request->get('row_total'));
         $new_order->status = "process";
         $new_order->total_quantity = $request->get('total_quantity');
         $new_order->subtotal = $request->get('subtotal');

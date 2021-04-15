@@ -9,39 +9,7 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>Product Thumbs</h1>
-                <div class="text-zero top-right-button-container">
-                    <button type="button" class="btn btn-primary btn-lg top-right-button mr-1">ADD NEW</button>
-                    <div class="btn-group">
-                        <div class="btn btn-primary btn-lg pl-4 pr-0 check-button">
-                            <label class="custom-control custom-checkbox mb-0 d-inline-block">
-                                <input type="checkbox" class="custom-control-input" id="checkAll">
-                                <span class="custom-control-label">&nbsp;</span>
-                            </label>
-                        </div>
-                        <button type="button"
-                            class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                        </div>
-                    </div>
-                </div>
-                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
-                    <ol class="breadcrumb pt-0">
-                        <li class="breadcrumb-item">
-                            <a href="#">Home</a>
-                        </li>
-                        <li class="breadcrumb-item">
-                            <a href="#">Library</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Data</li>
-                    </ol>
-                </nav>
-
+                <h1>Manage Order</h1>
             </div>
 
             <div class="mb-2">
@@ -121,34 +89,31 @@
         </div>
     </div>
 
-    @foreach ($product_name as $product)
-        {{-- @foreach (json_decode($order->buyer) as $buyer) --}}
-        <div class="card d-flex flex-row mb-3">
-            <a class="d-flex" href="Pages.Product.Detail.html">
-                <img src="img/fat-rascal-thumb.jpg" alt="Fat Rascal"
-                    class="list-thumbnail responsive border-0 card-img-left" />
-            </a>
-            <div class="pl-2 d-flex flex-grow-1 min-width-zero">
-                <div
-                    class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                    <a href="Pages.Product.Detail.html" class="w-40 w-sm-100">
-                        <p class="list-item-heading mb-0 truncate">{{ $buyer }}</p>
-                    </a>
-                    <p class="mb-0 text-muted text-small w-15 w-sm-100">{{$product}}</p>
-                    <p class="mb-0 text-muted text-small w-15 w-sm-100">{{$order->created_at}}</p>
-                    <div class="w-15 w-sm-100">
-                        <span class="badge badge-pill badge-primary">{{$order->status}}</span>
+    @foreach ($orders as $order)
+        <a href="{{ route('manage-order.show', [$order->id]) }}">
+            <div class="card d-flex flex-row mb-3">
+                    <img src="img/fat-rascal-thumb.jpg" alt="Fat Rascal" class="list-thumbnail responsive border-0 card-img-left" />
+                <div class="pl-2 d-flex flex-grow-1 min-width-zero">
+                    <div class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
+                        <p class="list-item-heading mb-0 truncate">{{ Str::ucfirst($order->buyer) }}</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-100">{{$order->total_quantity}}</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-100">{{$order->subtotal}}</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-100">{{$order->created_at}}</p>
+                        <div class="w-15 w-sm-100">
+                            <span class="badge badge-pill badge-primary">{{ Str::upper($order->status) }}</span>
+                        </div>
                     </div>
+                    {{-- <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
+                        <input type="checkbox" class="custom-control-input">
+                        <span class="custom-control-label">&nbsp;</span>
+                    </label> --}}
                 </div>
-                <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-label">&nbsp;</span>
-                </label>
             </div>
-        </div>
-        {{-- @endforeach --}}
+        </a>
     @endforeach
+
 </div>
+
     <nav class="mt-4 mb-3">
         <ul class="pagination justify-content-center mb-0">
             <li class="page-item ">

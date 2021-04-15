@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class ManageOrderController extends Controller
 {
@@ -11,16 +12,21 @@ class ManageOrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct(){
+
+        $this->middleware('auth');
+
+        // $this->middleware(function($request, $next){
+
+        // if(Gate::allows('manage-order')) return $next($request);
+        //     abort(403, 'Anda tidak memiliki cukup hak akses');
+        // });
+    }
+    
     public function index()
     {
         $orders = \Auth::user()->order;
-        foreach($orders as $order){
-            foreach(json_decode($order->buyer) as $buyer){
-                // $product_name
-            }
-            $product_name = json_decode($order->product_name);
-        }
-        return view('manage-order.index', ['order' => $order, 'buyer' => $buyer, 'product_name' => $product_name]);
+        return view('manage-order.index', ['orders' => $orders]);
     }
 
     /**
@@ -52,7 +58,9 @@ class ManageOrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $orders = Order::findOrFail($id);
+
+        return view('manage-order.show', ['orders' => $orders]);
     }
 
     /**

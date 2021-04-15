@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
-                <h1>Media Library</h1>
+                <h1>Manage Product</h1>
                 <div class="text-zero top-right-button-container">
                     <a href="{{ route('manage-product.create')}}" class="btn btn-primary btn-lg top-right-button mr-1"><i class="simple-icon-plus"> Create New Product</i></a>
                 </div>
