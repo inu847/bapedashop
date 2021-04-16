@@ -15,8 +15,8 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->string("buyer");
             $table->string("enkripsi_token");
+            $table->string("buyer_id");
             // Relationship one to many
             $table->unsignedBigInteger("product_id");
             $table->foreign("product_id")->references("id")->on("products")->onDelete('cascade');

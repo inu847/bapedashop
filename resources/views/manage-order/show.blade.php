@@ -53,9 +53,7 @@
                             <tr>
                                 <td align="left" valign="center"
                                     style="padding-bottom:35px; padding-top:15px; border-top:0;width:100% !important;">
-                                    {{-- <a class="navbar-logo" href="{{ url('/')}} "> --}}
                                         <img src="{{asset('img/LOGO 4.png')}}" alt="" style="height: 50px;">
-                                    {{-- </a> --}}
                                 </td>
                                 <td align="right" valign="center"
                                     style="padding-bottom:35px; padding-top:15px; border-top:0;width:100% !important;">

@@ -18,9 +18,13 @@ class ChartController extends Controller
      */
     public function index(Request $request)
     {
-        $enkripsi = $request->get('enkripsi');
         $buyer_id = $request->get('buyer_id');
-        $carts = Cart::where('enkripsi_token', '=', $enkripsi)->get();
+        $get_cart = Cart::where('buyer_id', '=', $buyer_id)->get();
+        
+        if($get_cart){
+            $enkripsi = $request->get('enkripsi');
+            $carts = Cart::where('enkripsi_token', '=', $enkripsi)->get();
+        }
 
         return view('order.cart', ['carts' => $carts, 'buyer_id' => $buyer_id]);
     }

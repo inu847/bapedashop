@@ -90,26 +90,41 @@
     </div>
 
     @foreach ($orders as $order)
-        <a href="{{ route('manage-order.show', [$order->id]) }}">
+        
             <div class="card d-flex flex-row mb-3">
                     <img src="img/fat-rascal-thumb.jpg" alt="Fat Rascal" class="list-thumbnail responsive border-0 card-img-left" />
                 <div class="pl-2 d-flex flex-grow-1 min-width-zero">
                     <div class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                        <p class="list-item-heading mb-0 truncate">{{ Str::ucfirst($order->buyer) }}</p>
-                        <p class="mb-0 text-muted text-small w-15 w-sm-100">{{$order->total_quantity}}</p>
-                        <p class="mb-0 text-muted text-small w-15 w-sm-100">{{$order->subtotal}}</p>
-                        <p class="mb-0 text-muted text-small w-15 w-sm-100">{{$order->created_at}}</p>
-                        <div class="w-15 w-sm-100">
-                            <span class="badge badge-pill badge-primary">{{ Str::upper($order->status) }}</span>
+                        <p class="list-item-heading mb-0 truncate w-15 w-sm-50">{{ Str::ucfirst($order->buyer) }}</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->total_quantity}} Pcs</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->subtotal}}</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->created_at->diffForHumans()}}</p>
+                        <div class="w-15 w-sm-50">
+                            @if ( $order->status == 'process' )
+                                <span class="badge badge-pill badge-primary">{{ Str::upper($order->status) }}</span>
+                            @elseif ($order->status == 'success')
+                                <span class="badge badge-pill badge-success">{{ Str::upper($order->status) }}</span>
+                            @elseif ($order->status == 'on hold')
+                                <span class="badge badge-pill badge-danger">{{ Str::upper($order->status) }}</span>
+                            @endif
                         </div>
                     </div>
-                    {{-- <label class="custom-control custom-checkbox mb-1 align-self-center pr-4">
-                        <input type="checkbox" class="custom-control-input">
-                        <span class="custom-control-label">&nbsp;</span>
-                    </label> --}}
+                
+                    <div class="b-1 align-self-center pr-4">
+                        <form
+                            onsubmit="return confirm('Delete this order permanently?')"
+                            action="{{route('manage-product.destroy', [$order->id])}}"
+                            method="POST">
+                            @csrf
+                            <input type="hidden" name="_method" value="DELETE">
+                            <a href="{{ route('manage-order.show', [$order->id]) }}" class="btn btn-warning btn-sm"><i class="iconsminds-cash-register-2"></i></a>
+                            <a href="{{route('manage-product.edit', [$order->id])}}" class="btn btn-info btn-sm"><i class="simple-icon-pencil"></i></a>
+                            <button type="submit" value="Delete" class="btn btn-danger btn-sm"><i class="simple-icon-trash"></i></button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </a>
+        
     @endforeach
 
 </div>
