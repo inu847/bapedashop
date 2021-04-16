@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buyer;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
@@ -18,10 +19,10 @@ class ChartController extends Controller
     public function index(Request $request)
     {
         $enkripsi = $request->get('enkripsi');
-        $user_id = $request->get('user_id');
+        $buyer_id = $request->get('buyer_id');
         $carts = Cart::where('enkripsi_token', '=', $enkripsi)->get();
 
-        return view('order.cart', ['carts' => $carts, 'user_id' => $user_id]);
+        return view('order.cart', ['carts' => $carts, 'buyer_id' => $buyer_id]);
     }
 
     /**
@@ -42,21 +43,21 @@ class ChartController extends Controller
      */
     public function store(Request $request)
     {
-        $id = $request->get('user_id');
-        $user = User::find($id);
+        $id = $request->get('buyer_id');
+        $buyer = Buyer::findOrFail($id);
+        $buyer->total_quantity = $request->get('total_quantity');
+        $buyer->subtotal = $request->get('subtotal');
+        $buyer->status = "process";
+        $buyer->save();
 
         $new_order = new Order();
-        $new_order->buyer = $request->get('buyer');
-        $new_order->product_name = json_encode($request->get('product_name'));
-        $new_order->deskripsi = json_encode($request->get('deskripsi'));
-        $new_order->price = json_encode($request->get('price'));
-        $new_order->images = json_encode($request->get('images'));
-        $new_order->quantity = json_encode($request->get('quantity'));
-        $new_order->row_total = json_encode($request->get('row_total'));
-        $new_order->status = "process";
-        $new_order->total_quantity = $request->get('total_quantity');
-        $new_order->subtotal = $request->get('subtotal');
-        $user->order()->save($new_order);
+        $new_order->product_name = $request->get('product_name');
+        $new_order->deskripsi = $request->get('deskripsi');
+        $new_order->price = $request->get('price');
+        $new_order->images = $request->get('images');
+        $new_order->quantity = $request->get('quantity');
+        $new_order->row_total = $request->get('row_total');
+        $buyer->order()->save($new_order);
 
         return redirect()->route('user.index');
     }
@@ -121,7 +122,7 @@ class ChartController extends Controller
         $status = $product->cartProduct()->save($cart);
 
         if ($status) {
-            $msg = $buyer . ", Add Product with id " . $id . " succesfully, " . ' - ' . $enkripsi;
+            $msg = "Are You Sure Add to cart " . $product->nama_product . "??";
         } else {
             $msg = "Add Product Failed";
         }

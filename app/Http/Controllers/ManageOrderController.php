@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Buyer;
 
 class ManageOrderController extends Controller
 {
@@ -25,7 +26,8 @@ class ManageOrderController extends Controller
     
     public function index()
     {
-        $orders = \Auth::user()->order;
+        $orders = \Auth::user()->Buyer->where('status');
+        // dd($orders);
         return view('manage-order.index', ['orders' => $orders]);
     }
 
@@ -58,9 +60,10 @@ class ManageOrderController extends Controller
      */
     public function show($id)
     {
+        $buyer = Buyer::findOrFail($id);
         $orders = Order::findOrFail($id);
-
-        return view('manage-order.show', ['orders' => $orders]);
+        
+        return view('manage-order.show', ['orders' => $orders, 'buyer' => $buyer]);
     }
 
     /**

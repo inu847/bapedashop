@@ -2311,7 +2311,7 @@ main {
 .dashboard-sq-banner {
   background-image: linear-gradient(to right top, #104978, #3582b2, #3693ce);
   background-size: cover;
-  height: 385px;
+  /* height: 385px; */
   transition: 0.5s;
   background-size: 350% auto;
   cursor: pointer; }

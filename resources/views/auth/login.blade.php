@@ -33,8 +33,8 @@
                             </p>
                         </div>
                         <div class="form-side">
-                            <a href="Dashboard.Default.html">
-                                <span class="logo-single"></span>
+                            <a class="navbar-logo" href="{{ url('/')}} ">
+                                <img src="{{asset('img/LOGO 4.png')}}" alt="" style="height: 70px;" class="mb-5">
                             </a>
                             @if(session('status'))
                                 <div class="alert alert-success">

@@ -60,10 +60,9 @@
         </div>
 
 
-        {{-- <a class="navbar-logo" href="Dashboard.Default.html">
-            <span class="logo d-none d-xs-block"></span>
-            <span class="logo-mobile d-block d-xs-none"></span>
-        </a> --}}
+        <a class="navbar-logo" href="{{ url('/')}} ">
+            <img src="{{asset('img/LOGO 4.png')}}" alt="" style="height: 50px;">
+        </a>
 
         <div class="navbar-right">
             <div class="header-icons d-inline-block align-middle">
@@ -239,7 +238,7 @@
     <footer class="page-footer">
         <div class="footer-content">
             <div class="container-fluid">
-                <p class="mb-0 text-muted text-center">© 2021 Bapedashop</p>
+                <p class="mb-0 text-muted text-center">© 2021 CAPPS</p>
             </div>
         </div>
     </footer>

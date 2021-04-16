@@ -20,10 +20,10 @@
                         <div class="card mb-4 progress-banner">
                             <div class="card-body justify-content-between d-flex flex-row align-items-center">
                                 <div>
-                                    <i class="iconsminds-file mr-2 text-white align-text-bottom d-inline-block"></i>
+                                    <i class="iconsminds-billing mr-2 text-white align-text-bottom d-inline-block"></i>
                                     <div>
-                                        <p class="lead text-white">5 Files</p>
-                                        <p class="text-small text-white">Pending for print</p>
+                                        <p class="lead text-white">Total Penjualan</p>
+                                        <p class="text-small text-white">Rp.115.000</p>
                                     </div>
                                 </div>
 
