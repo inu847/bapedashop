@@ -47,7 +47,7 @@
                     <rect x="0.5" y="15.5" width="25" height="1" />
                 </svg>
             </a>
-
+            
             <form action="{{ route('user.index')}}" class="ml-2">
                 <div class="input-group">
                     <input placeholder="Search..." value="{{Request::get('keyword')}}" name="keyword" type="text" class="form-control">
@@ -56,14 +56,13 @@
                     </div>
                 </div> 
             </form>
-    
+   
         </div>
 
-
-        {{-- <a class="navbar-logo" href="Dashboard.Default.html">
-            <span class="logo d-none d-xs-block"></span>
-            <span class="logo-mobile d-block d-xs-none"></span>
-        </a> --}}
+        <a class="navbar-logo" href="Dashboard.Default.html">
+            <img src="{{asset('img/LOGO 4.png')}}" alt="" style="height: 50px;">
+        </a>
+        
 
         <div class="navbar-right">
             <div class="header-icons d-inline-block align-middle">

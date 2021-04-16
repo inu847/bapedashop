@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-side">
                             <a href="Dashboard.Default.html">
-                                <span class="logo-single"></span>
+                                <span><img src="{{asset('img/LOGO 2.png')}}" alt="" class="logo-single"></span>
                             </a>
                             @if(session('status'))
                                 <div class="alert alert-success">
