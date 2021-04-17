@@ -47,6 +47,17 @@ class ChartController extends Controller
      */
     public function store(Request $request)
     {
+        $invoices = [];
+        foreach ($request->input('product_name') as $key => $value) {
+            $invoices["product_name.{$key}"] = 'required';
+            $invoices["deskripsi.{$key}"] = 'required';
+            $invoices["price.{$key}"] = 'required';
+            $invoices["images.{$key}"] = 'required';
+            $invoices["quantity.{$key}"] = 'required';
+            $invoices["row_total.{$key}"] = 'required';
+        }
+        $validator = \Validator::make($request->all(), $invoices);
+
         $id = $request->get('buyer_id');
         $buyer = Buyer::findOrFail($id);
         $buyer->total_quantity = $request->get('total_quantity');
@@ -54,18 +65,20 @@ class ChartController extends Controller
         $buyer->status = "process";
         $buyer->save();
 
-        foreach($request->get('product_name') as $key => $value){
-            $new_order = new Order();
-            $new_order->product_name = $request->get('product_name')[$key];
-            $new_order->deskripsi = $request->get('deskripsi')[$key];
-            $new_order->price = $request->get('price')[$key];
-            $new_order->images = $request->get('images')[$key];
-            $new_order->quantity = $request->get('quantity')[$key];
-            $new_order->row_total = $request->get('row_total')[$key];
-            $buyer->order()->save($new_order)[$key];
+        if ($validator->passes()) {
+            foreach($request->get('product_name') as $key => $value){
+                $new_order = new Order();
+                $new_order->product_name = $request->get('product_name')[$key];
+                $new_order->deskripsi = $request->get('deskripsi')[$key];
+                $new_order->price = $request->get('price')[$key];
+                $new_order->images = $request->get('images')[$key];
+                $new_order->quantity = $request->get('quantity')[$key];
+                $new_order->row_total = $request->get('row_total')[$key];
+                $buyer->order()->save($new_order)[$key];
+            }
         }
 
-        return redirect()->route('user.index');
+        return redirect()->route('user.index')->with('status', 'Pesanan Anda Berhasil Terkirim!!');
     }
 
     /**

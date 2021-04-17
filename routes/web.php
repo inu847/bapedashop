@@ -23,14 +23,13 @@ use App\Http\Controllers\ToolsController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/test', function () {
-    return view('layouts.global');
+Route::get('/test/1/1', function () {
+    return view('test');
 });
 
 
 Route::resource('user', UserController::class);
 Route::resource('cart', ChartController::class);
-
 Route::post('/user/{id}', [UserController::class, 'verivikasiPassword'])->name('verivikasi.password');
 
 Auth::routes();
@@ -43,6 +42,4 @@ Route::resource('tools', ToolsController::class);
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 Route::get('/alamat', [AlamatController::class, 'index']);
 Route::get('/product', [ProductController::class, 'index']);
-
-// Tambahan Route untuk memanggil controller Chart
 Route::post('/addtocartajax', [ChartController::class, 'ajaxaddtocart']);
