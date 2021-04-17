@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Buyer;
+use App\Models\Cart;
 
 class ManageOrderController extends Controller
 {
@@ -61,8 +62,8 @@ class ManageOrderController extends Controller
     public function show($id)
     {
         $buyer = Buyer::findOrFail($id);
-        $orders = Order::findOrFail($id);
-        
+        $orders = Buyer::findOrFail($id)->order;
+
         return view('manage-order.show', ['orders' => $orders, 'buyer' => $buyer]);
     }
 
@@ -97,6 +98,13 @@ class ManageOrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $buyer = Buyer::findOrFail($id);
+        $order = Order::where('buyer_id', $id);
+        $cart = Cart::where('buyer_id', $id);
+
+        $buyer->delete();
+        $order->delete();
+        $cart->delete();
+        return redirect()->route('manage-order.index')->with('statusdel', 'Data Berhasil Dihapus!!');
     }
 }

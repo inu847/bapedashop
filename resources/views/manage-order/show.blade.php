@@ -89,7 +89,7 @@
                                                     <p
                                                         style="color:#8f8f8f; font-size: 14px; padding: 0; line-height: 1.6; margin:0; ">
                                                         Invoice #: 0{{$buyer->id}}<br>
-                                                        {{$orders->created_at->format('d-m-Y')}}
+                                                        {{$buyer->created_at->format('d-m-Y')}}
                                                     </p>
                                                 </td>
                                             </tr>
@@ -113,27 +113,27 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @foreach ($orders as $order) --}}
+                                            @foreach ($orders as $order)
                                             <tr>
                                                 <td style="padding-top:0px; padding-bottom:5px;">
                                                     <h4 style="font-size: 16px; line-height: 1; margin-bottom:0; color:#303030; font-weight:500; margin-top: 10px;">
-                                                        {{$orders->product_name}}
+                                                        {{$order->product_name}}
                                                     </h4>
                                                 </td>
                                                 <td>
                                                     <p href="#"
                                                         style="font-size: 13px; text-decoration: none; line-height: 1; color:#909090; margin-top:0px; margin-bottom:0;">
-                                                        {{$orders->quantity}}
+                                                        {{$order->quantity}}
                                                         pcs</p>
                                                 </td>
                                                 <td style="padding-top:0px; padding-bottom:0; text-align: right;">
                                                     <p style="font-size: 13px; line-height: 1; color:#303030; margin-bottom:0; margin-top:0; vertical-align:top; white-space:nowrap;">
-                                                        Rp.{{$orders->row_total}}
+                                                        Rp.{{$order->row_total}}
                                                         </p>
                                                 </td>
                                             </tr>
                                            
-                                            {{-- @endforeach --}}
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </td>

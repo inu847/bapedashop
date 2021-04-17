@@ -113,12 +113,12 @@
                     <div class="b-1 align-self-center pr-4">
                         <form
                             onsubmit="return confirm('Delete this order permanently?')"
-                            action="{{route('manage-product.destroy', [$order->id])}}"
+                            action="{{route('manage-order.destroy', [$order->id])}}"
                             method="POST">
                             @csrf
                             <input type="hidden" name="_method" value="DELETE">
                             <a href="{{ route('manage-order.show', [$order->id]) }}" class="btn btn-warning btn-sm"><i class="iconsminds-cash-register-2"></i></a>
-                            <a href="{{route('manage-product.edit', [$order->id])}}" class="btn btn-info btn-sm"><i class="simple-icon-pencil"></i></a>
+                            <a href="{{route('manage-order.edit', [$order->id])}}" class="btn btn-info btn-sm"><i class="simple-icon-pencil"></i></a>
                             <button type="submit" value="Delete" class="btn btn-danger btn-sm"><i class="simple-icon-trash"></i></button>
                         </form>
                     </div>

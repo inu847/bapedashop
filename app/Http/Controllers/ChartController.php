@@ -54,14 +54,16 @@ class ChartController extends Controller
         $buyer->status = "process";
         $buyer->save();
 
-        $new_order = new Order();
-        $new_order->product_name = $request->get('product_name');
-        $new_order->deskripsi = $request->get('deskripsi');
-        $new_order->price = $request->get('price');
-        $new_order->images = $request->get('images');
-        $new_order->quantity = $request->get('quantity');
-        $new_order->row_total = $request->get('row_total');
-        $buyer->order()->save($new_order);
+        foreach($request->get('product_name') as $key => $value){
+            $new_order = new Order();
+            $new_order->product_name = $request->get('product_name')[$key];
+            $new_order->deskripsi = $request->get('deskripsi')[$key];
+            $new_order->price = $request->get('price')[$key];
+            $new_order->images = $request->get('images')[$key];
+            $new_order->quantity = $request->get('quantity')[$key];
+            $new_order->row_total = $request->get('row_total')[$key];
+            $buyer->order()->save($new_order)[$key];
+        }
 
         return redirect()->route('user.index');
     }
@@ -121,7 +123,7 @@ class ChartController extends Controller
 
         $product = Product::find($id);
         $cart = new Cart();
-        $cart->buyer = $buyer;
+        $cart->buyer_id = $buyer;
         $cart->enkripsi_token = $enkripsi;
         $status = $product->cartProduct()->save($cart);
 
