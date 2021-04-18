@@ -92,4 +92,11 @@ class ToolsController extends Controller
     {
         //
     }
+
+    public function member(Request $request)
+    {
+        $on = $request->get('on');
+        $off = $request->get('off');
+        return view('tools.member', ['on' => $on, 'off' => $off]);
+    }
 }

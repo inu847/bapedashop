@@ -15,11 +15,13 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
+            $table->string('file_penunjang');
+            $table->string('ktp');
             // hanya admin yang bisa mengubah role
-            $table->enum("role", ["star_seller", "mall"])->nullable();
+            $table->enum("role", ["trial" ,"member", "super member"]);
             // relationship one to many
             $table->unsignedBigInteger("user_id");
-            $table->foreign("user_id")->references("id")->on("users");
+            $table->foreign("user_id")->references("id")->on("users")->onDelete('cascade');
             $table->timestamps();
         });
     }

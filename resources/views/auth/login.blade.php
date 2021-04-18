@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('css/vendor/bootstrap.rtl.only.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/vendor/bootstrap-float-label.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/dore.light.blue.css') }}" />
 </head>
 
 <body class="background show-spinner no-footer">
@@ -33,8 +34,8 @@
                             </p>
                         </div>
                         <div class="form-side">
-                            <a href="Dashboard.Default.html">
-                                <span><img src="{{asset('img/LOGO 2.png')}}" alt="" class="logo-single"></span>
+                            <a class="navbar-logo" href="{{ url('/')}} ">
+                                <img src="{{asset('img/LOGO 4.png')}}" alt="" style="height: 70px;" class="mb-5">
                             </a>
                             @if(session('status'))
                                 <div class="alert alert-success">
@@ -97,7 +98,7 @@
     <script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('js/vendor/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/dore.script.js') }}"></script>
-    <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="{{ asset('js/scripts.single.theme.js') }}"></script>
 </body>
 
 </html>

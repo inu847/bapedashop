@@ -15,7 +15,7 @@
                             <h1>Pricing</h1>
                         </div>
                         <div class="col-2">
-                            <a href="" class="btn btn-primary">Skipped <span><i class="simple-icon-arrow-right"></i></span></a>
+                            <a href="{{ route('tools.member') }}" class="btn btn-primary">Skipped <span><i class="simple-icon-arrow-right"></i></span></a>
                         </div>
                     </div>
                 </div>

@@ -238,7 +238,7 @@
     <footer class="page-footer">
         <div class="footer-content">
             <div class="container-fluid">
-                <p class="mb-0 text-muted text-center">© 2021 Bapedashop</p>
+                <p class="mb-0 text-muted text-center">© 2021 CAPPS</p>
             </div>
         </div>
     </footer>

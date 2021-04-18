@@ -13,4 +13,9 @@ class Buyer extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    function order()
+    {
+        return $this->hasMany('App\Models\Order');
+    }
 }

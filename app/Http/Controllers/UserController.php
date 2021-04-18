@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Buyer;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\User as UserResource;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -17,21 +18,13 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $user = User::where('status', 'active')->paginate(20);
+    {        
+        $user = User::where('status', 'active')->paginate(10);
 
         $filterKeyword = $request->get('keyword');
-        $status = $request->get('status');
-        $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->paginate(10);
-        // if($filterKeyword){
-        //     $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->paginate(10);
-        //     if($status){
-        //         $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->where('status', $status)->paginate(10);
-        //     } else {
-        //         $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->paginate(10);
-        //         }
-        //    }
-
+        if($filterKeyword){
+            $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->paginate(10);
+        }
         return view('buyer.index', ['user' => $user]);
     }
 
@@ -68,20 +61,22 @@ class UserController extends Controller
         $new_user->email = $request->get('email');
         $new_user->nama_toko = $request->get('nama_toko');
         $new_user->phone = "+62".$request->get('phone');
-        $new_user->status = "inactive";
-        // $new_user->file_penunjang = $request->get('file_penunjang');
-        // $new_user->ktp = $request->get('ktp');
+        $new_user->password = \Hash::make($request->get('password'));
+        $new_user->save();
+
+        $new_roles = new Role();
         if($request->file('file_penunjang')){
             $file = $request->file('file_penunjang')->store('file_penunjangs', 'public');
-            $new_user->file_penunjang = $file;
+            $new_roles->file_penunjang = $file;
         }
         if($request->file('ktp')){
             $file = $request->file('ktp')->store('ktps', 'public');
-            $new_user->ktp = $file;
+            $new_roles->ktp = $file;
         }
-        $new_user->password = \Hash::make($request->get('password'));
+        $new_roles->status = "inactive";
+        $new_roles->role = "trial";
+        $new_user->roles()->save($new_roles);
         
-        $new_user->save();
         return redirect()->route('login')->with('status', 'Create Akun Success!! Prosess memakan waktu paling lama 2x24, cek secara berkala email kamu!');
     }
 

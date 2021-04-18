@@ -20,8 +20,6 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('profil')->nullable();
             $table->string('phone');
-            $table->string('file_penunjang');
-            $table->string('ktp');
             $table->enum('status', ["active", "inactive"]);
             $table->string('tanggal_lahir')->nullable();
             $table->timestamp('email_verified_at')->nullable();

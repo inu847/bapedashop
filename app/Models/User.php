@@ -72,10 +72,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Buyer');
     }
 
-    // public function cart()
-    // {
-    //     return $this->hasMany('App\Models\Cart');
-    // }
+    public function roles()
+    {
+        return $this->hasOne('App\Models\Role');
+    }
 
     public function generateToken()
     {
