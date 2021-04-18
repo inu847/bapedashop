@@ -44,3 +44,4 @@ Route::get('/alamat', [AlamatController::class, 'index']);
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/member', [ToolsController::class, 'member'])->name('tools.member');
 Route::post('/addtocartajax', [ChartController::class, 'ajaxaddtocart']);
+Route::post('/actionled', [ToolsController::class, 'actionled']);

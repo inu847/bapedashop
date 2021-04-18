@@ -11,7 +11,8 @@ class ToolsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(){
+    public function __construct()
+    {
 
         $this->middleware('auth');
 
@@ -21,7 +22,7 @@ class ToolsController extends Controller
         //     abort(403, 'Anda tidak memiliki cukup hak akses');
         // });
     }
-    
+
     public function index()
     {
         return view('tools.index');
@@ -98,5 +99,35 @@ class ToolsController extends Controller
         $on = $request->get('on');
         $off = $request->get('off');
         return view('tools.member', ['on' => $on, 'off' => $off]);
+    }
+
+    public function actionled(Request $request)
+    {
+        $keys = 'RA2V0A9DIO0UPV4O';
+        $data = 'api_key=' . $keys . '&' . $request->post('field') . '=' . $request->post('id');
+        $url = 'https://api.thingspeak.com/update?' . $data;
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
+
+        $rescurl = curl_exec($curl);
+        curl_close($curl);
+
+        $output = array(
+            'status' => 1,
+            'message' => $request->post('type') . ' Led Success...' . ' ==> Status ' . $rescurl
+        );
+
+        header('Content-Type:application/json');
+        echo json_encode($output);
     }
 }
