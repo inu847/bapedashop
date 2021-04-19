@@ -15,9 +15,9 @@
                             <a href="#">Home</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="#">Library</a>
+                            <a href="#">Manage Order</a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Data</li>
+                        <li class="breadcrumb-item active" aria-current="page">Detail Order</li>
                     </ol>
                 </nav>
                 <div class="separator mb-5"></div>
@@ -31,7 +31,19 @@
                         <div class="card-body justify-content-end d-flex flex-column">
                             <span class="badge badge-pill badge-theme-3 align-self-start mb-3">CAPPS</span>
                             <p class="lead text-white">Customer Applications</p>
-                            <p class="text-white">Cetak Struk Belanja <span><a onclick="window.print(); return false;" class="btn btn-info" href="#">PRINT</a></span></p>
+                            <p class="text-white">Choose an option below</p>
+                            <a onclick="window.print(); return false;" class="btn btn-info" href="#"><i class="simple-icon-printer"> PRINT</i></a>
+                            <form
+                                onsubmit="return confirm('Delete this order permanently?')"
+                                action="{{route('manage-order.destroy', [$buyer->id])}}"
+                                method="POST"
+                                class="mt-2 text-center">
+                            @csrf
+
+                            <input type="hidden" name="_method" value="DELETE">
+                            <a href="{{route('manage-order.edit', [$buyer->id])}}" class="btn btn-warning btn-sm"><i class="simple-icon-pencil"> EDIT</i></a>
+                            <button type="submit" value="Delete" class="btn btn-danger btn-sm"><i class="simple-icon-trash"> DELETE</i></button>
+                        </form>
                         </div>
                     </div>
                 </div>
@@ -169,7 +181,7 @@
                             <td style="padding-top:0px; text-align: right; padding-bottom:15px;">
                                 <p
                                     style="font-size: 13px; line-height: 1.6; color:#303030; margin-bottom:0; margin-top:0; vertical-align:top; white-space:nowrap; margin-left:15px">
-                                    <strong>{{ $buyer->subtotal }}</strong>
+                                    <strong>Rp.{{ $buyer->subtotal }}</strong>
                                 </p>
                             </td>
                         </tr>

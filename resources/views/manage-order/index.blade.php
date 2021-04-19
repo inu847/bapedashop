@@ -10,6 +10,19 @@
         <div class="col-12">
             <div class="mb-3">
                 <h1>Manage Order</h1>
+                <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#">Manage Order</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            List Order
+                        </li>
+                    </ol>
+                </nav>
             </div>
 
             <div class="mb-2">
@@ -90,41 +103,34 @@
     </div>
 
     @foreach ($orders as $order)
-        
+        <a href="{{ route('manage-order.show', [$order->id]) }}">
             <div class="card d-flex flex-row mb-3">
-                    <img src="img/fat-rascal-thumb.jpg" alt="Fat Rascal" class="list-thumbnail responsive border-0 card-img-left" />
+                <img src="{{ asset('storage/'. $order->images )}}" alt="{{ $order->product_name }}" class="list-thumbnail responsive border-0 card-img-left" />
+
                 <div class="pl-2 d-flex flex-grow-1 min-width-zero">
                     <div class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                        <p class="list-item-heading mb-0 truncate w-15 w-sm-50">{{ Str::ucfirst($order->buyer) }}</p>
-                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->total_quantity}} Pcs</p>
-                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->subtotal}}</p>
-                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->created_at->diffForHumans()}}</p>
+                        <p class="list-item-heading mb-0 truncate w-15 w-sm-50">{{ Str::ucfirst($order->buyer->buyer) }}</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->buyer->total_quantity}} Pcs</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-50">Rp.{{$order->buyer->subtotal}}</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->buyer->created_at->diffForHumans()}}</p>
                         <div class="w-15 w-sm-50">
-                            @if ( $order->status == 'process' )
-                                <span class="badge badge-pill badge-primary">{{ Str::upper($order->status) }}</span>
-                            @elseif ($order->status == 'success')
-                                <span class="badge badge-pill badge-success">{{ Str::upper($order->status) }}</span>
-                            @elseif ($order->status == 'on hold')
-                                <span class="badge badge-pill badge-danger">{{ Str::upper($order->status) }}</span>
+                            @if ( $order->buyer->status == 'process' )
+                                <span class="badge badge-pill badge-primary">{{ Str::upper($order->buyer->status) }}</span>
+                            @elseif ($order->buyer->status == 'success')
+                                <span class="badge badge-pill badge-success">{{ Str::upper($order->buyer->status) }}</span>
+                            @elseif ($order->buyer->status == 'on hold')
+                                <span class="badge badge-pill badge-danger">{{ Str::upper($order->buyer->status) }}</span>
                             @endif
                         </div>
-                    </div>
-                
-                    <div class="b-1 align-self-center pr-4">
-                        <form
-                            onsubmit="return confirm('Delete this order permanently?')"
-                            action="{{route('manage-order.destroy', [$order->id])}}"
-                            method="POST">
+                        <form action="{{ route('tools.status', [$order->buyer->id])}}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="_method" value="DELETE">
-                            <a href="{{ route('manage-order.show', [$order->id]) }}" class="btn btn-warning btn-sm"><i class="iconsminds-cash-register-2"></i></a>
-                            <a href="{{route('manage-order.edit', [$order->id])}}" class="btn btn-info btn-sm"><i class="simple-icon-pencil"></i></a>
-                            <button type="submit" value="Delete" class="btn btn-danger btn-sm"><i class="simple-icon-trash"></i></button>
+                            <button type="submit" class="btn btn-success"><i class="simple-icon-check"></i></button>
                         </form>
                     </div>
                 </div>
+
             </div>
-        
+        </a>
     @endforeach
 
 </div>

@@ -23,7 +23,7 @@
                                     <i class="iconsminds-billing mr-2 text-white align-text-bottom d-inline-block"></i>
                                     <div>
                                         <p class="lead text-white">Total Penjualan</p>
-                                        <p class="text-small text-white">Rp.115.000</p>
+                                        <p class="text-small text-white">Rp.{{ $total_penjualan }}</p>
                                     </div>
                                 </div>
 
@@ -43,8 +43,8 @@
                                 <div>
                                     <i class="iconsminds-male mr-2 text-white align-text-bottom d-inline-block"></i>
                                     <div>
-                                        <p class="lead text-white">4 Orders</p>
-                                        <p class="text-small text-white">On approval process</p>
+                                        <p class="lead text-white">{{ $total_order }} Order</p>
+                                        <p class="text-small text-white">total order masuk</p>
                                     </div>
                                 </div>
                                 <div>
@@ -93,7 +93,7 @@
                                         <div class="card-body text-center">
                                             <i class="iconsminds-clock"></i>
                                             <p class="card-text mb-0">Pending Orders</p>
-                                            <p class="lead text-center">16</p>
+                                            <p class="lead text-center">{{ $order_pending }}</p>
                                         </div>
                                     </a>
                                 </li>
@@ -102,7 +102,7 @@
                                         <div class="card-body text-center">
                                             <i class="iconsminds-basket-coins"></i>
                                             <p class="card-text mb-0">Completed Orders</p>
-                                            <p class="lead text-center">32</p>
+                                            <p class="lead text-center">{{ $order_success }}</p>
                                         </div>
                                     </a>
                                 </li>
@@ -111,7 +111,7 @@
                                         <div class="card-body text-center">
                                             <i class="iconsminds-arrow-refresh"></i>
                                             <p class="card-text mb-0">On Hold Orders</p>
-                                            <p class="lead text-center">2</p>
+                                            <p class="lead text-center">{{ $order_onhold }}</p>
                                         </div>
                                     </a>
                                 </li>
@@ -160,129 +160,34 @@
 
             <div class="col-xl-6 col-lg-12 mb-4">
                 <div class="card">
-
+                    
                     <div class="card-body">
                         <h5 class="card-title">Recent Orders</h5>
+                        
                         <div class="scroll dashboard-list-with-thumbs">
-                            <div class="d-flex flex-row mb-3">
-                                <a class="d-block position-relative" href="#">
-                                    <img src="img/marble-cake-thumb.jpg" alt="Marble Cake"
-                                        class="list-thumbnail border-0" />
-                                    <span
-                                        class="badge badge-pill badge-theme-2 position-absolute badge-top-right">NEW</span>
-                                </a>
-                                <div class="pl-3 pt-2 pr-2 pb-2">
-                                    <a href="#">
-                                        <p class="list-item-heading">Marble Cake</p>
-                                        <div class="pr-4 d-none d-sm-block">
-                                            <p class="text-muted mb-1 text-small">Latashia Nagy - 100-148 Warwick
-                                                Trfy, Kansas City, USA</p>
-                                        </div>
-                                        <div class="text-primary text-small font-weight-medium d-none d-sm-block">
-                                            09.04.2018</div>
+                            @foreach ($recent_order as $order)
+                                <div class="d-flex flex-row mb-3">
+                                    <a class="d-block position-relative" href="#">
+                                        <img src="{{ asset('storage/'. $order->images) }}" alt="Marble Cake" class="list-thumbnail border-0" />
+                                        @if ( $order->buyer->status == 'process' )
+                                            <span class="badge badge-pill badge-theme-1 position-absolute badge-top-right">{{ Str::upper($order->buyer->status) }}</span>
+                                        @elseif ($order->buyer->status == 'success')
+                                            <span class="badge badge-pill badge-theme-3 position-absolute badge-top-right">{{ Str::upper($order->buyer->status) }}</span>
+                                        @elseif ($order->buyer->status == 'on hold')
+                                            <span class="badge badge-pill badge-theme-2 position-absolute badge-top-right">{{ Str::upper($order->buyer->status) }}</span>
+                                        @endif
                                     </a>
+                                    <div class="pl-3 pt-2 pr-2 pb-2">
+                                        <a href="#">
+                                            <p class="list-item-heading">{{ $order->product_name }}</p>
+                                            <div class="pr-4 d-none d-sm-block">
+                                                <p class="text-muted mb-1 text-small">{{ $order->buyer->buyer }}</p>
+                                            </div>
+                                            <div class="text-primary text-small font-weight-medium d-none d-sm-block"> {{$order->created_at->diffForHumans()}}</div>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="d-flex flex-row mb-3">
-                                <a class="d-block position-relative" href="#">
-                                    <img src="img/fruitcake-thumb.jpg" alt="Fruitcake"
-                                        class="list-thumbnail border-0" />
-                                    <span
-                                        class="badge badge-pill badge-theme-2 position-absolute badge-top-right">NEW</span>
-                                </a>
-                                <div class="pl-3 pt-2 pr-2 pb-2">
-                                    <a href="#">
-                                        <p class="list-item-heading">Fruitcake</p>
-                                        <div class="pr-4 d-none d-sm-block">
-                                            <p class="text-muted mb-1 text-small">Marty Otte - 166-156 Rue de
-                                                Varennes, Gatineau, QC J8T 8G4, Canada</p>
-                                        </div>
-                                        <div class="text-primary text-small font-weight-medium d-none d-sm-block">
-                                            09.04.2018</div>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row mb-3">
-                                <a class="d-block position-relative" href="#">
-                                    <img src="img/chocolate-cake-thumb.jpg" alt="Chocolate Cake"
-                                        class="list-thumbnail border-0" />
-                                    <span
-                                        class="badge badge-pill badge-theme-1 position-absolute badge-top-right">PROCESS</span>
-                                </a>
-                                <div class="pl-3 pt-2 pr-2 pb-2">
-                                    <a href="#">
-                                        <p class="list-item-heading">Chocolate Cake</p>
-                                        <div class="pr-4 d-none d-sm-block">
-                                            <p class="text-muted mb-1 text-small">Linn Ronning - Rasen 2-14, 98547
-                                                Kühndorf, Germany</p>
-                                        </div>
-                                        <div class="text-primary text-small font-weight-medium d-none d-sm-block">
-                                            09.04.2018</div>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row mb-3">
-                                <a class="d-block position-relative" href="#">
-                                    <img src="img/fat-rascal-thumb.jpg" alt="Fat Rascal"
-                                        class="list-thumbnail border-0" />
-                                    <span
-                                        class="badge badge-pill badge-theme-3 position-absolute badge-top-right">DONE</span>
-                                </a>
-                                <div class="pl-3 pt-2 pr-2 pb-2">
-                                    <a href="#">
-                                        <p class="list-item-heading">Fat Rascal</p>
-                                        <div class="pr-4 d-none d-sm-block">
-                                            <p class="text-muted mb-1 text-small">Rasheeda Vaquera - 37 Rue des
-                                                Grands Prés, 03100 Montluçon, France</p>
-                                        </div>
-                                        <div class="text-primary text-small font-weight-medium d-none d-sm-block">
-                                            09.04.2018</div>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row mb-3">
-                                <a class="d-block position-relative" href="#">
-                                    <img src="img/streuselkuchen-thumb.jpg" alt="Streuselkuchen"
-                                        class="list-thumbnail border-0" />
-                                    <span
-                                        class="badge badge-pill badge-theme-3 position-absolute badge-top-right">DONE</span>
-                                </a>
-                                <div class="pl-3 pt-2 pr-2 pb-2">
-                                    <a href="#">
-                                        <p class="list-item-heading">Streuselkuchen</p>
-                                        <div class="pr-4 d-none d-sm-block">
-                                            <p class="text-muted mb-1 text-small">Mimi Carreira - 36-71 Victoria
-                                                St, Birmingham, UK</p>
-                                        </div>
-                                        <div class="text-primary text-small font-weight-medium d-none d-sm-block">
-                                            09.04.2018</div>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-row mb-3">
-                                <a class="d-block position-relative" href="#">
-                                    <img src="img/cremeschnitte-thumb.jpg" alt="Cremeschnitte"
-                                        class="list-thumbnail border-0" />
-                                    <span
-                                        class="badge badge-pill badge-theme-3 position-absolute badge-top-right">DONE</span>
-                                </a>
-                                <div class="pl-3 pt-2 pr-2 pb-2">
-                                    <a href="#">
-                                        <p class="list-item-heading">Cremeschnitte</p>
-                                        <div class="pr-4 d-none d-sm-block">
-                                            <p class="text-muted mb-1 text-small">Lenna Majeed - 6 Hertford St
-                                                Mayfair, London, UK</p>
-                                        </div>
-                                        <div class="text-primary text-small font-weight-medium d-none d-sm-block">
-                                            09.04.2018</div>
-                                    </a>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

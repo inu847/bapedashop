@@ -19,14 +19,15 @@ class ChartController extends Controller
     public function index(Request $request)
     {
         $buyer_id = $request->get('buyer_id');
+        $user = $request->get('user_id');
         $get_cart = Cart::where('buyer_id', '=', $buyer_id)->get();
-        
+
         if($get_cart){
             $enkripsi = $request->get('enkripsi');
             $carts = Cart::where('enkripsi_token', '=', $enkripsi)->get();
         }
 
-        return view('order.cart', ['carts' => $carts, 'buyer_id' => $buyer_id]);
+        return view('order.cart', ['carts' => $carts, 'buyer_id' => $buyer_id, 'user' => $user]);
     }
 
     /**
@@ -58,11 +59,15 @@ class ChartController extends Controller
         }
         $validator = \Validator::make($request->all(), $invoices);
 
-        $id = $request->get('buyer_id');
-        $buyer = Buyer::findOrFail($id);
+        $buyer_id = $request->get('buyer_id');
+        $buyer = Buyer::findOrFail($buyer_id);
         $buyer->total_quantity = $request->get('total_quantity');
-        $buyer->subtotal = $request->get('subtotal');
+        $rp = str_replace("Rp","" , $request->get('subtotal'));
+        $koma = str_replace(".","" , $rp);
+        $result = str_replace(",","" , $koma);
+        $buyer->subtotal = $result;
         $buyer->status = "process";
+        $buyer->save();
 
         if ($validator->passes()) {
             foreach($request->get('product_name') as $key => $value){
@@ -73,6 +78,7 @@ class ChartController extends Controller
                 $new_order->images = $request->get('images')[$key];
                 $new_order->quantity = $request->get('quantity')[$key];
                 $new_order->row_total = $request->get('row_total')[$key];
+                $new_order->user_id = $request->get('user_id')[$key];
                 $buyer->order()->save($new_order)[$key];
             }
         }

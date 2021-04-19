@@ -27,7 +27,7 @@ class ManageOrderController extends Controller
     
     public function index()
     {
-        $orders = \Auth::user()->Buyer->where('status');
+        $orders = \Auth::user()->orderId;
         // dd($orders);
         return view('manage-order.index', ['orders' => $orders]);
     }
@@ -140,5 +140,14 @@ class ManageOrderController extends Controller
         $order->delete();
         $cart->delete();
         return redirect()->route('manage-order.index')->with('statusdel', 'Data Berhasil Dihapus!!');
+    }
+
+    public function status($id)
+    {
+        $status = Buyer::findOrFail($id);
+        $status->status = "success";
+        $status->save();
+
+        return redirect()->route('manage-order.index')->with('status', 'Update Order Success!!');
     }
 }

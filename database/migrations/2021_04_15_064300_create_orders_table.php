@@ -24,6 +24,8 @@ class CreateOrdersTable extends Migration
             // Relationship one to many
             $table->unsignedBigInteger("buyer_id");
             $table->foreign("buyer_id")->references("id")->on("buyers")->onDelete('cascade');
+            $table->unsignedBigInteger("user_id");
+            $table->foreign("user_id")->references("id")->on("users")->onDelete('cascade');
             $table->timestamps();
         });
     }

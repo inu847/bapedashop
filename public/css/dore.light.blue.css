@@ -2196,7 +2196,7 @@ main {
   border: initial;
   height: auto;
   max-width: unset;
-  height: 85px;
+  height: 100px;
   object-fit: cover;
   width: unset; }
   @media (max-width: 991px) {

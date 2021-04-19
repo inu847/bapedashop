@@ -110,9 +110,9 @@
                                 </div>
                                 <div class="pl-1 align-self-center">
                                     <form
-                                        onsubmit="return confirm('Delete this order permanently?')"
+                                        onsubmit="return confirm('Delete this product permanently?')"
                                         class="d-inline"
-                                        action="{{route('manage-order.destroy', [$product->id])}}"
+                                        action="{{route('manage-product.destroy', [$product->id])}}"
                                         method="POST">
                                         @csrf
                                         <input
@@ -120,9 +120,9 @@
                                         name="_method"
                                         value="DELETE">
 
-                                        <a href="{{route('manage-order.show', [$product->id])}}"
+                                        <a href="{{route('manage-product.show', [$product->id])}}"
                                             class="btn btn-primary btn-sm"><i class="simple-icon-list mb-2"></i></a>
-                                        <a href="{{route('manage-order.edit', [$product->id])}}"
+                                        <a href="{{route('manage-product.edit', [$product->id])}}"
                                             class="btn btn-info btn-sm"><i class="simple-icon-pencil"></i></a>
 
                                     <button type="submit" value="Delete" class="btn btn-danger btn-sm"><i class="simple-icon-trash"></i>

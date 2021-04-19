@@ -9,17 +9,22 @@
         <div class="row mb-5">
             <div class="col-12">
 
-                <div class="mb-2">
-                    <div class="row">
-                        <div class="col-10">
-                            <h1>Pricing</h1>
-                        </div>
-                        <div class="col-2">
-                            <a href="{{ route('tools.member') }}" class="btn btn-primary">Skipped <span><i class="simple-icon-arrow-right"></i></span></a>
-                        </div>
-                    </div>
+                <div class="mb-3">
+                    <h1>Pricing</h1>
+                    <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                        <ol class="breadcrumb pt-0">
+                            <li class="breadcrumb-item">
+                                <a href="#">Home</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="#">Pricing</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Purchase
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
-                <hr>
 
                 <div class="row equal-height-container">
                     <div class="col-md-12 col-lg-4 mb-4 col-item">
@@ -36,12 +41,12 @@
                                     <ul class="list-unstyled">
                                         <li>
                                             <p class="mb-0 ">
-                                                Add Product Up to 50
+                                                Add Product Up to 20
                                             </p>
                                         </li>
                                         <li>
                                             <p class="mb-0 ">
-                                                Free 1 mounth
+                                                Free 1 year
                                             </p>
                                         </li>
                                         <li>
@@ -77,7 +82,7 @@
                                         </li>
                                         <li>
                                             <p class="mb-0 ">
-                                                Add Product Up to 20
+                                                Add Product Up to 40
                                             </p>
                                         </li>
 
@@ -98,8 +103,15 @@
                                         </li>
                                     </ul>
                                     <div class="text-center">
-                                        <a href="#" class="btn btn-link btn-empty btn-lg">PURCHASE <i
+                                        @if ($roles->role == "member")
+                                            <a href="{{ route('tools.member') }}" class="btn btn-primary btn-lg">MEMBER AREA<i
                                                 class="simple-icon-arrow-right"></i></a>
+                                        @elseif ($roles->role == "super member")
+                                                <p class="text-muted">CLAIMED</p>
+                                        @elseif ($roles->role == "trial")
+                                            <a href="{{ route('tools.create') }}" class="btn btn-link btn-empty btn-lg">PURCHASE <i
+                                                class="simple-icon-arrow-right"></i></a>
+                                        @endif                                        
                                     </div>
                                 </div>
                             </div>
@@ -146,8 +158,16 @@
                                         </li>
                                     </ul>
                                     <div class="text-center">
-                                        <a href="#" class="btn btn-link btn-empty btn-lg">PURCHASE <i
+                                        @if ($roles->role == "member")
+                                            <a href="{{ route('tools.create') }}" class="btn btn-link btn-empty btn-lg">PURCHASE <i
                                                 class="simple-icon-arrow-right"></i></a>
+                                        @elseif ($roles->role == "super member")
+                                            <a href="{{ route('tools.superMember') }}" class="btn btn-primary btn-lg">SUPER MEMBER AREA<i
+                                                class="simple-icon-arrow-right"></i></a>
+                                        @elseif ($roles->role == "trial")
+                                            <a href="{{ route('tools.create') }}" class="btn btn-link btn-empty btn-lg">PURCHASE <i
+                                                class="simple-icon-arrow-right"></i></a>
+                                        @endif                
                                     </div>
                                 </div>
                             </div>

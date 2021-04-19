@@ -61,6 +61,7 @@ class UserController extends Controller
         $new_user->email = $request->get('email');
         $new_user->nama_toko = $request->get('nama_toko');
         $new_user->phone = "+62".$request->get('phone');
+        $new_user->status = "inactive";
         $new_user->password = \Hash::make($request->get('password'));
         $new_user->save();
 
@@ -73,7 +74,7 @@ class UserController extends Controller
             $file = $request->file('ktp')->store('ktps', 'public');
             $new_roles->ktp = $file;
         }
-        $new_roles->status = "inactive";
+        
         $new_roles->role = "trial";
         $new_user->roles()->save($new_roles);
         

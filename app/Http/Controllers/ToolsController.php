@@ -25,7 +25,9 @@ class ToolsController extends Controller
 
     public function index()
     {
-        return view('tools.index');
+        $roles = \Auth::user()->roles;
+        
+        return view('tools.index', ['roles' => $roles]);
     }
 
     /**
@@ -94,11 +96,26 @@ class ToolsController extends Controller
         //
     }
 
-    public function member(Request $request)
+    public function member()
     {
-        $on = $request->get('on');
-        $off = $request->get('off');
-        return view('tools.member', ['on' => $on, 'off' => $off]);
+        $member = \Auth::user()->roles;
+        if($member->role == 'member'){
+            return view('tools.member');
+        }elseif($member->role == 'super member'){
+            return view('tools.superMember');
+        }else{
+            return redirect()->back();
+        } 
+    }
+
+    public function superMember()
+    {
+        $member = \Auth::user()->roles;
+        if($member->role == 'super member'){
+            return view('tools.superMember');
+        }else{
+            return redirect()->back();
+        }
     }
 
     public function actionled(Request $request)
@@ -109,7 +126,7 @@ class ToolsController extends Controller
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $url,
+            CURLOPT_URL => $url,    
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

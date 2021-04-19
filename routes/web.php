@@ -36,6 +36,7 @@ Auth::routes();
 
 Route::resource('manage-product', ProductController::class);
 Route::resource('manage-order', ManageOrderController::class);
+Route::post('status/{id}', [ManageOrderController::class, 'status'])->name('tools.status');
 Route::resource('tools', ToolsController::class);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -43,5 +44,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/alamat', [AlamatController::class, 'index']);
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/member', [ToolsController::class, 'member'])->name('tools.member');
+Route::get('/superMember', [ToolsController::class, 'superMember'])->name('tools.superMember');
 Route::post('/addtocartajax', [ChartController::class, 'ajaxaddtocart']);
 Route::post('/actionled', [ToolsController::class, 'actionled']);
