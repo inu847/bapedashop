@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tools;
 
 class ToolsController extends Controller
 {
@@ -26,8 +27,25 @@ class ToolsController extends Controller
     public function index()
     {
         $roles = \Auth::user()->roles;
+
+        $tools = \Auth::user()->tools;
+        if($tools){
+            $limit_date = $tools->finished_at;
+            $date_now = date('Y-m-d m:i:s');
+            
+            if($date_now <= $limit_date){
+                return view('tools.pricing', ['tools' => $tools]);            
+            }else{
+                if($tools->status == "process"){
+                    $tools->delete();
+                }else{
+                    return view('tools.index', ['roles' => $roles]);
+                }
+            }
+        }
+
+        return view('tools.index', ['roles' => $roles, 'tools' => $tools]);
         
-        return view('tools.index', ['roles' => $roles]);
     }
 
     /**
@@ -37,7 +55,9 @@ class ToolsController extends Controller
      */
     public function create()
     {
-        //
+        $user = \Auth::user();
+
+        return view('tools.create', ['user' => $user]);
     }
 
     /**
@@ -48,7 +68,18 @@ class ToolsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = \Auth::user();
+        $purchase = new Tools();
+        $purchase->nama_pembeli = $request->get('nama_pembeli');
+        $purchase->alamat_lain = $request->get('alamat_lain');
+        $purchase->ssid = $request->get('ssid');
+        $purchase->password_wifi = $request->get('password');
+        $purchase->keterangan = $request->get('keterangan');
+        $purchase->status = "process";
+        $date = date('d') + 3;
+        $purchase->finished_at = date('Y-m-'.$date.' m:i:s');
+        $user->tools()->save($purchase);
+        return redirect()->route('tools.index')->with('status', 'Purchase success, Silahkan Melakukan Pembayaran!!');
     }
 
     /**

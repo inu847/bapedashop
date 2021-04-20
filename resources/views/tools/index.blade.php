@@ -102,6 +102,7 @@
                                             </p>
                                         </li>
                                     </ul>
+                                    {{-- {{$tools->finished_at->format('d')}} --}}
                                     <div class="text-center">
                                         @if ($roles->role == "member")
                                             <a href="{{ route('tools.member') }}" class="btn btn-primary btn-lg">MEMBER AREA<i

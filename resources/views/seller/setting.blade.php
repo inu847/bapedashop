@@ -22,35 +22,47 @@
                                             @csrf
                                             <input type="hidden" value="PUT" name="_method">
                                             <div class="card-body">
-                                                <div class="input-group mb-3">
-                                                    <div class="col-12">
-                                                        <label for="">Nama :</label>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="">Nama</label>
+                                                        <input type="text" class="form-control" name="name" value="{{$user->name}}">
                                                     </div>
-                                                    <input type="text" class="form-control col-12" name="name" value="{{$user->name}}">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="">Nama Toko</label>
+                                                        <input type="text" class="form-control" name="nama_toko" value="{{$user->nama_toko}}" disabled>
+                                                    </div>
                                                 </div>
-                                                <div class="input-group mb-3">
-                                                    <div class="col-12">
-                                                        <label for="">Nama Toko :</label>
-                                                    </div>
-                                                    <input type="text" class="form-control col-12" name="nama_toko" value="{{$user->nama_toko}}">
+                                                <div class="form-group">
+                                                    <label for="">Email :</label>
+                                                    <input type="text" class="form-control" name="email" value="{{$user->email}}" disabled>
                                                 </div>
-                                                <div class="input-group mb-3">
-                                                    <div class="col-12">
-                                                        <label for="">Email :</label>
-                                                    </div>
-                                                    <input type="text" class="form-control col-12" name="email" value="{{$user->email}}">
+                                                <div class="form-group">
+                                                    <label for="">No Handphone</label>
+                                                    <input type="text" class="form-control" name="phone" value="{{$user->phone}}">
                                                 </div>
-                                                <div class="input-group mb-3">
-                                                    <div class="col-12">
-                                                        <label for="">No Handphone :</label>
-                                                    </div>
-                                                    <input type="text" class="form-control col-12" name="phone" value="{{$user->phone}}">
+                                                
+                                                <div class="form-group">
+                                                    <label for="">Alamat</label>
+                                                    <input type="text" class="form-control" name="alamat[]" value="{{json_decode($user->alamat)[0]}}">
                                                 </div>
-                                                <div class="input-group mb-3">
-                                                    <div class="col-12">
-                                                        <label for="">Tanggal Lahir :</label>
+                                                <div class="form-row">
+                                                     <div class="form-group col-md-4">
+                                                        <label for="">Provinsi</label>
+                                                        <input type="text" class="form-control" name="alamat[]" value="{{json_decode($user->alamat)[1]}}">
                                                     </div>
-                                                    <input type="date" class="form-control col-12" name="tanggal_lahir" value="{{$user->tanggal_lahir}}">
+                                                    <div class="form-group col-md-4">
+                                                        <label for="">Kota</label>
+                                                        <input type="text" class="form-control" name="alamat[]" value="{{json_decode($user->alamat)[2]}}">
+                                                    </div>
+                                                    <div class="form-group col-md-4">
+                                                        <label for="">Kelurahan</label>
+                                                        <input type="text" class="form-control" name="alamat[]" value="{{json_decode($user->alamat)[3]}}">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label for="">Tanggal Lahir</label>
+                                                    <input type="date" class="form-control" name="tanggal_lahir" value="{{$user->tanggal_lahir}}">
                                                 </div>
                                             </div>
                                         </div>

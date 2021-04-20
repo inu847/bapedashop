@@ -119,6 +119,7 @@ class UserController extends Controller
         $user->name = $request->get('name');
         $user->nama_toko = $request->get('nama_toko');
         $user->email = $request->get('email');
+        $user->alamat = json_encode($request->get('alamat'));
 
         if($request->file('profil')){
             if($user->profil && file_exists(storage_path('app/public/' . $user->profil))){
@@ -137,7 +138,7 @@ class UserController extends Controller
         $user->tanggal_lahir = $request->get('tanggal_lahir');
 
         $user->save();
-        return redirect()->route('user.index')->with('status', 'Update Product Success!!');
+        return redirect()->back()->with('status', 'Update Product Success!!');
     }
 
     /**

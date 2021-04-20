@@ -77,6 +77,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Role');
     }
 
+    public function tools()
+    {
+        return $this->hasOne('App\Models\Tools');
+    }
+
     public function generateToken()
     {
         $this->enkripsi_token = Str::random(60);
