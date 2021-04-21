@@ -38,32 +38,14 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="">No Handphone</label>
-                                                    <input type="text" class="form-control" name="phone" value="{{$user->phone}}">
-                                                </div>
-                                                
-                                                <div class="form-group">
-                                                    <label for="">Alamat</label>
-                                                    <input type="text" class="form-control" name="alamat[]" value="{{json_decode($user->alamat)[0]}}">
-                                                </div>
-                                                <div class="form-row">
-                                                     <div class="form-group col-md-4">
-                                                        <label for="">Provinsi</label>
-                                                        <input type="text" class="form-control" name="alamat[]" value="{{json_decode($user->alamat)[1]}}">
-                                                    </div>
-                                                    <div class="form-group col-md-4">
-                                                        <label for="">Kota</label>
-                                                        <input type="text" class="form-control" name="alamat[]" value="{{json_decode($user->alamat)[2]}}">
-                                                    </div>
-                                                    <div class="form-group col-md-4">
-                                                        <label for="">Kelurahan</label>
-                                                        <input type="text" class="form-control" name="alamat[]" value="{{json_decode($user->alamat)[3]}}">
-                                                    </div>
-                                                </div>
+                                                    <input type="text" class="form-control" name="phone" value="{{$user->phone}}" disabled>
+                                                </div>                                               
                                                 
                                                 <div class="form-group">
                                                     <label for="">Tanggal Lahir</label>
                                                     <input type="date" class="form-control" name="tanggal_lahir" value="{{$user->tanggal_lahir}}">
                                                 </div>
+                                                <a href="{{ route('setting.alamat') }}" class="btn btn-link">&nbsp;-> Tambahkan Alamat</a>
                                             </div>
                                         </div>
                                         <div class="col-4">

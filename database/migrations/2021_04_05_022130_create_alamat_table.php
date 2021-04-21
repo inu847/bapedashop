@@ -15,16 +15,14 @@ class CreateAlamatTable extends Migration
     {
         Schema::create('alamats', function (Blueprint $table) {
             $table->id();
-            $table->string("nama");
-            $table->string("phone");
+            $table->string("provinsi");
+            $table->string("kabupaten");
             $table->string("desa");
             $table->string("kecamatan");
             $table->string("rt");
             $table->string("rw");
             $table->string("kode_pos");
-            $table->string("kabupaten");
-            $table->string("provinsi");
-            $table->string("detail_address");
+            $table->string("alamat");
             $table->enum("status", ["alamat_utama", "alamat_toko", "alamat_pengembalian"]);
             // Relationship one to many
             $table->unsignedBigInteger("user_id");

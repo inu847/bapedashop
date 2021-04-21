@@ -30,16 +30,18 @@ class ToolsController extends Controller
 
         $tools = \Auth::user()->tools;
         if($tools){
-            $limit_date = $tools->finished_at;
-            $date_now = date('Y-m-d m:i:s');
-            
-            if($date_now <= $limit_date){
-                return view('tools.pricing', ['tools' => $tools]);            
-            }else{
-                if($tools->status == "process"){
-                    $tools->delete();
+            if($tools->status == "process"){
+                $limit_date = $tools->finished_at;
+                $date_now = date('Y-m-d m:i:s');
+                
+                if($date_now <= $limit_date){
+                    return view('tools.pricing', ['tools' => $tools]);            
                 }else{
-                    return view('tools.index', ['roles' => $roles]);
+                    if($tools->status == "process"){
+                        $tools->delete();
+                    }else{
+                        return view('tools.index', ['roles' => $roles]);
+                    }
                 }
             }
         }
@@ -56,8 +58,9 @@ class ToolsController extends Controller
     public function create()
     {
         $user = \Auth::user();
+        $alamats = \Auth::user()->alamatId->where('status', 'alamat_utama');
 
-        return view('tools.create', ['user' => $user]);
+        return view('tools.create', ['user' => $user, 'alamats' => $alamats]);
     }
 
     /**
@@ -71,10 +74,10 @@ class ToolsController extends Controller
         $user = \Auth::user();
         $purchase = new Tools();
         $purchase->nama_pembeli = $request->get('nama_pembeli');
-        $purchase->alamat_lain = $request->get('alamat_lain');
         $purchase->ssid = $request->get('ssid');
         $purchase->password_wifi = $request->get('password');
         $purchase->keterangan = $request->get('keterangan');
+        $purchase->alamat_id = $request->get('alamat_id');
         $purchase->status = "process";
         $date = date('d') + 3;
         $purchase->finished_at = date('Y-m-'.$date.' m:i:s');
@@ -124,7 +127,10 @@ class ToolsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pricing = Tools::findOrFail($id);
+
+        $pricing->delete();
+        return redirect()->route('tools.index');
     }
 
     public function member()

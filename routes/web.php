@@ -38,6 +38,10 @@ Route::resource('manage-product', ProductController::class);
 Route::resource('manage-order', ManageOrderController::class);
 Route::post('status/{id}', [ManageOrderController::class, 'status'])->name('tools.status');
 Route::resource('tools', ToolsController::class);
+Route::get('setting/alamat', [UserController::class, 'showAlamat'])->name('setting.alamat');
+Route::post('setting/alamat', [UserController::class, 'alamat'])->name('add.alamat');
+Route::post('setting/alamat/{id}', [UserController::class, 'hapusAlamat'])->name('alamat.destroy');
+
 // Route::get('tools/pricing', ToolsController::class)->name('tools.pricing');
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

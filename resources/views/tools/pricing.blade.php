@@ -40,6 +40,21 @@
                         </div>
                         <div class="col-12 offset-0 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
                                 <div class="text-center">
+                                    <form
+                                        onsubmit="return confirm('Are you sure?')"
+                                        class="d-inline"
+                                        action="{{route('tools.destroy', [$tools->id])}}"
+                                        method="POST">
+                                        @csrf
+                                        <input
+                                        type="hidden"
+                                        name="_method"
+                                        value="DELETE">
+                                        <button class="btn btn-danger mb-1" type="submit">
+                                            <i class="iconsminds-credit-card-3">Batalkan Pembayaran</i> 
+                                         </button>
+                                    </form>
+                                    
                                     <button class="btn btn-primary mb-1" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">
                                        <i class="iconsminds-credit-card-3">Bayar Sekarang</i> 
                                     </button>
