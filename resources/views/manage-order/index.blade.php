@@ -109,20 +109,20 @@
 
                 <div class="pl-2 d-flex flex-grow-1 min-width-zero">
                     <div class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-                        <p class="list-item-heading mb-0 truncate w-15 w-sm-50">{{ Str::ucfirst($order->buyer->buyer) }}</p>
-                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->buyer->total_quantity}} Pcs</p>
-                        <p class="mb-0 text-muted text-small w-15 w-sm-50">Rp.{{$order->buyer->subtotal}}</p>
-                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->buyer->created_at->diffForHumans()}}</p>
+                        <p class="list-item-heading mb-0 truncate w-15 w-sm-50">{{ Str::ucfirst($order->buyer) }}</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->total_quantity}} Pcs</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-50">Rp.{{$order->subtotal}}</p>
+                        <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$order->created_at->diffForHumans()}}</p>
                         <div class="w-15 w-sm-50">
-                            @if ( $order->buyer->status == 'process' )
-                                <span class="badge badge-pill badge-primary">{{ Str::upper($order->buyer->status) }}</span>
-                            @elseif ($order->buyer->status == 'success')
-                                <span class="badge badge-pill badge-success">{{ Str::upper($order->buyer->status) }}</span>
-                            @elseif ($order->buyer->status == 'on hold')
-                                <span class="badge badge-pill badge-danger">{{ Str::upper($order->buyer->status) }}</span>
+                            @if ( $order->status == 'process' )
+                                <span class="badge badge-pill badge-primary">{{ Str::upper($order->status) }}</span>
+                            @elseif ($order->status == 'success')
+                                <span class="badge badge-pill badge-success">{{ Str::upper($order->status) }}</span>
+                            @elseif ($order->status == 'on hold')
+                                <span class="badge badge-pill badge-danger">{{ Str::upper($order->status) }}</span>
                             @endif
                         </div>
-                        <form action="{{ route('tools.status', [$order->buyer->id])}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('tools.status', [$order->id])}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <button type="submit" class="btn btn-success"><i class="simple-icon-check"></i></button>
                         </form>

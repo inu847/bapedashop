@@ -152,20 +152,18 @@ class UserController extends Controller
     public function verivikasiPassword(Request $request, $id)
     {
         $user = User::findOrFail($id);
+        // $buyer_id = Buyer::findOrFail($id);
         $products = User::findOrFail($id)->productId;
-        $new_buyer = new Buyer;
 
-        $buyer = $request->get('buyer');
-        $_token = $request->get('_token');
-        $verivikasi = $request->get('enkripsi');
-        if($verivikasi == $user->enkripsi){
-            $user->generateToken();
-            $new_buyer->buyer = $buyer;
-            $user->buyer()->save($new_buyer);
-            return view('buyer.show', ['user' => $user, 'products' => $products, 'verivikasi' => $verivikasi, 'new_buyer' => $new_buyer, '_token' => $_token]);
-        }else{
-            return redirect()->route('user.index')->with('status', 'Password Salah!!');
-        }
+        $new_buyer = new Buyer();
+        $new_buyer->buyer = $request->get('buyer');
+        $new_buyer->meja = $request->get('meja');
+        $factory = new \RandomLib\Factory();
+        $generator = $factory->getMediumStrengthGenerator();
+        $new_buyer->enkripsi_token = $generator->generateString(7, "01234567891011121314151617181920");
+        $user->buyer()->save($new_buyer);
+        
+        return view('buyer.show', ['user' => $user, 'products' => $products, 'new_buyer' => $new_buyer]);
     }
 
     public function showAlamat()

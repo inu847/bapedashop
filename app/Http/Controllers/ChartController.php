@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ChartController extends Controller
 {
@@ -82,8 +83,9 @@ class ChartController extends Controller
                 $buyer->order()->save($new_order)[$key];
             }
         }
+        $enkripsi = $buyer->enkripsi_token;
 
-        return redirect()->route('user.index')->with('status', 'Pesanan Anda Berhasil Terkirim!!');
+        return view('order.qrcode', ['new_order' => $new_order, 'enkripsi' => $enkripsi]);
     }
 
     /**
@@ -92,6 +94,12 @@ class ChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function finishOrder()
+    {
+        return redirect()->route('user.index')->with('status', 'Order Berhasil');
+    }
+
     public function show($id)
     {
         //

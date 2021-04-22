@@ -31,6 +31,8 @@ Route::get('/test/1/1', function () {
 Route::resource('user', UserController::class);
 Route::resource('cart', ChartController::class);
 Route::post('/user/{id}', [UserController::class, 'verivikasiPassword'])->name('verivikasi.password');
+Route::get('scan', [ChartController::class, 'qrGenerator'])->name('order.qrcode');
+Route::get('scan', [ChartController::class, 'finishOrder'])->name('order.finish');
 
 Auth::routes();
 

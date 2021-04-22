@@ -41,7 +41,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<img src="{{asset('img/LOGO 4.png')}}" alt="" style="height: 50px;">
-						<h5 class="mt-3"> Verivikasi Password</h5>
+						<h5 class="mt-3">Masukkan Data Pemesan</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -55,8 +55,8 @@
 								</div>
 								
 								<div class="form-group">
-									<label for="" class="col-form-label">Password Toko</label>
-									<input name="enkripsi" type="text" class="form-control">
+									<label for="" class="col-form-label">Nomor Meja</label>
+									<input name="meja" type="text" class="form-control">
 								</div>
 							</div>
 							<div class="modal-footer">

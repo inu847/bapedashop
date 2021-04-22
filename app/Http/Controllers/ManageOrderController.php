@@ -27,7 +27,7 @@ class ManageOrderController extends Controller
     
     public function index()
     {
-        $orders = \Auth::user()->orderId;
+        $orders = \Auth::user()->buyer->where('status');
         // dd($orders);
         return view('manage-order.index', ['orders' => $orders]);
     }
@@ -63,7 +63,7 @@ class ManageOrderController extends Controller
     {
         $buyer = Buyer::findOrFail($id);
         $orders = Buyer::findOrFail($id)->order;
-
+        
         return view('manage-order.show', ['orders' => $orders, 'buyer' => $buyer]);
     }
 

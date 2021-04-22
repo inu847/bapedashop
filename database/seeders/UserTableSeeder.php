@@ -20,7 +20,6 @@ class UserTableSeeder extends Seeder
             'phone' => '089601351252',
             'email' => 'adin72978@gmail.com',
             'status' => 'active',
-            'enkripsi' => 'Semogaberkah',
             'password' =>  \Hash::make("Semogaberkah"),
             'created_at' => now(),
             'updated_at' => now(),

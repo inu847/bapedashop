@@ -16,9 +16,11 @@ class CreateBuyersTable extends Migration
         Schema::create('buyers', function (Blueprint $table) {
             $table->id();
             $table->string("buyer");
+            $table->string("meja");
             $table->enum('status', ["on hold", "process" ,"success"])->nullable();
             $table->string("total_quantity")->nullable();
             $table->string("subtotal")->nullable();
+            $table->string('enkripsi_token')->unique();
             // Relationship one to many
             $table->unsignedBigInteger("user_id");
             $table->foreign("user_id")->references("id")->on("users")->onDelete('cascade');

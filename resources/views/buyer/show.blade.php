@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    @if ($verivikasi)
+
         <div class="container-fluid disable-text-selection">
             <div class="alert alert-success">
                 <div>Selamat Datang {{ $new_buyer['buyer'] }} Silahkan Memesan Di Daftar Menu Yang Tersedia!!</div>
@@ -145,7 +145,7 @@
                                         </div>
                                     </div>
                                     <footer>
-                                        <a class="btn btn-primary btn-block mb-1" href="javascript:void(0)" id="addtocart" data-id="{{ $product->id }}" data-buyer="{{ $new_buyer['id'] }}" data-encripsi_token="{{ $user->enkripsi_token }}"><i class="iconsminds-add-cart"></i>Add To cart </a>
+                                        <a class="btn btn-primary btn-block mb-1" href="javascript:void(0)" id="addtocart" data-id="{{ $product->id }}" data-buyer="{{ $new_buyer['id'] }}" data-encripsi_token="{{ $new_buyer->enkripsi_token }}"><i class="iconsminds-add-cart"></i>Add To cart </a>
                                     </footer>
                                 </div>
                             </div>
@@ -161,7 +161,7 @@
                         <div class="col-12">
                             <form action="{{ route('cart.index') }}">
                                 @csrf
-                                <input type="hidden" value="{{ $user->enkripsi_token }}" name="enkripsi">
+                                <input type="hidden" value="{{ $new_buyer->enkripsi_token }}" name="enkripsi">
                                 <input type="hidden" value="{{ $new_buyer['id'] }}" name="buyer_id">
                                 <input type="hidden" value="{{ $user['id'] }}" name="user_id">
                                 <button type="submit" class="btn btn-danger btn-block fw-bold" style="font-size: 20px;" value="Filter">CHECKOUT</button>
@@ -171,9 +171,6 @@
                 </div>
             </div>
         </div>
-    @else
-        Belum Masukkan Verivikasi
-    @endif
 @endsection
 
 <!-- Di bawah ini Adalah basic dari javascript Ajax Silah Modifikasi sesuai dengan framework JS anda -->
