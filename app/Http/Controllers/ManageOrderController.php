@@ -142,6 +142,29 @@ class ManageOrderController extends Controller
         return redirect()->route('manage-order.index')->with('statusdel', 'Data Berhasil Dihapus!!');
     }
 
+    public function formVerivikasiOrder()
+    {
+        return view('manage-order.verivikasi');
+    }
+
+    public function verivikasiOrder(Request $request)
+    {
+        $no_pesanan = $request->get('no_pesanan');
+        $buyers = Buyer::get()->where('enkripsi_token', $no_pesanan);
+        foreach($buyers as $buyer){
+            if($buyer->status){
+                return redirect()->back()->with('fail', 'order '.$buyer->buyer.' telah disetujui dengan status '.$buyer->status);
+            }else{
+                $id = $buyer->id;
+                $verivikasi = Buyer::findOrFail($id);
+                $verivikasi->status = 'process';
+                $verivikasi->save();
+
+                return redirect()->back()->with('success', 'Verivikasi Sucess!!');
+            }
+        }
+    }
+    
     public function status($id)
     {
         $status = Buyer::findOrFail($id);

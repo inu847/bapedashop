@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -36,5 +37,20 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function authenticate(Request $request){
+        // Inputan yg diambil
+        $credentials = $request->only('email', 'password');
+
+        if (\Auth::attempt($credentials)) {
+            // Jika berhasil login
+
+            return redirect('berhasil');
+
+            //return redirect()->intended('/details');
+        }
+        // Jika Gagal
+        return redirect('login');
     }
 }

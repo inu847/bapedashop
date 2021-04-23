@@ -67,7 +67,6 @@ class ChartController extends Controller
         $koma = str_replace(".","" , $rp);
         $result = str_replace(",","" , $koma);
         $buyer->subtotal = $result;
-        $buyer->status = "process";
         $buyer->save();
 
         if ($validator->passes()) {
@@ -138,7 +137,6 @@ class ChartController extends Controller
     {
         //
     }
-
 
     // insert to database with return modified text 
     public function ajaxaddtocart(Request $request)

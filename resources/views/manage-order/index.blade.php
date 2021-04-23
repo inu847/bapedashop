@@ -5,11 +5,19 @@
 @endsection
 
 @section('content')
+    @if(session('status'))
+        <div class="alert alert-warning rounded" role="alert">
+            {{session('status')}}
+        </div>
+    @endif
 <div class="container-fluid disable-text-selection">
     <div class="row">
         <div class="col-12">
             <div class="mb-3">
                 <h1>Manage Order</h1>
+                <div class="text-zero top-right-button-container">
+                    <a href="{{ route('verivikasi.order') }}" class="btn btn-success btn-lg top-right-button mr-1"><i class="simple-icon-check"> Verivikasi</i></a>
+                </div>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
                     <ol class="breadcrumb pt-0">
                         <li class="breadcrumb-item">
@@ -19,7 +27,7 @@
                             <a href="#">Manage Order</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            List Order
+                            Verivikasi Order
                         </li>
                     </ol>
                 </nav>

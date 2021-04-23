@@ -15,12 +15,16 @@
             <div class="col-12 col-md-5 mx-auto my-auto">
                 <div class="card auth-card">
                     <div class="card-body text-center">
-                        <h2><strong>Scan Qr Code</strong></h2>
+                        <h2><strong>Scan Qr Code/Barcode</strong></h2>
                         <div>
                             <span class="btn btn-success mb-3">{{$enkripsi}}</span>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             {{QrCode::format('svg')->size(300)->generate($enkripsi)}}
+                        </div>
+                        <div class="mt-4">
+                            <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($enkripsi, 'C39',1,33)}}" alt="barcode" />
+                            <p class="text-small"><strong>{{$enkripsi}}</strong></p>
                         </div>
                         <div class="text-center">
                             <a href="{{ route('order.finish') }}" class="ml-5 mr-5"><i class="simple-icon-logout large-icon"></i></a>

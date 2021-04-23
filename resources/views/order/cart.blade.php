@@ -22,7 +22,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <input type="hidden" name="user_id" value="{{$user}}">
                             <input type="hidden" name="buyer_id" value="{{$buyer_id}}">
                             @foreach ($carts as $cart)
                                 <input type="hidden" value="{{ $product = \App\Models\Product::find($cart->product_id)}}">
@@ -32,6 +31,7 @@
                                         <input type="hidden" name="price[]" value="{{$product->price}}">
                                         <input type="hidden" name="images[]" value="{{$product->images}}">
                                         <td class="product-title">{{$product->nama_product}}</td>
+                                        <input type="hidden" name="user_id[]" value="{{$user}}">
                                         <td class="num-pallets"><input type="number" class="num-pallets-input form-control" id="sparkle-num-pallets" name="quantity[]"></td>
                                         <td class="price-per-pallet">Rp.<span>{{$product->price}}</span></td>
                                         <td class="equals">=</td>

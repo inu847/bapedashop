@@ -29,14 +29,18 @@ Route::get('/test/1/1', function () {
 
 
 Route::resource('user', UserController::class);
+Route::get('scan-qr', [ChartController::class, 'qrGenerator'])->name('order.qrcode');
+Route::get('scan', [ChartController::class, 'finishOrder'])->name('order.finish');
 Route::resource('cart', ChartController::class);
 Route::post('/user/{id}', [UserController::class, 'verivikasiPassword'])->name('verivikasi.password');
-Route::get('scan', [ChartController::class, 'qrGenerator'])->name('order.qrcode');
-Route::get('scan', [ChartController::class, 'finishOrder'])->name('order.finish');
 
+
+Route::post('logged_in', [LoginController::class, 'authenticate']);
 Auth::routes();
 
 Route::resource('manage-product', ProductController::class);
+Route::post('manage-order/verivikasi', [ManageOrderController::class, 'verivikasiOrder'])->name('verivikasi.pesanan');
+Route::get('manage-order/verivikasi', [ManageOrderController::class, 'formVerivikasiOrder'])->name('verivikasi.order');
 Route::resource('manage-order', ManageOrderController::class);
 Route::post('status/{id}', [ManageOrderController::class, 'status'])->name('tools.status');
 Route::resource('tools', ToolsController::class);
