@@ -136,13 +136,11 @@ class ToolsController extends Controller
     public function member()
     {
         $member = \Auth::user()->roles;
-        if($member->role == 'member'){
+        if($member->role == 'member' or $member->role == 'super member'){
             return view('tools.member');
-        }elseif($member->role == 'super member'){
-            return view('tools.superMember');
         }else{
             return redirect()->back();
-        } 
+        }
     }
 
     public function superMember()

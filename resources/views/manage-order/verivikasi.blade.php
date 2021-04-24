@@ -18,7 +18,7 @@
     
     <div class="card mb-4">
         <div class="card-body">
-            <h5 class="mb-4">Inline</h5>
+            <h5 class="mb-4">Verivikasi Order</h5>
             <form action="{{ route('verivikasi.pesanan') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <label for="no_pesanan">Nomor Pesanan</label>

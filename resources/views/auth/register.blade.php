@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('title')
-    Regitration
+    Daftar Akun
 @endsection
 
 @section('content')

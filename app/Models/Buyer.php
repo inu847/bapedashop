@@ -18,4 +18,9 @@ class Buyer extends Model
     {
         return $this->hasMany('App\Models\Order');
     }
+
+    function suggestion()
+    {
+        return $this->hasMany('App\Models\Suggestion');
+    }
 }

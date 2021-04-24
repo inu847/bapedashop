@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Buyer;
 use App\Models\Order;
+use App\Models\Suggestion;
 
 class DashboardController extends Controller
 {
@@ -27,12 +28,26 @@ class DashboardController extends Controller
         $order_success = \Auth::user()->buyer->where('status', 'success')->count();
         $order_onhold = \Auth::user()->buyer->where('status', 'on hold')->count();
         $recent_order = \Auth::user()->orderId;
-
+        // Rating Toko
+        $banyak_rating = \Auth::user()->suggestion->count('rating');
+        $jumlah_rating = \Auth::user()->suggestion->sum('rating');
+        $total_rating = $jumlah_rating / $banyak_rating;
+        $pembulatan_rating = round($total_rating);
+        // Quantity Order
+        $progress_order = $order_pending + $order_onhold;
+        $all_order = $order_pending + $order_success + $order_onhold;
+        $results_order = $all_order - $progress_order;
+        
         return view('dashboard.index', ['total_penjualan' => $total_penjualan,
                                         'total_order' => $total_order,
                                         'order_pending' => $order_pending,
                                         'order_success' => $order_success,
                                         'order_onhold' => $order_onhold,
-                                        'recent_order' => $recent_order]);
+                                        'recent_order' => $recent_order,
+                                        'total_rating' => $total_rating,
+                                        'pembulatan_rating' => $pembulatan_rating,
+                                        'progress_order' => $progress_order,
+                                        'all_order' => $all_order,
+                                        'results_order' => $results_order]);
     }
 }

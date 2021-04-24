@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Buyer;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Resources\User as UserResource;
 use App\Models\Alamat;
 use App\Models\Role;
 
@@ -20,13 +19,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {        
-        $user = User::where('status', 'active')->paginate(10);
-
-        $filterKeyword = $request->get('keyword');
-        if($filterKeyword){
-            $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->paginate(10);
-        }
-        return view('buyer.index', ['user' => $user]);
+        // 
     }
 
     /**
@@ -149,23 +142,6 @@ class UserController extends Controller
         //
     }
 
-    public function verivikasiPassword(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        // $buyer_id = Buyer::findOrFail($id);
-        $products = User::findOrFail($id)->productId;
-
-        $new_buyer = new Buyer();
-        $new_buyer->buyer = $request->get('buyer');
-        $new_buyer->meja = $request->get('meja');
-        $factory = new \RandomLib\Factory();
-        $generator = $factory->getMediumStrengthGenerator();
-        $new_buyer->enkripsi_token = $generator->generateString(7, "01234567891011121314151617181920");
-        $user->buyer()->save($new_buyer);
-        
-        return view('buyer.show', ['user' => $user, 'products' => $products, 'new_buyer' => $new_buyer]);
-    }
-
     public function showAlamat()
     {
         $alamats = \Auth::user()->alamatId->sortByDesc('status');
@@ -213,13 +189,4 @@ class UserController extends Controller
         return redirect()->back()->with('status', 'Delete Alamat Success!!');
     }
 
-    // Api
-    public function getToko(Request $request)
-    {
-        $user = new UserResource(User::get());
-        $filterKeyword = $request->get('keyword');
-        $status = $request->get('status');
-        $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->paginate(10);
-        return $user;
-    }
 }

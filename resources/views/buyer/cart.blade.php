@@ -22,6 +22,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <input type="hidden" name="user_id" value="{{$user}}">
                             <input type="hidden" name="buyer_id" value="{{$buyer_id}}">
                             @foreach ($carts as $cart)
                                 <input type="hidden" value="{{ $product = \App\Models\Product::find($cart->product_id)}}">
@@ -63,7 +64,7 @@
                                 </table>
                             </div>
                         </div>
-
+                        
                         <div class="col-md-2 ml-auto">
                             <button class="btn btn-info" type="submit">Submit</button>
                         </div>

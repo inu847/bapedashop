@@ -31,7 +31,7 @@
                                     <div role="progressbar"
                                         class="progress-bar-circle progress-bar-banner position-relative"
                                         data-color="white" data-trail-color="rgba(255,255,255,0.2)"
-                                        aria-valuenow="5" aria-valuemax="12" data-show-percent="false">
+                                        aria-valuenow="{{$results_order}}" aria-valuemax="{{$all_order}}" data-show-percent="false">
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                                     <div role="progressbar"
                                         class="progress-bar-circle progress-bar-banner position-relative"
                                         data-color="white" data-trail-color="rgba(255,255,255,0.2)"
-                                        aria-valuenow="4" aria-valuemax="6" data-show-percent="false">
+                                        aria-valuenow="{{$results_order}}" aria-valuemax="{{$all_order}}" data-show-percent="false">
                                     </div>
                                 </div>
                             </div>
@@ -65,15 +65,15 @@
                                 <div>
                                     <i class="iconsminds-bell mr-2 text-white align-text-bottom d-inline-block"></i>
                                     <div>
-                                        <p class="lead text-white">8 Alerts</p>
-                                        <p class="text-small text-white">Waiting for notice</p>
+                                        <p class="lead text-white">{{$total_rating}} Rating</p>
+                                        <p class="text-small text-white">Rating Pembelian</p>
                                     </div>
                                 </div>
                                 <div>
                                     <div role="progressbar"
                                         class="progress-bar-circle progress-bar-banner position-relative"
                                         data-color="white" data-trail-color="rgba(255,255,255,0.2)"
-                                        aria-valuenow="8" aria-valuemax="10" data-show-percent="false">
+                                        aria-valuenow="{{$pembulatan_rating}}" aria-valuemax="5" data-show-percent="false">
                                     </div>
                                 </div>
                             </a>

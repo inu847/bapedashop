@@ -23,6 +23,14 @@ class UserTableSeeder extends Seeder
             'password' =>  \Hash::make("Semogaberkah"),
             'created_at' => now(),
             'updated_at' => now(),
-            ]);
+        ]);
+        DB::table('role')->insert([
+            'file_penunjang' => 'admin',
+            'ktp' => 'admin',
+            'role' => 'super member',
+            'user_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

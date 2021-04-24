@@ -48,7 +48,7 @@
                 </svg>
             </a>
             
-            <form action="{{ route('user.index')}}" class="ml-2">
+            <form action="{{ route('filter.toko')}}" class="ml-2">
                 <div class="input-group">
                     <input placeholder="Search..." value="{{Request::get('keyword')}}" name="keyword" type="text" class="form-control">
                     <div class="input-group-append">
