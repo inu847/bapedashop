@@ -20,6 +20,7 @@ class CreateToolsTable extends Migration
             $table->string("password_wifi");
             $table->string("keterangan")->nullable();
             $table->string("status");
+            $table->enum("roles", ['member', 'super member']);
             // Relationship one to many
             $table->unsignedBigInteger("alamat_id");
             $table->foreign("alamat_id")->references("id")->on("alamats")->onDelete('cascade');

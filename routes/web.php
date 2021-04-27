@@ -50,6 +50,7 @@ Route::resource('manage-product', ProductController::class);
 // Manage Order Controller
 Route::post('manage-order/verivikasi', [ManageOrderController::class, 'verivikasiOrder'])->name('verivikasi.pesanan');
 Route::get('manage-order/verivikasi', [ManageOrderController::class, 'formVerivikasiOrder'])->name('verivikasi.order');
+Route::get('manage-order/verivikasi-qrcode', [ManageOrderController::class, 'qrcode'])->name('verivikasi.qrcode');
 Route::resource('manage-order', ManageOrderController::class);
 Route::post('status/{id}', [ManageOrderController::class, 'status'])->name('tools.status');
 

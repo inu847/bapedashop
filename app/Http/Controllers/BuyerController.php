@@ -86,10 +86,9 @@ class BuyerController extends Controller
         if ($validator->passes()) {
             foreach($request->get('product_name') as $key => $value){
                 $new_order = new Order();
-                $new_order->product_name = $request->get('product_name')[$key];
-                $new_order->deskripsi = $request->get('deskripsi')[$key];
-                $new_order->price = $request->get('price')[$key];
-                $new_order->images = $request->get('images')[$key];
+                $prod_id = $request->get('prod_id')[$key];
+                $new_order->prod_id = $prod_id;
+                // Harus Dibuat penghitung versi backend
                 $new_order->quantity = $request->get('quantity')[$key];
                 $new_order->row_total = $request->get('row_total')[$key];
                 $new_order->user_id = $request->get('user_id')[$key];

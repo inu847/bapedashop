@@ -109,7 +109,6 @@
             <div class="separator mb-5"></div>
         </div>
     </div>
-
     @foreach ($orders as $order)
         <a href="{{ route('manage-order.show', [$order->id]) }}">
             <div class="card d-flex flex-row mb-3">

@@ -69,7 +69,7 @@
                                         <div class="col-sm-12">
                                             <div class="collapse multi-collapse" id="multiCollapseExample1">
                                                 <div class="mt-4">
-                                                    <strong><h1>Rp.50.000</h1></strong>
+                                                    <strong><h1>Rp.{{$pricing}}</h1></strong>
                                                 </div>
                                             </div>
                                         </div>

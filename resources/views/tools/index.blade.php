@@ -5,6 +5,17 @@
 @endsection
 
 @section('content')
+    @if(session('success'))
+        <div class="alert alert-warning rounded" role="alert">
+            {{session('success')}}
+        </div>
+    @endif
+    @if(session('fail'))
+        <div class="alert alert-danger rounded" role="alert">
+            {{session('fail')}}
+        </div>
+    @endif
+
     <div class="container-fluid">
         <div class="row mb-5">
             <div class="col-12">
@@ -161,14 +172,22 @@
                                     </ul>
                                     <div class="text-center">
                                         @if ($roles->role == "member")
-                                            <a href="{{ route('tools.create') }}" class="btn btn-link btn-empty btn-lg">PURCHASE <i
-                                                class="simple-icon-arrow-right"></i></a>
+                                            <form action="{{ route('tools.create') }}" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden" name="roles" value="super member">
+                                                <button type="submit" class="btn btn-link btn-empty btn-lg">PURCHASE <i
+                                                    class="simple-icon-arrow-right"></i></button>
+                                            </form>
                                         @elseif ($roles->role == "super member")
                                             <a href="{{ route('tools.superMember') }}" class="btn btn-primary btn-lg">SUPER MEMBER AREA<i
                                                 class="simple-icon-arrow-right"></i></a>
                                         @elseif ($roles->role == "trial")
-                                            <a href="{{ route('tools.create') }}" class="btn btn-link btn-empty btn-lg">PURCHASE <i
-                                                class="simple-icon-arrow-right"></i></a>
+                                            <form action="{{ route('tools.create') }}">
+                                                @csrf
+                                                <input type="hidden" name="roles" value="super member">
+                                                <button type="submit" class="btn btn-link btn-empty btn-lg">PURCHASE <i
+                                                    class="simple-icon-arrow-right"></i></button>
+                                            </form>
                                         @endif                
                                     </div>
                                 </div>

@@ -18,4 +18,9 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\Buyer');
     }
+
+    function product()
+    {
+        return $this->hasMany('App\Models\Product');
+    }
 }

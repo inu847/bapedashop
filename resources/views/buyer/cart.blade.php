@@ -27,6 +27,7 @@
                             @foreach ($carts as $cart)
                                 <input type="hidden" value="{{ $product = \App\Models\Product::find($cart->product_id)}}">
                                     <tr class="odd">
+                                        <input type="hidden" name="prod_id[]" value="{{$cart->product_id}}">
                                         <input type="hidden" name="product_name[]" value="{{$product->nama_product}}">
                                         <input type="hidden" name="deskripsi[]" value="{{$product->deskripsi}}">
                                         <input type="hidden" name="price[]" value="{{$product->price}}">
@@ -36,7 +37,7 @@
                                         <td class="num-pallets"><input type="number" class="num-pallets-input form-control" id="sparkle-num-pallets" name="quantity[]"></td>
                                         <td class="price-per-pallet">Rp.<span>{{$product->price}}</span></td>
                                         <td class="equals">=</td>
-                                        <td class="row-total"><input type="text" class="row-total-input" id="sparkle-row-total" name="row_total[]"></td>
+                                        <td class="row-total"><input type="text" class="row-total-input" id="sparkle-row-total" name="row_total[]" readonly></td>
                                     </tr>
                             @endforeach
                         </tbody>
@@ -54,11 +55,11 @@
                                     <tbody>
                                         <tr>
                                             <td>Total Quantity <span>:</span></td>
-                                            <td id="total-pallets"><input id="total-pallets-input" value="0" type="text" name="total_quantity"></td>
+                                            <td id="total-pallets"><input id="total-pallets-input" value="0" type="text" name="total_quantity" readonly></td>
                                         </tr>
                                         <tr>
                                             <td>Product Subtotal <span>:</span></td>
-                                            <td><input type="text" class="total-box" value="Rp.0" id="product-subtotal" name="subtotal"></td>
+                                            <td><input type="text" class="total-box" value="Rp.0" id="product-subtotal" name="subtotal" readonly></td>
                                         </tr>
                                     </tbody>
                                 </table>

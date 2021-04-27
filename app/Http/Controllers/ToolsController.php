@@ -35,7 +35,17 @@ class ToolsController extends Controller
                 $date_now = date('Y-m-d m:i:s');
                 
                 if($date_now <= $limit_date){
-                    return view('tools.pricing', ['tools' => $tools]);            
+                    // Menentukan Harga
+                    $member = \Auth::user()->roles->where('roles', 'member');
+                    $super_member = \Auth::user()->roles->where('roles', 'super member');
+
+                    if($member){
+                        $pricing = "50.000";
+                    }elseif($super_member){
+                        $pricing = "100.000";
+                    }
+
+                    return view('tools.pricing', ['tools' => $tools, 'pricing' => $pricing]);            
                 }else{
                     if($tools->status == "process"){
                         $tools->delete();
@@ -46,6 +56,9 @@ class ToolsController extends Controller
             }
         }
 
+        
+
+
         return view('tools.index', ['roles' => $roles, 'tools' => $tools]);
         
     }
@@ -55,12 +68,17 @@ class ToolsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $user = \Auth::user();
         $alamats = \Auth::user()->alamatId->where('status', 'alamat_utama');
+        $roles = $request->get('roles');
+        $user_verivied = \Auth::user()->roles;
+        if($user_verivied->role == $roles){
+            return redirect()->back()->with('fail', 'Anda Tidak Dapat Melakukan purchase!!');
+        }
 
-        return view('tools.create', ['user' => $user, 'alamats' => $alamats]);
+        return view('tools.create', ['user' => $user, 'alamats' => $alamats, 'roles' => $roles]);
     }
 
     /**
@@ -71,18 +89,25 @@ class ToolsController extends Controller
      */
     public function store(Request $request)
     {
-        $user = \Auth::user();
-        $purchase = new Tools();
-        $purchase->nama_pembeli = $request->get('nama_pembeli');
-        $purchase->ssid = $request->get('ssid');
-        $purchase->password_wifi = $request->get('password');
-        $purchase->keterangan = $request->get('keterangan');
-        $purchase->alamat_id = $request->get('alamat_id');
-        $purchase->status = "process";
-        $date = date('d') + 3;
-        $purchase->finished_at = date('Y-m-'.$date.' m:i:s');
-        $user->tools()->save($purchase);
-        return redirect()->route('tools.index')->with('status', 'Purchase success, Silahkan Melakukan Pembayaran!!');
+        $roles = $request->get('roles');
+        $user_verivied = \Auth::user()->roles;
+        if($user_verivied->role == $roles){
+            return redirect()->route('tools.index')->with('fail', 'Anda Tidak Dapat Melakukan purchase!!');
+        }else{
+            $user = \Auth::user();
+            $purchase = new Tools();
+            $purchase->nama_pembeli = $request->get('nama_pembeli');
+            $purchase->ssid = $request->get('ssid');
+            $purchase->password_wifi = $request->get('password');
+            $purchase->keterangan = $request->get('keterangan');
+            $purchase->alamat_id = $request->get('alamat_id');
+            $purchase->status = "process";
+            $purchase->roles = $request->get('roles');
+            $date = date('d') + 3;
+            $purchase->finished_at = date('Y-m-'.$date.' m:i:s');
+            $user->tools()->save($purchase);
+            return redirect()->route('tools.index')->with('success', 'Purchase success, Silahkan Melakukan Pembayaran!!');
+        }
     }
 
     /**

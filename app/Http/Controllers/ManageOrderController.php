@@ -28,7 +28,7 @@ class ManageOrderController extends Controller
     public function index()
     {
         $orders = \Auth::user()->buyer->where('status');
-        // dd($orders);
+
         return view('manage-order.index', ['orders' => $orders]);
     }
 
@@ -63,7 +63,7 @@ class ManageOrderController extends Controller
     {
         $buyer = Buyer::findOrFail($id);
         $orders = Buyer::findOrFail($id)->order;
-        
+        // dd($orders);
         return view('manage-order.show', ['orders' => $orders, 'buyer' => $buyer]);
     }
 
@@ -91,30 +91,26 @@ class ManageOrderController extends Controller
     public function update(Request $request, $id)
     {
         $invoices = [];
-        foreach ($request->input('product_name') as $key => $value) {
-            $invoices["product_name.{$key}"] = 'required';
-            $invoices["deskripsi.{$key}"] = 'required';
-            $invoices["price.{$key}"] = 'required';
-            $invoices["images.{$key}"] = 'required';
+        foreach ($request->input('prod_id') as $key => $value) {
+            $invoices["prod_id.{$key}"] = 'required';
             $invoices["quantity.{$key}"] = 'required';
             $invoices["row_total.{$key}"] = 'required';
         }
         $validator = \Validator::make($request->all(), $invoices);
 
-        $id = $request->get('buyer_id');
         $buyer = Buyer::findOrFail($id);
         $buyer->total_quantity = $request->get('total_quantity');
-        $buyer->subtotal = $request->get('subtotal');
-        $buyer->status = "process";
+        $rp = str_replace("Rp","" , $request->get('subtotal'));
+        $koma = str_replace(".","" , $rp);
+        $result = str_replace(",","" , $koma);
+        $buyer->subtotal = $result;
         $buyer->save();
 
         if ($validator->passes()) {
-            foreach($request->get('product_name') as $key => $value){
-                $new_order = new Order();
-                $new_order->product_name = $request->get('product_name')[$key];
-                $new_order->deskripsi = $request->get('deskripsi')[$key];
-                $new_order->price = $request->get('price')[$key];
-                $new_order->images = $request->get('images')[$key];
+            foreach($request->get('prod_id') as $key => $value){
+                $new_order = Order::find('buyer_id', $buyer);
+                $new_order->prod_id = $request->get('prod_id')[$key];
+                // Harus Dibuat penghitung versi backend
                 $new_order->quantity = $request->get('quantity')[$key];
                 $new_order->row_total = $request->get('row_total')[$key];
                 $buyer->order()->save($new_order)[$key];
@@ -172,5 +168,10 @@ class ManageOrderController extends Controller
         $status->save();
 
         return redirect()->route('manage-order.index')->with('status', 'Update Order Success!!');
+    }
+
+    public function qrcode()
+    {
+        return view('manage-order.scanBarcode');
     }
 }

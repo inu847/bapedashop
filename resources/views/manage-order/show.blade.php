@@ -125,13 +125,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            
                                             @foreach ($orders as $order)
+                                            <input type="hidden" value="{{$products = \App\Models\Product::get()->where('id', $order->prod_id)}}">
                                             <tr>
+                                                @foreach ($products as $product)
                                                 <td style="padding-top:0px; padding-bottom:5px;">
                                                     <h4 style="font-size: 16px; line-height: 1; margin-bottom:0; color:#303030; font-weight:500; margin-top: 10px;">
-                                                        {{$order->product_name}}
+                                                        {{$product->nama_product}}
                                                     </h4>
                                                 </td>
+                                                @endforeach
                                                 <td>
                                                     <p href="#"
                                                         style="font-size: 13px; text-decoration: none; line-height: 1; color:#909090; margin-top:0px; margin-bottom:0;">

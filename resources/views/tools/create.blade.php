@@ -11,6 +11,8 @@
 
             <form action="{{ route('tools.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="roles" value="{{$roles}}">
+
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="">Nama Penerima</label>

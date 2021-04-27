@@ -9,8 +9,9 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Form Order</h5>
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('manage-order.update', [$buyer->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" value="PUT" name="_method">
                     <table class="table">
                         <thead class="thead-light">
                             <tr>
@@ -24,14 +25,14 @@
                         <tbody>
                             <input type="hidden" name="buyer_id" value="{{$buyer}}">
                             @foreach ($orders as $product)
+                            <input type="hidden" value="{{$products = \App\Models\Product::get()->where('id', $product->prod_id)}}">
                                 <tr class="odd">
-                                    <input type="hidden" name="product_name[]" value="{{$product->product_name}}">
-                                    <input type="hidden" name="deskripsi[]" value="{{$product->deskripsi}}">
-                                    <input type="hidden" name="price[]" value="{{$product->price}}">
-                                    <input type="hidden" name="images[]" value="{{$product->images}}">
-                                    <td class="product-title">{{$product->product_name}}</td>
-                                    <td class="num-pallets"><input type="number" class="num-pallets-input form-control" id="sparkle-num-pallets" name="quantity[]" value="{{$product->quantity}}"></td>
-                                    <td class="price-per-pallet">Rp.<span>{{$product->price}}</span></td>
+                                    <input type="hidden" name="prod_id[]" value="{{$product->prod_id}}">
+                                    @foreach ($products as $prod)
+                                        <td class="product-title">{{$prod->nama_product}}</td>
+                                        <td class="num-pallets"><input type="number" class="num-pallets-input form-control" id="sparkle-num-pallets" name="quantity[]" value="{{$product->quantity}}"></td>
+                                        <td class="price-per-pallet">Rp.<span>{{$prod->price}}</span></td>
+                                    @endforeach
                                     <td class="equals">=</td>
                                     <td class="row-total"><input type="text" class="row-total-input" id="sparkle-row-total" name="row_total[]" value="{{$product->row_total}}"></td>
                                 </tr>
