@@ -1,4 +1,4 @@
-@extends('layouts.global')
+@extends('layouts.buyer')
 
 @section('title')
     Scan Qr Code
@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-5 mx-auto my-auto">
-                <div class="card auth-card">
+                <div class="card auth-card mt-5">
                     <div class="card-body text-center">
                         <h2><strong>Scan Qr Code/Barcode</strong></h2>
                         <div>

@@ -24,31 +24,11 @@
     <link rel="stylesheet" href="{{ asset('css/dore.light.blue.css') }}" />
 </head>
 
-<body id="app-container" class="menu-sub-hidden show-spinner">
+<body id="app-container" class="menu-hidden show-spinner">
     <nav class="navbar fixed-top">
         <div class="d-flex align-items-center navbar-left">
-            <a href="#" class="menu-button d-none d-md-block">
-                <svg class="main" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 17">
-                    <rect x="0.48" y="0.5" width="7" height="1" />
-                    <rect x="0.48" y="7.5" width="7" height="1" />
-                    <rect x="0.48" y="15.5" width="7" height="1" />
-                </svg>
-                <svg class="sub" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17">
-                    <rect x="1.56" y="0.5" width="16" height="1" />
-                    <rect x="1.56" y="7.5" width="16" height="1" />
-                    <rect x="1.56" y="15.5" width="16" height="1" />
-                </svg>
-            </a>
-
-            <a href="#" class="menu-button-mobile d-xs-block d-sm-block d-md-none">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 17">
-                    <rect x="0.5" y="0.5" width="25" height="1" />
-                    <rect x="0.5" y="7.5" width="25" height="1" />
-                    <rect x="0.5" y="15.5" width="25" height="1" />
-                </svg>
-            </a>
-            
-            <form action="{{ route('filter.toko')}}" class="ml-2">
+            <u><a href="{{ route('dashboard.index') }}" class="ml-3" rel="noopener noreferrer" target="_blank">Seller</a></u>
+            <form action="{{ route('filter.toko')}}" class="ml-3">
                 <div class="input-group">
                     <input placeholder="Search..." value="{{Request::get('keyword')}}" name="keyword" type="text" class="form-control">
                     <div class="input-group-append">
@@ -58,8 +38,9 @@
             </form>
    
         </div>
+        
 
-        <a class="navbar-logo" href="{{ ('/') }}">
+        <a class="navbar-logo" href="{{ url('/') }}">
             <img src="{{asset('img/LOGO 4.png')}}" alt="" style="height: 50px;">
         </a>
         
@@ -173,63 +154,6 @@
             @endif
         </div>
     </nav>
-    
-    <div class="menu">
-        <div class="main-menu">
-            <div class="scroll">
-                <ul class="list-unstyled" data-link="dashboard">
-                    <li>
-                        <a href="{{url('/')}}">
-                            <i class="iconsminds-shop-4"></i>
-                            <span>Home Page</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('dashboard.index') }}">
-                            <i class="simple-icon-pie-chart"></i>
-                            <span>Dasboard</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('manage-order.index') }}">
-                            <i class="iconsminds-shopping-cart"></i> 
-                            <span>Manage Order</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('manage-product.index')}}">
-                            <i class="iconsminds-air-balloon-1"></i>
-                            <span>Manage Product</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('tools.index') }}">
-                            <i class="simple-icon-diamond"></i> 
-                            <span>Tools</span>
-                        </a>
-                    </li>
-                    <li>
-                        @if (\Auth::user())
-                            <a href="{{ route('user.edit', [\Auth::user()])}}">
-                        @else
-                            <a href="#">
-                        @endif
-                            <i class="simple-icon-settings"></i><span>Account Setting</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('logout') }}" 
-                            onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();" ><i class="simple-icon-logout"></i> Sign out</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>        
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
 
     <main>
         @yield('content')

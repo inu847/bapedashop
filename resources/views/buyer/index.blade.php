@@ -1,4 +1,4 @@
-@extends('layouts.global')
+@extends('layouts.buyer')
 
 @section('title')
     Bapeda Shop
@@ -15,6 +15,10 @@
 								<i class="iconsminds-shop-4 mr-2 text-white align-text-bottom d-inline-block"></i>
 							</div>
 							<div class="col-8">
+								<input type="hidden" value="{{$banyak_rating = $data->suggestion->count('rating')}}">
+								<input type="hidden" value="{{$jumlah_rating = $data->suggestion->sum('rating')}}">
+								<input type="hidden" value="{{$total_rating = $jumlah_rating / $banyak_rating}}">
+								<input type="hidden" value="{{$pembulatan_rating = round($total_rating)}}">
 								<p class="lead text-white">{{ $data->nama_toko }}</p>
 								<p class="text-small text-white">{{ $data->name }}</p>
 							</div>
@@ -22,7 +26,7 @@
 						<div>
 							<div class="col-12 col-xs-6">
 								<div class="form-group mb-1">
-									<select class="rating" data-current-rating="3" data-readonly="true">
+									<select class="rating" data-current-rating="{{$pembulatan_rating}}" data-readonly="true">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -36,6 +40,7 @@
 				</div>
 			</a>
 		</div>		
+		
 		<div class="modal fade" id="exampleModalContent" tabindex="-1" role="dialog" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">

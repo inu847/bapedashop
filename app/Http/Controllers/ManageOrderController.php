@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Buyer;
 use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
 
 class ManageOrderController extends Controller
 {
@@ -27,7 +28,8 @@ class ManageOrderController extends Controller
     
     public function index()
     {
-        $orders = \Auth::user()->buyer->where('status');
+        $orders = Auth::user()->buyer->where('status');
+        $get_order = Auth::user()->orderId->where('buyer_id');
 
         return view('manage-order.index', ['orders' => $orders]);
     }
@@ -147,17 +149,24 @@ class ManageOrderController extends Controller
     {
         $no_pesanan = $request->get('no_pesanan');
         $buyers = Buyer::get()->where('enkripsi_token', $no_pesanan);
-        foreach($buyers as $buyer){
-            if($buyer->status){
-                return redirect()->back()->with('fail', 'order '.$buyer->buyer.' telah disetujui dengan status '.$buyer->status);
-            }else{
-                $id = $buyer->id;
-                $verivikasi = Buyer::findOrFail($id);
-                $verivikasi->status = 'process';
-                $verivikasi->save();
-
-                return redirect()->back()->with('success', 'Verivikasi Sucess!!');
+        if ($buyers->count() > 0) {
+            foreach($buyers as $buyer){
+                if($buyer->status){
+                    return redirect()->back()->with('fail', 'order '.$buyer->buyer.' telah disetujui dengan status '.$buyer->status);
+                }else{
+                    try {
+                        $id = $buyer->id;
+                        $verivikasi = Buyer::findOrFail($id);
+                        $verivikasi->status = 'process';
+                        $verivikasi->save();
+                    } catch (\Throwable $e) {
+                        return redirect()->back()->with('fail', 'Order Tidak Dapat Di Proses');
+                    }
+                    return redirect()->back()->with('success', 'Buyer atas nama '.ucfirst($buyer->buyer).' di meja '.$buyer->meja.' Berhasil Verivikasi!!');
+                }
             }
+        }else{
+            return redirect()->back()->with('fail', 'Order dengan id ' .$no_pesanan. ' Tidak Terdaftar!!');
         }
     }
     
@@ -170,8 +179,17 @@ class ManageOrderController extends Controller
         return redirect()->route('manage-order.index')->with('status', 'Update Order Success!!');
     }
 
-    public function qrcode()
+    public function qrcode(Request $request)
     {
-        return view('manage-order.scanBarcode');
+        $buyer = "";
+        $orders = "";
+        $no_pesanan = $request->get('no_pesanan');
+        $buyer_id = Buyer::get()->where('enkripsi_token', $no_pesanan)->first();
+        if ($buyer_id) {
+            $buyer = Buyer::findOrFail($buyer_id->id);
+            $orders = Buyer::findOrFail($buyer_id->id)->order;
+            // dd($orders);
+        }
+        return view('manage-order.scanBarcode', ['buyer' => $buyer, 'orders' => $orders]);
     }
 }

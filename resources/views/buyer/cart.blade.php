@@ -1,4 +1,4 @@
-@extends('layouts.global')
+@extends('layouts.buyer')
 
 @section('title')
     Keranjang Belanja

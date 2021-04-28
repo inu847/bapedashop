@@ -29,8 +29,81 @@
                     <label for="">Nomor Pesanan</label>
                     <input type="text" id="qrcode" class="form-control" name="no_pesanan">
                 </div>
+                <a class="btn btn-sm btn-outline-primary mb-2" href="javascript:void(0)" id="search"></i>Search </a>
                 <button type="submit" class="btn btn-sm btn-outline-primary mb-2">Submit</button>
             </form>
+            <form action="{{ route('verivikasi.qrcode') }}" method="GET">             
+                <div class="form-group">
+                    <label for="">Nomor Pesanan</label>
+                    <input type="text" id="qrcode" class="form-control" name="no_pesanan">
+                </div>
+                <button type="submit" class="btn btn-sm btn-outline-primary mb-2">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="mb-4">Detail Order</h4>
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th>Buyer <span>:</span></th>
+                        <td>{{$buyer->buyer}}</td>
+                    </tr>
+                    <tr>
+                        <th>Meja <span>:</span></th>
+                        <td>{{$buyer->meja}}</td>
+                    </tr>
+                    <tr>
+                        <th>Enkripsi <span>:</span></th>
+                        <td>{{$buyer->enkripsi_token}}</td>
+                    </tr>
+                    
+                </thead>
+            </table>
+            {{-- Table 2 --}}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nama Product</th>
+                        <th>Quantity</th>
+                        <th>Row Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($orders as $order)
+                        <tr>
+                            <input type="hidden" value="{{$product = \App\Models\Product::get()->where('id', $order->prod_id)}}">
+                            @foreach ($product as $prod)
+                                <td>{{$prod->nama_product}}</td>
+                            @endforeach
+                            <td>{{$order->quantity}} Pcs</td>
+                            <td>Rp.{{$order->row_total}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <table class="table table-borderless">
+                <tr>
+                    <td colspan="2" style=" width: 100%; padding-bottom:15px;">
+                        <p href="#"
+                            style="font-size: 13px; text-decoration: none; line-height: 1.6; color:#909090; margin-top:0px; margin-bottom:0; text-align: right;">
+                            Total Quantity : 
+                        </p>
+                    </td>
+                    <td>{{$buyer->total_quantity}} Pcs</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style=" width: 100%; padding-bottom:15px;">
+                        <p href="#"
+                            style="font-size: 13px; text-decoration: none; line-height: 1.6; color:#909090; margin-top:0px; margin-bottom:0; text-align: right;">
+                            Total Pembelian : 
+                        </p>
+                    </td>
+                    <td>Rp.{{$buyer->subtotal}}</td>
+                </tr>
+            </table>        
         </div>
     </div>
 

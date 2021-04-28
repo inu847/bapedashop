@@ -36,7 +36,7 @@ class BuyerController extends Controller
     public function cariToko(Request $request)
     {
         $user = User::where('status', 'active')->paginate(10);
-
+        
         $filterKeyword = $request->get('keyword');
         if($filterKeyword){
             $user = User::where('nama_toko', 'LIKE', "%$filterKeyword%")->paginate(10);
