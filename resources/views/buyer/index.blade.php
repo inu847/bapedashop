@@ -15,10 +15,6 @@
 								<i class="iconsminds-shop-4 mr-2 text-white align-text-bottom d-inline-block"></i>
 							</div>
 							<div class="col-8">
-								<input type="hidden" value="{{$banyak_rating = $data->suggestion->count('rating')}}">
-								<input type="hidden" value="{{$jumlah_rating = $data->suggestion->sum('rating')}}">
-								<input type="hidden" value="{{$total_rating = $jumlah_rating / $banyak_rating}}">
-								<input type="hidden" value="{{$pembulatan_rating = round($total_rating)}}">
 								<p class="lead text-white">{{ $data->nama_toko }}</p>
 								<p class="text-small text-white">{{ $data->name }}</p>
 							</div>
@@ -26,7 +22,15 @@
 						<div>
 							<div class="col-12 col-xs-6">
 								<div class="form-group mb-1">
-									<select class="rating" data-current-rating="{{$pembulatan_rating}}" data-readonly="true">
+									@if ($data->suggestion->count('rating') && $data->suggestion->sum('rating'))
+										<input type="hidden" value="{{$banyak_rating = $data->suggestion->count('rating')}}">
+										<input type="hidden" value="{{$jumlah_rating = $data->suggestion->sum('rating')}}">
+										<input type="hidden" value="{{$total_rating = $jumlah_rating / $banyak_rating}}">
+										<input type="hidden" value="{{$pembulatan_rating = round($total_rating)}}">
+										<select class="rating" data-current-rating="{{$pembulatan_rating}}" data-readonly="true">
+									@else
+										<select class="rating" data-current-rating="1" data-readonly="true">
+									@endif
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>

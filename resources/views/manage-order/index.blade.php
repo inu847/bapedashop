@@ -110,10 +110,11 @@
         </div>
     </div>
     @foreach ($orders as $order)
+        <input type="hidden" value="{{$get_order = Auth::user()->orderId->where('buyer_id', $order->id)->first()}}">
+        <input type="hidden" value="{{$prod = \App\Models\Product::find($get_order->prod_id)}}">       
         <a href="{{ route('manage-order.show', [$order->id]) }}">
             <div class="card d-flex flex-row mb-3">
-                <img src="{{ asset('storage/'. $order->images )}}" alt="{{ $order->product_name }}" class="list-thumbnail responsive border-0 card-img-left" />
-
+                <img src="{{ asset('storage/'. $prod->images )}}" alt="{{ $prod->product_name }}" class="list-thumbnail responsive border-0 card-img-left" style="width: 150px;/>
                 <div class="pl-2 d-flex flex-grow-1 min-width-zero">
                     <div class="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
                         <p class="list-item-heading mb-0 truncate w-15 w-sm-50">{{ Str::ucfirst($order->buyer) }}</p>

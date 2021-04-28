@@ -27,12 +27,14 @@ class DashboardController extends Controller
         $order_pending = \Auth::user()->buyer->where('status', 'process')->count();
         $order_success = \Auth::user()->buyer->where('status', 'success')->count();
         $order_onhold = \Auth::user()->buyer->where('status', 'on hold')->count();
-        $recent_order = \Auth::user()->orderId;
+        $recent_order = \Auth::user()->buyer->where('status');
+        $product = 
         // Rating Toko
         $banyak_rating = \Auth::user()->suggestion->count('rating');
         $jumlah_rating = \Auth::user()->suggestion->sum('rating');
         $total_rating = $jumlah_rating / $banyak_rating;
         $pembulatan_rating = round($total_rating);
+        $suggestion = \Auth::user()->suggestion->where('suggestion')->count();
         // Quantity Order
         $progress_order = $order_pending + $order_onhold;
         $all_order = $order_pending + $order_success + $order_onhold;
@@ -48,6 +50,7 @@ class DashboardController extends Controller
                                         'pembulatan_rating' => $pembulatan_rating,
                                         'progress_order' => $progress_order,
                                         'all_order' => $all_order,
-                                        'results_order' => $results_order]);
+                                        'results_order' => $results_order,
+                                        'suggestion' => $suggestion]);
     }
 }

@@ -119,8 +119,8 @@
                                     <a href="#" class="card">
                                         <div class="card-body text-center">
                                             <i class="iconsminds-mail-read"></i>
-                                            <p class="card-text mb-0">New Comments</p>
-                                            <p class="lead text-center">25</p>
+                                            <p class="card-text mb-0">Suggestion</p>
+                                            <p class="lead text-center">{{$suggestion}}</p>
                                         </div>
                                     </a>
                                 </li>
@@ -168,20 +168,23 @@
                             @foreach ($recent_order as $order)
                                 <div class="d-flex flex-row mb-3">
                                     <a class="d-block position-relative" href="#">
-                                        <img src="{{ asset('storage/'. $order->images) }}" alt="Marble Cake" class="list-thumbnail border-0" />
-                                        @if ( $order->buyer->status == 'process' )
-                                            <span class="badge badge-pill badge-theme-1 position-absolute badge-top-right">{{ Str::upper($order->buyer->status) }}</span>
-                                        @elseif ($order->buyer->status == 'success')
-                                            <span class="badge badge-pill badge-theme-3 position-absolute badge-top-right">{{ Str::upper($order->buyer->status) }}</span>
-                                        @elseif ($order->buyer->status == 'on hold')
-                                            <span class="badge badge-pill badge-theme-2 position-absolute badge-top-right">{{ Str::upper($order->buyer->status) }}</span>
+                                        <input type="hidden" value="{{$get_order = Auth::user()->orderId->where('buyer_id', $order->id)->first()}}">
+                                        <input type="hidden" value="{{$prod = \App\Models\Product::find($get_order->prod_id)}}">
+
+                                        <img src="{{ asset('storage/'. $prod->images) }}" alt="Marble Cake" class="list-thumbnail border-0" style="width: 130px;"/>
+                                        @if ( $order->status == 'process' )
+                                            <span class="badge badge-pill badge-theme-1 position-absolute badge-top-right">{{ Str::upper($order->status) }}</span>
+                                        @elseif ($order->status == 'success')
+                                            <span class="badge badge-pill badge-theme-3 position-absolute badge-top-right">{{ Str::upper($order->status) }}</span>
+                                        @elseif ($order->status == 'on hold')
+                                            <span class="badge badge-pill badge-theme-2 position-absolute badge-top-right">{{ Str::upper($order->status) }}</span>
                                         @endif
                                     </a>
                                     <div class="pl-3 pt-2 pr-2 pb-2">
                                         <a href="#">
                                             <p class="list-item-heading">{{ $order->product_name }}</p>
                                             <div class="pr-4 d-none d-sm-block">
-                                                <p class="text-muted mb-1 text-small">{{ $order->buyer->buyer }}</p>
+                                                <p class="text-muted mb-1 text-small">{{ $order->buyer }}</p>
                                             </div>
                                             <div class="text-primary text-small font-weight-medium d-none d-sm-block"> {{$order->created_at->diffForHumans()}}</div>
                                         </a>

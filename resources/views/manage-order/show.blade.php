@@ -73,9 +73,9 @@
                                         style="color: #8f8f8f; font-weight: normal; line-height: 1.2; font-size: 12px; white-space: nowrap; ">
                                         CAPPS
                                         <br> 
-                                        Alamat lengkap TOKO
+                                        {{$alamat_utama->desa}} {{$alamat_utama->rt}}/{{$alamat_utama->rw}}
                                         <br>
-                                        STATUS TOKO
+                                        {{$alamat_utama->provinsi}}, {{$alamat_utama->kabupaten}}
                                     </p>
                                 </td>
                             </tr>
@@ -92,7 +92,7 @@
                                                         <br>
                                                         {{\Auth::user()->nama_toko}}
                                                         <br>
-                                                        Alamat TOKO,beserta kota kabupaten
+                                                        {{Str::ucfirst($alamat_utama->kabupaten)}}, {{$alamat_utama->desa}} {{$alamat_utama->rt}}/{{$alamat_utama->rw}}
                                                     </p>
                                                 </td>
 

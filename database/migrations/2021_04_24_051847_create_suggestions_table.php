@@ -15,7 +15,7 @@ class CreateSuggestionsTable extends Migration
     {
         Schema::create('suggestions', function (Blueprint $table) {
             $table->id();
-            $table->string('suggestion');
+            $table->string('suggestion')->nullable();
             $table->enum('rating', ['1', '2', '3', '4', '5']);
             $table->unsignedBigInteger('buyer_id');
             $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade');

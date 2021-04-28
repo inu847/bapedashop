@@ -29,7 +29,6 @@ class ManageOrderController extends Controller
     public function index()
     {
         $orders = Auth::user()->buyer->where('status');
-        $get_order = Auth::user()->orderId->where('buyer_id');
 
         return view('manage-order.index', ['orders' => $orders]);
     }
@@ -65,8 +64,9 @@ class ManageOrderController extends Controller
     {
         $buyer = Buyer::findOrFail($id);
         $orders = Buyer::findOrFail($id)->order;
+        $alamat_utama = \Auth::user()->alamatId->where('status', 'alamat_utama')->first();
         // dd($orders);
-        return view('manage-order.show', ['orders' => $orders, 'buyer' => $buyer]);
+        return view('manage-order.show', ['orders' => $orders, 'buyer' => $buyer, 'alamat_utama' => $alamat_utama]);
     }
 
     /**
@@ -140,34 +140,59 @@ class ManageOrderController extends Controller
         return redirect()->route('manage-order.index')->with('statusdel', 'Data Berhasil Dihapus!!');
     }
 
-    public function formVerivikasiOrder()
+    public function formVerivikasiOrder(Request $request)
     {
-        return view('manage-order.verivikasi');
+        $buyer = "";
+        $orders = "";
+        $no_pesanan = $request->get('no_pesanan');
+        if ($no_pesanan) {
+            $buyer_id = \Auth::user()->buyer->where('enkripsi_token', $no_pesanan)->first();
+            if ($buyer_id) {
+                $buyer = Buyer::findOrFail($buyer_id->id);
+                $orders = Buyer::findOrFail($buyer_id->id)->order;
+            }else{
+                return redirect()->route('verivikasi.order')->with('fail', $no_pesanan.' Tidak Tersedia!!');
+            }
+        }
+
+        return view('manage-order.verivikasi', ['buyer' => $buyer, 'orders' => $orders]);
     }
 
     public function verivikasiOrder(Request $request)
     {
-        $no_pesanan = $request->get('no_pesanan');
+        $no_pesanan = $request->post('no_pesanan');
         $buyers = Buyer::get()->where('enkripsi_token', $no_pesanan);
         if ($buyers->count() > 0) {
             foreach($buyers as $buyer){
                 if($buyer->status){
-                    return redirect()->back()->with('fail', 'order '.$buyer->buyer.' telah disetujui dengan status '.$buyer->status);
+                    $msg = 'order '.$buyer->buyer.' telah disetujui dengan status '.$buyer->status;
+                    // return redirect()->back()->with('fail', 'order '.$buyer->buyer.' telah disetujui dengan status '.$buyer->status);
                 }else{
                     try {
                         $id = $buyer->id;
                         $verivikasi = Buyer::findOrFail($id);
                         $verivikasi->status = 'process';
-                        $verivikasi->save();
+                        $status = $verivikasi->save();
+                        if ($status) {
+                            $msg = 'Buyer atas nama '.ucfirst($buyer->buyer).' di meja '.$buyer->meja.' Berhasil Verivikasi!!';
+                        }
                     } catch (\Throwable $e) {
-                        return redirect()->back()->with('fail', 'Order Tidak Dapat Di Proses');
+                        // return redirect()->back()->with('fail', 'Order Tidak Dapat Di Proses');
+                        $msg = 'Order Tidak Dapat Di Proses';
                     }
-                    return redirect()->back()->with('success', 'Buyer atas nama '.ucfirst($buyer->buyer).' di meja '.$buyer->meja.' Berhasil Verivikasi!!');
+                    // return redirect()->back()->with('success', 'Buyer atas nama '.ucfirst($buyer->buyer).' di meja '.$buyer->meja.' Berhasil Verivikasi!!');
                 }
             }
         }else{
-            return redirect()->back()->with('fail', 'Order dengan id ' .$no_pesanan. ' Tidak Terdaftar!!');
+            $msg = 'Order dengan id ' .$no_pesanan. ' Tidak Terdaftar!!';
+            // return redirect()->back()->with('fail', 'Order dengan id ' .$no_pesanan. ' Tidak Terdaftar!!');
         }
+
+        $output = array(
+            'message' => $msg
+        );
+
+        return $output;
     }
     
     public function status($id)
@@ -177,19 +202,5 @@ class ManageOrderController extends Controller
         $status->save();
 
         return redirect()->route('manage-order.index')->with('status', 'Update Order Success!!');
-    }
-
-    public function qrcode(Request $request)
-    {
-        $buyer = "";
-        $orders = "";
-        $no_pesanan = $request->get('no_pesanan');
-        $buyer_id = Buyer::get()->where('enkripsi_token', $no_pesanan)->first();
-        if ($buyer_id) {
-            $buyer = Buyer::findOrFail($buyer_id->id);
-            $orders = Buyer::findOrFail($buyer_id->id)->order;
-            // dd($orders);
-        }
-        return view('manage-order.scanBarcode', ['buyer' => $buyer, 'orders' => $orders]);
     }
 }
