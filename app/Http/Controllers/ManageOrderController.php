@@ -194,6 +194,34 @@ class ManageOrderController extends Controller
 
         return $output;
     }
+
+    public function verivikasiByGet(Request $request)
+    {
+        $no_pesanan = $request->post('no_pesanan');
+        $buyers = Buyer::get()->where('enkripsi_token', $no_pesanan);
+        if ($buyers->count() > 0) {
+            foreach($buyers as $buyer){
+                if($buyer->status){
+                    return redirect()->back()->with('fail', 'order '.$buyer->buyer.' telah disetujui dengan status '.$buyer->status);
+                }else{
+                    try {
+                        $id = $buyer->id;
+                        $verivikasi = Buyer::findOrFail($id);
+                        $verivikasi->status = 'process';
+                        $status = $verivikasi->save();
+                        if ($status) {
+                            return redirect()->back()->with('success', 'Buyer atas nama '.ucfirst($buyer->buyer).' di meja '.$buyer->meja.' Berhasil Verivikasi!!');
+                        }
+                    } catch (\Throwable $e) {
+                        return redirect()->back()->with('fail', 'Order Tidak Dapat Di Proses');
+                    }
+                    return redirect()->back()->with('success', 'Buyer atas nama '.ucfirst($buyer->buyer).' di meja '.$buyer->meja.' Berhasil Verivikasi!!');
+                }
+            }
+        }else{
+            return redirect()->back()->with('fail', 'Order dengan id ' .$no_pesanan. ' Tidak Terdaftar!!');
+        }
+    }
     
     public function status($id)
     {
@@ -202,5 +230,13 @@ class ManageOrderController extends Controller
         $status->save();
 
         return redirect()->route('manage-order.index')->with('status', 'Update Order Success!!');
+    }
+
+    public function deleteOrder($id)
+    {
+        $order = \Auth::user()->orderId->find($id);
+        $order->delete();
+        
+        return redirect()->back()->with('fail', 'Succes Delete Order');
     }
 }

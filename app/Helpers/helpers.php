@@ -1,14 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
+use App\Models\Buyer;
 
-    function dataToko()
+    function orderId()
     {
-        // Rating Toko
-        $banyak_rating = Auth::user()->suggestion->count('rating');
-        $jumlah_rating = Auth::user()->suggestion->sum('rating');
-        $total_rating = $jumlah_rating / $banyak_rating;
-        $pembulatan_rating = round($total_rating);
+        $order = Order::get();
+        return $order;
+    }
+
+    function qrcode($enkripsi)
+    {
+        $buyer = Buyer::get()->where('enkripsi_token', $enkripsi)->first();
+        return $buyer;
     }
 
 ?>

@@ -75,6 +75,7 @@
                             <th>Nama Product</th>
                             <th>Quantity</th>
                             <th>Row Total</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,6 +87,16 @@
                                 @endforeach
                                 <td>{{$order->quantity}} Pcs</td>
                                 <td>Rp.{{$order->row_total}}</td>
+                                <td>
+                                    <form action="{{ route('verivikasi.delete', [$order->id]) }}" 
+                                        method="POST"
+                                        enctype="multipart/form-data"
+                                        onsubmit="return confirm('Delete This Order??')">
+                                        @csrf
+                                    {{-- <input type="hidden" name="_method" value="DELETE"> --}}
+                                    <button class="btn btn-danger btn-sm" type="submit"><i class="simple-icon-trash"></i></button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -109,9 +120,18 @@
                         </td>
                         <td>Rp.{{$buyer->subtotal}}</td>
                     </tr>
-                </table>        
+                    <tr>
+                        <td colspan="3" style=" width: 100%; padding-bottom:15px;">
+                            <form action="{{ route('verivikasi.byGet') }}" method="POST" enctype="multipart/form-data" style="font-size: 13px; text-decoration: none; line-height: 1.6; color:#909090; margin-top:0px; margin-bottom:0; text-align: right;">
+                                @csrf             
+                                <input type="hidden" class="form-control" name="no_pesanan" value="{{$buyer->enkripsi_token}}">                  
+                                <button class="btn btn-sm btn-primary mb-2" type="submit"></i>Verivikasi Sekarang</button>
+                            </form> 
+                        </td>
+                    </tr>
+                </table>
             </div>
-        </div>  
+        </div>
     @endif
     
 

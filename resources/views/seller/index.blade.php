@@ -58,7 +58,9 @@
                             </div>
                         </div>
                         <div class="search-sm d-inline-block float-md-left mr-1 mb-1 align-top">
-                            <input placeholder="Search...">
+                            <form action="{{ route('manage-product.index')}}">
+                                <input placeholder="Search..." name="keywoard" value="{{Request::get('keyword')}}" type="text">
+                            </form>
                         </div>
                     </div>
                     <div class="float-md-right">
@@ -115,11 +117,7 @@
                                         action="{{route('manage-product.destroy', [$product->id])}}"
                                         method="POST">
                                         @csrf
-                                        <input
-                                        type="hidden"
-                                        name="_method"
-                                        value="DELETE">
-
+                                        <input type="hidden" name="_method" value="DELETE">
                                         <a href="{{route('manage-product.show', [$product->id])}}"
                                             class="btn btn-primary btn-sm"><i class="simple-icon-list mb-2"></i></a>
                                         <a href="{{route('manage-product.edit', [$product->id])}}"

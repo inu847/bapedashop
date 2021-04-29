@@ -27,10 +27,13 @@ class ProductController extends Controller
         // });
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $products = \Auth::user()->productId;
-        
+        $keywoard = $request->get('keywoard');
+        if($keywoard) {
+            $products = Product::where('nama_product', 'LIKE', "%$keywoard%")->paginate(10);
+        }
         return view('seller.index', ['products' => $products]);
     }
 
@@ -41,7 +44,31 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('seller.create');
+        $roles = \Auth::user()->roles;
+        $product = \Auth::user()->productId->count();
+        if(\Auth::user()->status == 'inactive'){
+            return redirect()->back()->with('statusdel', 'Akun Anda Sedang Dalam Tahap Pemeriksaan!!');
+        }else if(\Auth::user()->status == 'active'){
+            if($roles->role == 'trial'){
+                if ($product <= 20) {
+                    return view('seller.create');
+                }else{
+                    return view('tools.index', ['roles' => $roles]);
+                }
+            }else if($roles->role == 'member'){
+                if ($product <= 40) {
+                    return view('seller.create');
+                }else{
+                    return view('tools.index', ['roles' => $roles]);
+                }
+            }else if($roles->role == 'super member'){
+                if ($product <= 200) {
+                    return view('seller.create');
+                }else{
+                    return view('tools.index', ['roles' => $roles]);
+                }
+            }
+        } 
     }
 
     /**

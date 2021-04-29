@@ -28,12 +28,16 @@ class DashboardController extends Controller
         $order_success = \Auth::user()->buyer->where('status', 'success')->count();
         $order_onhold = \Auth::user()->buyer->where('status', 'on hold')->count();
         $recent_order = \Auth::user()->buyer->where('status');
-        $product = 
         // Rating Toko
         $banyak_rating = \Auth::user()->suggestion->count('rating');
         $jumlah_rating = \Auth::user()->suggestion->sum('rating');
-        $total_rating = $jumlah_rating / $banyak_rating;
-        $pembulatan_rating = round($total_rating);
+        if($banyak_rating && $jumlah_rating){
+            $total_rating = $jumlah_rating / $banyak_rating;
+            $pembulatan_rating = round($total_rating);
+        }else{
+            $total_rating = 0;
+            $pembulatan_rating = 0;
+        }
         $suggestion = \Auth::user()->suggestion->where('suggestion')->count();
         // Quantity Order
         $progress_order = $order_pending + $order_onhold;

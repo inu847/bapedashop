@@ -29,7 +29,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::post('logged_in', [LoginController::class, 'authenticate']);
 
 // Buyer Controller
-
+Route::post('/deleteOrder', [BuyerController::class, 'deleteOrder'])->name('deleteOrder.verivikasi');
 Route::post('/user/{id}', [BuyerController::class, 'verivikasiPassword'])->name('verivikasi.password');
 Route::post('suggestion/{id}', [BuyerController::class, 'suggestion'])->name('create.suggestion');
 Route::post('/addtocartajax', [BuyerController::class, 'ajaxaddtocart']);
@@ -37,6 +37,7 @@ Route::get('capps', [BuyerController::class, 'cariToko'])->name('filter.toko');
 Route::get('scan', [BuyerController::class, 'finishOrder'])->name('order.finish');
 Route::get('scan-qr', [BuyerController::class, 'qrGenerator'])->name('order.qrcode');
 Route::resource('cart', BuyerController::class);
+Route::post('keranjang', [BuyerController::class, 'cart'])->name('cart.buyer');
 
 Auth::routes();
 
@@ -48,7 +49,9 @@ Route::get('/product', [ProductController::class, 'index']);
 Route::resource('manage-product', ProductController::class);
 
 // Manage Order Controller
+Route::post('manage-order/verivikasidelete/{id}', [ManageOrderController::class, 'deleteOrder'])->name('verivikasi.delete');
 Route::post('manage-order/verivikasipesanan', [ManageOrderController::class, 'verivikasiOrder'])->name('verivikasi.pesanan');
+Route::post('manage-order/verivikasiByGet', [ManageOrderController::class, 'verivikasiByGet'])->name('verivikasi.byGet');
 Route::get('manage-order/verivikasi', [ManageOrderController::class, 'formVerivikasiOrder'])->name('verivikasi.order');
 Route::resource('manage-order', ManageOrderController::class);
 Route::post('status/{id}', [ManageOrderController::class, 'status'])->name('tools.status');

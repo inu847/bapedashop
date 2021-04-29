@@ -73,7 +73,6 @@ class BuyerController extends Controller
         }
         $validator = \Validator::make($request->all(), $invoices);
 
-        $user_id = $request->get('user_id');
         $buyer_id = $request->get('buyer_id');
         $buyer = Buyer::findOrFail($buyer_id);
         $buyer->total_quantity = $request->get('total_quantity');
@@ -97,7 +96,7 @@ class BuyerController extends Controller
         }
         $enkripsi = $buyer->enkripsi_token;
 
-        return view('buyer.qrcode', ['enkripsi' => $enkripsi, 'buyer' => $buyer, 'user_id' => $user_id]);
+        return view('buyer.qrcode', ['enkripsi' => $enkripsi]);
     }
 
     /**
@@ -229,6 +228,23 @@ class BuyerController extends Controller
         }else{
             return 'Not Found!!';
         }
+    }
 
+    public function deleteOrder(Request $request)
+    {
+        $id = $request->post('id');
+
+        $order = Order::find($id);
+        $status = $order->delete();
+
+        if ($status) {
+            $msg = "Order Delete";
+        } else {
+            $msg = "Failed Delete Order";
+        }
+        $output = array(
+            'message' => $msg
+        );
+        return  $output;
     }
 }
