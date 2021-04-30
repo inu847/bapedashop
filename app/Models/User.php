@@ -82,6 +82,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Suggestion');
     }
 
+    public function job()
+    {
+        return $this->hasMany('App\Models\Job');
+    }
+
     public function generateToken()
     {
         $this->enkripsi_token = Str::random(60);

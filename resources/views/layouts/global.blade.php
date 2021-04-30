@@ -203,9 +203,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('tools.index') }}">
-                            <i class="simple-icon-diamond"></i> 
-                            <span>Tools</span>
+                        <a href="{{ route('manage-job.index') }}">
+                            <i class="simple-icon-grid"></i> 
+                            <span>Jobs</span>
                         </a>
                     </li>
                     <li>
@@ -218,12 +218,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('logout') }}" 
-                            onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();" ><i class="simple-icon-logout"></i> Sign out</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>        
+                        <a href="{{ route('tools.index') }}">
+                            <i class="simple-icon-diamond"></i> 
+                            <span>Tools</span>
                         </a>
                     </li>
                 </ul>

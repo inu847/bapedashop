@@ -10,7 +10,7 @@
     }
 </style>
 @section('content')
-    {{-- <input type="hidden" value="{{$buyer = qrcode($enkripsi)}}"> --}}
+    <input type="hidden" value="{{$buyer = qrcode($enkripsi)}}">
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-5 mx-auto my-auto">

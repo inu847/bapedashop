@@ -44,6 +44,13 @@ class BuyerController extends Controller
         return view('buyer.index', ['user' => $user]);
     }
 
+    public function job($id)
+    {
+        $jobs = User::findorFail($id)->job->where('status', 'active');
+
+        return view('buyer.job', ['jobs' => $jobs]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AlamatController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BuyerController;
@@ -35,6 +35,7 @@ Route::post('suggestion/{id}', [BuyerController::class, 'suggestion'])->name('cr
 Route::post('/addtocartajax', [BuyerController::class, 'ajaxaddtocart']);
 Route::get('capps', [BuyerController::class, 'cariToko'])->name('filter.toko');
 Route::get('scan', [BuyerController::class, 'finishOrder'])->name('order.finish');
+Route::get('lowongan-pekerjaan/{id}', [BuyerController::class, 'job'])->name('buyer.job');
 Route::get('scan-qr', [BuyerController::class, 'qrGenerator'])->name('order.qrcode');
 Route::resource('cart', BuyerController::class);
 Route::post('keranjang', [BuyerController::class, 'cart'])->name('cart.buyer');
@@ -67,3 +68,7 @@ Route::get('/member', [ToolsController::class, 'member'])->name('tools.member');
 Route::get('/superMember', [ToolsController::class, 'superMember'])->name('tools.superMember');
 Route::post('/actionled', [ToolsController::class, 'actionled']);
 Route::resource('tools', ToolsController::class);
+
+// Job Controller
+Route::post('manage-job/{id}', [JobController::class, 'ubahStatus'])->name('job.status');
+Route::resource('manage-job', JobController::class);

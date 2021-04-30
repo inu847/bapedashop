@@ -20,6 +20,9 @@
 							</div>
 						</div>
 						<div>
+							@if ($data->job->where('status', 'active')->count() > 0)
+								<a href="{{ route('buyer.job', [$data->id]) }}" class="btn btn-warning btn-sm mb-2">Lowongan Kerja</a>
+							@endif
 							<div class="col-12 col-xs-6">
 								<div class="form-group mb-1">
 									@if ($data->suggestion->count('rating') && $data->suggestion->sum('rating'))
