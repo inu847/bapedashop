@@ -13,4 +13,9 @@ class Job extends Model
     {
         return $this->belongsTo('App\Models\Users');
     }
+    
+    public function alamat()
+    {
+        return $this->hasMany('App\Models\Alamat');
+    }
 }

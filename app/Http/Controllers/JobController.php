@@ -63,7 +63,7 @@ class JobController extends Controller
         $new_job->skill = $request->get('skill');
         $new_job->email = $request->get('email');
         $new_job->status = "active";
-        $new_job->location = $request->get('location');
+        $new_job->alamat_id = $request->get('location');
         $user->job()->save($new_job);
 
         return redirect()->route('manage-job.index')->with('success', 'Lowongan Pekerjaan Berhasil Dipublish!!');
@@ -117,7 +117,7 @@ class JobController extends Controller
         $new_job->skill = $request->get('skill');
         $new_job->email = $request->get('email');
         $new_job->status = $request->get('status');
-        $new_job->location = $request->get('location');
+        $new_job->alamat_id = $request->get('location');
         $user->job()->save($new_job);
 
         return redirect()->route('manage-job.index')->with('success', 'Lowongan Pekerjaan Berhasil Ubah!!');

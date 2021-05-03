@@ -39,7 +39,7 @@
                             <div class="row">
                                 <p class="col-sm-2"><strong>Alamat</strong> </p>
                             </div>
-                            <input type="hidden" value="{{$alamat = alamatJob($job->id)}}">
+                            <input type="hidden" value="{{$alamat = alamatJob($job->alamat_id)}}">
                             <div class="row">
                                 <p class="text-muted col-sm-2">Provinsi </p>
                                 <span class="col-sm-3">{{$alamat->provinsi}}</span>

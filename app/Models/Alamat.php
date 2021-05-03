@@ -13,4 +13,9 @@ class Alamat extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    function Job()
+    {
+        return $this->belongsTo('App\Models\Job');
+    }
 }
