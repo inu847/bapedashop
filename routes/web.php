@@ -9,6 +9,7 @@ use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ManageOrderController;
 use App\Http\Controllers\ToolsController;
+use App\Http\Controllers\LinkGrabCurlController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Another Login
 Route::post('logged_in', [LoginController::class, 'authenticate']);
 
+Route::get('grabUid', [LinkGrabCurlController::class, 'getUserid']);
+Route::get('grabItems', [LinkGrabCurlController::class, 'getProduct']);
 // Buyer Controller
 Route::post('/deleteOrder', [BuyerController::class, 'deleteOrder'])->name('deleteOrder.verivikasi');
 Route::post('/user/{id}', [BuyerController::class, 'verivikasiPassword'])->name('verivikasi.password');
