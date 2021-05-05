@@ -27,6 +27,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('logged_in', [LoginController::class, 'authenticate']);
 
 Route::get('grabbingProduct', [LinkGrabCurlController::class, 'grabbingProduct']);
+Route::get('grabbingProduct2', [LinkGrabCurlController::class, 'grabbingProduct2']);
+
 // Buyer Controller
 Route::post('/deleteOrder', [BuyerController::class, 'deleteOrder'])->name('deleteOrder.verivikasi');
 Route::post('/user/{id}', [BuyerController::class, 'verivikasiPassword'])->name('verivikasi.password');
