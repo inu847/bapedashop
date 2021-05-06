@@ -47,6 +47,8 @@ Auth::routes();
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 // Product Controller
+Route::post('manage-product/botMigrasiUpload', [ProductController::class, 'botMigrasiUpload']);
+Route::get('manage-product/creates', [ProductController::class, 'create']);
 Route::get('/product', [ProductController::class, 'index']);
 Route::resource('manage-product', ProductController::class);
 

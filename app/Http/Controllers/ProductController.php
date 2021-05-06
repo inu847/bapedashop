@@ -98,6 +98,7 @@ class ProductController extends Controller
         $new_product->price = $request->get('price');
         $new_product->status = "publish";
         \Auth::user()->productId()->save($new_product);
+        dd($new_product);
         return redirect()->route('manage-product.index')->with('status', 'Create Product Success!!');
     }
 
@@ -185,6 +186,21 @@ class ProductController extends Controller
 
         $delete_product->delete();
         return redirect()->route('manage-product.index')->with('statusdel', 'Data Berhasil Dihapus!!');
+    }
+
+
+    public function botMigrasiUpload(Request $request)
+    {
+        // $user = User::findOrFail($request->get('user_id'));
+        $new_product = new Product();
+        $new_product->nama_product = $request->get('nama_product');
+        $new_product->deskripsi = $request->get('deskripsi');
+        $new_product->stok = $request->get('stok');
+        $new_product->images = $request->get('images');
+        $new_product->price = $request->get('price');
+        $new_product->status = "publish";
+        \Auth::user()->productId()->save($new_product);
+        // return redirect()->route('manage-product.index');
     }
     
 }
