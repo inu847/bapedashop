@@ -4,6 +4,7 @@
     Scrap
 @endsection
 
+
 @section('content')
     Halaman Scrap </p>
 
@@ -23,5 +24,4 @@
             @endforeach
         </div>
     </div>
-
 @endsection
