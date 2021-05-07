@@ -11,3 +11,12 @@ from itemadapter import ItemAdapter
 class CappsPipeline:
     def process_item(self, item, spider):
         return item
+
+    # SAVE IMAGE
+    # os.chdir('C:/xampp/htdocs/scraping/books_crawler')
+
+    #     if item['images'][0]['path']:
+    #         new_image_name = item['title'][0] + '.jpg'
+    #         new_image_path = 'full/' + new_image_name
+
+    #         os.rename(item['images'][0]['path'], new_image_path)

@@ -8,5 +8,7 @@ import scrapy
 
 class CappsItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    nama_product = scrapy.Field()
+    description = scrapy.Field()
+    image = scrapy.Field()
+    price = scrapy.Field()

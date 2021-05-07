@@ -10,18 +10,27 @@
 
     <div class="container">
         <div class="row">
-            @foreach ($hasil as $data)
-                <div class="col-lg-4 mb-2">
-                    <div class="card">
-                        <div class="card-body">
-                            <ul>
-                                <li> Id Item <b>{{ $data->itemid }}</b></li>
-                                <li> Nama barang <b>{{ $data->name }}</b></li>
-                            </ul>
+            @if (isset($hasil))
+                @foreach ($hasil as $data)
+                    <div class="col-lg-4 mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <ul>
+                                    <li class="nama_product">{{ $data->name }}</li>
+                                    <li class="description">{{ getProductDetail($userId, $data->itemid) }}</li>
+                                    <li class="image">
+                                        {{-- <img src="{{asset('https://cf.shopee.co.id/file/'.$data->image)}}" width="150px" height="150px" alt=""> --}}
+                                        {{ $data->image }}
+                                    </li>
+                                    <li class="price">{{ $data->price }}</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            @else
+                Not Found
+            @endif
         </div>
     </div>
 @endsection

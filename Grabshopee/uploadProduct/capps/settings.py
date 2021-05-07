@@ -65,6 +65,12 @@ ROBOTSTXT_OBEY = False
 #ITEM_PIPELINES = {
 #    'capps.pipelines.CappsPipeline': 300,
 #}
+ITEM_PIPELINES = {
+#    'scrapy.pipelines.images.ImagesPipeline': 1,
+    # 'books_crawler.pipelines.BooksCrawlerPipeline': 2
+   'capps.pipelines.CappsPipeline': 300,
+}
+# IMAGES_STORE = 'C:/xampp/htdocs/scraping/books_crawler'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

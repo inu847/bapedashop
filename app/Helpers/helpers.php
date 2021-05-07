@@ -23,9 +23,8 @@ function alamatJob($id)
     return $job;
 }
 
-function h_apiShopeeUser()
+function h_apiShopeeUser($UsernameShopee)
 {
-    $UsernameShopee = 'farhan.id';
     $curl = curl_init();
     curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://shopee.co.id/api/v4/shop/get_shop_detail?username=' . $UsernameShopee,
@@ -42,6 +41,7 @@ function h_apiShopeeUser()
 
     return json_decode($response);
 }
+
 function h_apiShopee($url, $referer = "http://www.google.com/")
 {
     $ua = ['Mozilla/5.0 (Linux; Android 11) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 11; SM-A205U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 11; SM-A102U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 11; SM-G960U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 11; SM-N960U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 11; LM-Q720) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 11; LM-X420) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36', 'Mozilla/5.0 (Linux; Android 11; LM-Q710(FGN)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36'];
@@ -75,4 +75,33 @@ function h_apiShopee($url, $referer = "http://www.google.com/")
     curl_close($data);
 
     return json_decode($hasil);
+}
+
+function detailProduct($itemId, $userId)
+{
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://shopee.co.id/api/v2/item/get?itemid='.$itemId.'&shopid='.$userId,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+    ));
+    $response = curl_exec($curl);
+    curl_close($curl);
+    // return $response;
+    return json_decode($response);
+}
+
+function getProductDetail($userId, $itemId)
+{
+    $url = 'https://shopee.co.id/api/v2/item/get?itemid='.$itemId.'&shopid='.$userId;
+    $hasilcurl = h_apiShopee($url);
+    $loop = $hasilcurl;
+    $results = array();
+    $results = $loop->item->description;
+    return $results;
 }
