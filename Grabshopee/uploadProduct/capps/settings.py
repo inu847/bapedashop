@@ -66,11 +66,12 @@ ROBOTSTXT_OBEY = False
 #    'capps.pipelines.CappsPipeline': 300,
 #}
 ITEM_PIPELINES = {
-#    'scrapy.pipelines.images.ImagesPipeline': 1,
+    'scrapy.pipelines.images.ImagesPipeline': 1,
     # 'books_crawler.pipelines.BooksCrawlerPipeline': 2
-   'capps.pipelines.CappsPipeline': 300,
+    'capps.pipelines.CappsPipeline': 300,
 }
-# IMAGES_STORE = 'C:/xampp/htdocs/scraping/books_crawler'
+
+IMAGES_STORE = 'C:/xampp/htdocs/bapedashop/Grabshopee/uploadProduct'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

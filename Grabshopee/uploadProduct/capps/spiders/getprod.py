@@ -2,6 +2,8 @@ import scrapy
 from scrapy.http import Request
 import os
 import requests
+from scrapy.loader import ItemLoader
+from capps.items import CappsItem
 
 class GetprodSpider(scrapy.Spider):
     name = 'getprod'
@@ -23,10 +25,16 @@ class GetprodSpider(scrapy.Spider):
                 prices = response.xpath('//*[@class="price"]/text()').extract()
                     
                 for nama_product, description, image, price in zip(nama_products, descriptions, images, prices):
-                    yield{'nama_product': nama_product,
-                            'description' : description,
-                            'image' : image,
-                            'price': price}
+                    img = image.strip()
+                    image_url = "https://cf.shopee.co.id/file/"+img
+                    loader = ItemLoader(item=CappsItem(), selector=image_url)
+                    loader.add_value('image_urls', image_url)
+                    loader.add_value('nama_product', nama_product)
+                    loader.add_value('description', description)
+                    loader.add_value('img', img)
+                    loader.add_value('price', price)
+                    yield loader.load_item()                    
+                    
                     #try: 
                     #    os.mkdir('images') 
                     #except: 
