@@ -1,7 +1,0 @@
-link API shopId
-https://shopee.co.id/api/v4/shop/get_shop_detail?username=farhan.id
-
-link API Product json
-https://shopee.co.id/api/v4/search/search_items?by=pop&limit=30&match_id=33276518&newest=0&order=desc&page_type=shop&scenario=PAGE_OTHERS&version=2
-https://shopee.co.id/api/v4/search/search_items?by=pop&limit=30&match_id=33276518&newest=30&order=desc&page_type=shop&scenario=PAGE_OTHERS&version=2
-https://shopee.co.id/api/v4/search/search_items?by=pop&limit=30&match_id=33276518&newest=60&order=desc&page_type=shop&scenario=PAGE_OTHERS&version=2

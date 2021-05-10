@@ -29,7 +29,9 @@
                     </div>
                 @endforeach
             @else
-                Not Found
+                <div>
+                    <p class="not-found"></p> Not Found
+                </div>
             @endif
         </div>
     </div>
