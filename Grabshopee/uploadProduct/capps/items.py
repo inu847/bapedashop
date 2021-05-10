@@ -13,3 +13,7 @@ class CappsItem(scrapy.Item):
     # price = scrapy.Field()
     image_urls = scrapy.Field()
     images = scrapy.Field()
+    # nama_product = scrapy.Field()
+    # description = scrapy.Field()
+    # img = scrapy.Field()
+    # price = scrapy.Field()
