@@ -109,12 +109,12 @@
         <div class="row list disable-text-selection" data-check-all="checkAll">
             @foreach ($products as $product)
             <div class="col-xl-3 col-lg-4 col-12 col-sm-6 mb-4">
-                <div class="card">
+                <div class="card" style="height: 425px">
                     <div class="position-relative">
                         <a href="Pages.Product.Detail.html">
                             @if($product->images)
                             <div class="side_view">
-                                <img src="{{asset('storage/'. $product->images)}}" alt="Card image cap" class="card-img-top" style="height: 216px;" />
+                                <img src="{{productImages($product->images)}}" alt="Card image cap" class="card-img-top" height="210" />
                             </div>
                             @else
                                 No avatar
@@ -131,7 +131,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <a href="#">
-                                    <p class="list-item-heading mb-4 pt-1" style="font-size: 20px;">{{ $product->nama_product }}</p>
+                                    <p class="list-item-heading mb-4 pt-1" style="font-size: 20px;">{{ Str::limit($product->nama_product, 40) }}</p>
                                 </a>
                                 <div class="row">
                                     <div class="col-7 mb-3">

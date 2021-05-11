@@ -16,4 +16,9 @@ class Customer extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    function keranjang()
+    {
+        return $this->hasMany('App\Models\Keranjang');
+    }
 }

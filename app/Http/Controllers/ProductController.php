@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
+use Excel;
+use App\Imports\ProductImport;
 
 class ProductController extends Controller
 {
@@ -202,4 +204,15 @@ class ProductController extends Controller
         // return redirect()->route('manage-product.index');
     }
     
+    public function importform()
+    {
+        return view('seller.import');
+    }
+
+    public function importProduct(Request $request)
+    {
+        Excel::import(new ProductImport, $request->file('files'));
+
+        return "import success";
+    }
 }

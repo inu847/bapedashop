@@ -105,3 +105,21 @@ function getProductDetail($userId, $itemId)
     $results = $loop->item->description;
     return $results;
 }
+
+function keranjangCustomer()
+{
+    $keranjang = \Auth::guard('customer')->user()->keranjang->count();
+
+    return $keranjang;
+}
+
+function productImages($product)
+{
+    $img =  explode("/", $product);
+    if($img[0] == "product_images"){
+        $images = asset('storage/'. $product);
+    }else{
+        $images = 'https://cf.shopee.co.id/file/'. $product;
+    }
+    return $images;
+}

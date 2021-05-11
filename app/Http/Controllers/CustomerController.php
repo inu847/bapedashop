@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Keranjang;
 
 class CustomerController extends Controller
 {
@@ -37,7 +38,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 
     }
 
     /**
@@ -83,5 +84,24 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function addToKeranjang(Request $request)
+    {
+        $product_id = $request->get('product_id');
+
+        $cart = new Keranjang();
+        $cart->prod_id = $request->get('product_id');
+        $status = \Auth::guard('customer')->user()->keranjang()->save($cart);
+
+        if ($status) {
+            $msg = "Add To cart Success";
+        } else {
+            $msg = "Add Product Failed";
+        }
+        $output = array(
+            'message' => $msg
+        );
+        return  $output;
     }
 }

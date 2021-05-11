@@ -47,6 +47,7 @@ Route::post('keranjang', [BuyerController::class, 'cart'])->name('cart.buyer');
 
 Auth::routes();
 // CUSTOMER
+Route::post('/addtocartcustomer', [CustomerController::class, 'addToKeranjang']);
 Route::resource('customer', CustomerController::class);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -55,6 +56,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 // Product Controller
+Route::post('manage-product/import', [ProductController::class, 'importProduct'])->name('product.import');
+Route::get('manage-product/importform', [ProductController::class, 'importform']);
 Route::post('manage-product/botMigrasiUpload', [ProductController::class, 'botMigrasiUpload']);
 Route::get('manage-product/creates', [ProductController::class, 'create']);
 Route::get('/product', [ProductController::class, 'index']);

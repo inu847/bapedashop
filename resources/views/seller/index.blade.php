@@ -90,8 +90,7 @@
                             <a class="d-flex align-self-center" href="Apps.MediaLibrary.ViewImage.html">
                                 @if($product->images)
                                     <div class="side_view">
-                                        <img src="{{asset('storage/'. $product->images)}}" alt="uploaded image" class="list-media-thumbnail responsive border-0" />
-                                    {{-- <img src="{{asset('storage/'. $baju->avatar)}}" width="128px" id="myImg" alt="Baju : {{$baju->kategori}} {{$baju->title}}"/> --}}
+                                        <img src="{{productImages($product->images)}}" alt="uploaded image" class="list-media-thumbnail responsive border-0" />
                                     </div>
                                 @else
                                     No avatar

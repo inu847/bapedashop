@@ -49,11 +49,13 @@
             <div class="header-icons d-inline-block align-middle">
 
                 <div class="position-relative d-inline-block">
+                    @if (Auth::guard('customer')->user())
                     <button class="header-icon btn btn-empty" type="button" id="notificationButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="simple-icon-bell"></i>
-                        <span class="count">3</span>
+                        <i class="iconsminds-shopping-cart"></i>
+                            <span class="count">{{keranjangCustomer()}}</span>
                     </button>
+                    @endif
                     <div class="dropdown-menu dropdown-menu-right mt-3 position-absolute" id="notificationDropdown">
                         <div class="scroll">
                             <div class="d-flex flex-row mb-3 pb-3 border-bottom">
