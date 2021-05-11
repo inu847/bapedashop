@@ -98,7 +98,6 @@ class ProductController extends Controller
         $new_product->price = $request->get('price');
         $new_product->status = "publish";
         \Auth::user()->productId()->save($new_product);
-        dd($new_product);
         return redirect()->route('manage-product.index')->with('status', 'Create Product Success!!');
     }
 

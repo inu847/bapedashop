@@ -10,6 +10,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ManageOrderController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\LinkGrabCurlController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +25,10 @@ use App\Http\Controllers\LinkGrabCurlController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-// Another Login
-Route::post('logged_in', [LoginController::class, 'authenticate']);
+// Login Customer
+Route::get('login/customer', [AuthController::class, 'index'])->name('login_customer');
+Route::post('do_login_customer', [AuthController::class, 'login'])->name('do_login_customer');
+Route::post('do_logout_customer', [AuthController::class, 'logout'])->name('do_logout_customer');
 
 Route::get('grabbingProduct', [LinkGrabCurlController::class, 'grabbingProduct']);
 Route::get('grabbingProduct2', [LinkGrabCurlController::class, 'grabbingProduct2']);
@@ -42,6 +46,10 @@ Route::resource('cart', BuyerController::class);
 Route::post('keranjang', [BuyerController::class, 'cart'])->name('cart.buyer');
 
 Auth::routes();
+// CUSTOMER
+Route::resource('customer', CustomerController::class);
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 // Dashboard Controller
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
