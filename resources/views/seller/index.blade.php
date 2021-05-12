@@ -24,6 +24,7 @@
             <div class="mb-3">
                 <h1>Manage Product</h1>
                 <div class="text-zero top-right-button-container">
+                    <a href="{{ route('manage-product.import')}}" class="btn btn-danger btn-lg top-right-button mr-1"><i class="simple-icon-plus"> Import Product</i></a>
                     <a href="{{ route('manage-product.create')}}" class="btn btn-primary btn-lg top-right-button mr-1"><i class="simple-icon-plus"> Create New Product</i></a>
                 </div>
                 <nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">

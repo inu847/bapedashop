@@ -19,7 +19,7 @@ class ProductImport implements ToModel,WithHeadingRow
             'nama_product' => $row['nama_product'],
             'deskripsi' => $row['deskripsi'],
             'price' => $row['price'],
-            'images' => $row['images'],
+            'images' => $row['image'],
             'stok' => '20',
             'status' => 'publish',
             'user_id' => Auth::user()->id,

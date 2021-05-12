@@ -21,4 +21,9 @@ class Customer extends Authenticatable
     {
         return $this->hasMany('App\Models\Keranjang');
     }
+
+    function alamatCustomer()
+    {
+        return $this->hasMany('App\Models\AlamatCustomer');
+    }
 }

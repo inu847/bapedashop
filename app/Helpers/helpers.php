@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\Buyer;
 use App\Models\Alamat;
+use App\Models\Keranjang;
+use App\Models\Product;
 
 function orderId()
 {
@@ -108,7 +110,7 @@ function getProductDetail($userId, $itemId)
 
 function keranjangCustomer()
 {
-    $keranjang = \Auth::guard('customer')->user()->keranjang->count();
+    $keranjang = \Auth::guard('customer')->user()->keranjang->where('status', null)->count();
 
     return $keranjang;
 }
@@ -122,4 +124,11 @@ function productImages($product)
         $images = 'https://cf.shopee.co.id/file/'. $product;
     }
     return $images;
+}
+
+function keranjang($id)
+{
+    $carts = Product::find($id);
+
+    return $carts;
 }

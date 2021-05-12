@@ -13,10 +13,11 @@ def getprod(userid):
     workbook = xlsxwriter.Workbook('sheet/'+userid+'.xlsx')
     worksheet = workbook.add_worksheet()
     # HEADER
-    worksheet.write(0, 0, 'nama product')
+    worksheet.write(0, 0, 'nama_product')
     worksheet.write(0, 1, 'deskripsi')
     worksheet.write(0, 2, 'price')
     worksheet.write(0, 3, 'image')
+    worksheet.write(0, 3, 'stok')
     for page in range(0,2011,30):
         URL = 'http://127.0.0.1:8000/grabbingProduct2?username='+str(userid)+'&page='+str(page)
         print("[ INFO ]__main__ :"+URL)
@@ -27,6 +28,7 @@ def getprod(userid):
         nama_products = dom.xpath('//*[@class="nama_product"]/text()')
         descriptions = dom.xpath('//*[@class="description"]/text()')
         images = dom.xpath('//*[@class="image"]/text()')
+        stocks = dom.xpath('//*[@class="stock"]/text()')
         prices = dom.xpath('//*[@class="price"]/text()')
 
         if not nama_products:
@@ -34,7 +36,7 @@ def getprod(userid):
             workbook.close()
             return False
 
-        for nama_product, description, image, price, x in zip(nama_products, descriptions, images, prices, range(page+1, page+31)):
+        for nama_product, description, image, stock, price, x in zip(nama_products, descriptions, images, stocks, prices, range(page+1, page+31)):
             img = image.strip()
 
             # DOWNLOAD IMAGES
@@ -57,6 +59,8 @@ def getprod(userid):
                     worksheet.write(x, y, str(price))
                 elif y == 3:
                     worksheet.write(x, y, img)
+                elif y == 4:
+                    worksheet.write(x, y, stock)
     workbook.close()
 
 def user():

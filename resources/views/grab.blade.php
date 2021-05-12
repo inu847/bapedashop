@@ -22,6 +22,7 @@
                                         {{-- <img src="{{asset('https://cf.shopee.co.id/file/'.$data->image)}}" width="150px" height="150px" alt=""> --}}
                                         {{ $data->image }}
                                     </li>
+                                    <li class="stock">{{ $data->stock }}</li>
                                     <li class="price">{{ $data->price }}</li>
                                 </ul>
                             </div>

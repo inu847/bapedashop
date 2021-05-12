@@ -27,7 +27,6 @@
 <body id="app-container" class="menu-hidden show-spinner">
     <nav class="navbar fixed-top">
         <div class="d-flex align-items-center navbar-left">
-            <u><a href="{{ route('dashboard.index') }}" class="ml-3" rel="noopener noreferrer" target="_blank">Seller</a></u>
             <form action="{{ route('filter.toko')}}" class="ml-3">
                 <div class="input-group">
                     <input placeholder="Search..." value="{{Request::get('keyword')}}" name="keyword" type="text" class="form-control">
@@ -36,11 +35,10 @@
                     </div>
                 </div> 
             </form>
-   
         </div>
         
 
-        <a class="navbar-logo" href="{{ url('/') }}">
+        <a class="navbar-logo" href="{{ url('/customer') }}">
             <img src="{{asset('img/LOGO 4.png')}}" alt="" style="height: 50px;">
         </a>
         
@@ -50,65 +48,11 @@
 
                 <div class="position-relative d-inline-block">
                     @if (Auth::guard('customer')->user())
-                    <button class="header-icon btn btn-empty" type="button" id="notificationButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="{{ route('customer.create') }}" class="header-icon btn btn-empty" id="notificationButton">
                         <i class="iconsminds-shopping-cart"></i>
                             <span class="count">{{keranjangCustomer()}}</span>
-                    </button>
+                    </a>
                     @endif
-                    <div class="dropdown-menu dropdown-menu-right mt-3 position-absolute" id="notificationDropdown">
-                        <div class="scroll">
-                            <div class="d-flex flex-row mb-3 pb-3 border-bottom">
-                                <a href="#">
-                                    <img src="img/profile-pic-l-2.jpg" alt="Notification Image"
-                                        class="img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                                </a>
-                                <div class="pl-3">
-                                    <a href="#">
-                                        <p class="font-weight-medium mb-1">Joisse Kaycee just sent a new comment!</p>
-                                        <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-row mb-3 pb-3 border-bottom">
-                                <a href="#">
-                                    <img src="img/notification-thumb.jpg" alt="Notification Image"
-                                        class="img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                                </a>
-                                <div class="pl-3">
-                                    <a href="#">
-                                        <p class="font-weight-medium mb-1">1 item is out of stock!</p>
-                                        <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-row mb-3 pb-3 border-bottom">
-                                <a href="#">
-                                    <img src="img/notification-thumb-2.jpg" alt="Notification Image"
-                                        class="img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                                </a>
-                                <div class="pl-3">
-                                    <a href="#">
-                                        <p class="font-weight-medium mb-1">New order received! It is total $147,20.</p>
-                                        <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-row mb-3 pb-3 ">
-                                <a href="#">
-                                    <img src="{{ asset('img/notification-thumb-3.jpg')}}" alt="Notification Image"
-                                        class="img-thumbnail list-thumbnail xsmall border-0 rounded-circle" />
-                                </a>
-                                <div class="pl-3">
-                                    <a href="#">
-                                        <p class="font-weight-medium mb-1">3 items just added to wish list by a user!
-                                        </p>
-                                        <p class="text-muted mb-0 text-small">09.04.2018 - 12:45</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <button class="header-icon btn btn-empty d-none d-sm-inline-block" type="button" id="fullScreenButton">
@@ -133,10 +77,9 @@
                     </button>
 
                     <div class="dropdown-menu dropdown-menu-right mt-3">
-                        <a class="dropdown-item" href="#">Account</a>
-                        <a class="dropdown-item" href="#">Features</a>
+                        <a class="dropdown-item" href="{{ route('accountCustomer') }}">Account</a>
+                        <a class="dropdown-item" href="{{ route('pesanan.saya') }}">Pesanan Saya</a>
                         <a class="dropdown-item" href="#">History</a>
-                        <a class="dropdown-item" href="#">Support</a>
                         <a class="dropdown-item" href="{{ route('do_logout_customer') }}" 
                             onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();" >Sign out</a>
@@ -149,7 +92,7 @@
                 <a href="{{ route('login_customer') }}" class="text-sm mr-1">Log in</a>
                 <span>|</span>
                 @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="ml-1 text-sm mr-2">Register</a>
+                    <a href="{{ route('formRegister.customer') }}" class="ml-1 text-sm mr-2">Register</a>
                 @endif
             @endif
         </div>

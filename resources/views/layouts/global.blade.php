@@ -167,7 +167,7 @@
                 <a href="{{ route('login') }}" class="text-sm mr-1">Log in</a>
                 <span>|</span>
                 @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="ml-1 text-sm mr-2">Register</a>
+                    <a href="{{ route('formRegister.user') }}" class="ml-1 text-sm mr-2">Register</a>
                 @endif
                 @endauth
             @endif

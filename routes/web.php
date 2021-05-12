@@ -12,6 +12,7 @@ use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\LinkGrabCurlController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,13 @@ use App\Http\Controllers\CustomerController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// REGISTER
+Route::get('register/user', [RegisterController::class, 'registerUser'])->name('formRegister.user');
+Route::get('register/customer', [RegisterController::class, 'registerCustomer'])->name('formRegister.customer');
+Route::post('register/user', [RegisterController::class, 'registerUser'])->name('register.user');
+Route::post('register/customer', [RegisterController::class, 'registerCustomer'])->name('register.customer');
+
 // Login Customer
 Route::get('login/customer', [AuthController::class, 'index'])->name('login_customer');
 Route::post('do_login_customer', [AuthController::class, 'login'])->name('do_login_customer');
@@ -47,6 +55,12 @@ Route::post('keranjang', [BuyerController::class, 'cart'])->name('cart.buyer');
 
 Auth::routes();
 // CUSTOMER
+Route::post('customer/account/hapus-alamat/{id}', [CustomerController::class, 'hapusAlamatCustomer'])->name('hapusAlamatCustomer');
+Route::post('customer/account/tambah-alamat', [CustomerController::class, 'alamatCustomer'])->name('alamatCustomer');
+Route::get('customer/account/alamat', [CustomerController::class, 'formalamatCustomer'])->name('formalamatCustomer');
+Route::get('customer/account', [CustomerController::class, 'accountCustomer'])->name('accountCustomer');
+Route::get('customer/pesanan', [CustomerController::class, 'pesananSaya'])->name('pesanan.saya');
+Route::any('/customer/sell', [CustomerController::class, 'sellCustomer'])->name('sellCustomer');
 Route::post('/addtocartcustomer', [CustomerController::class, 'addToKeranjang']);
 Route::resource('customer', CustomerController::class);
 
@@ -57,7 +71,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 // Product Controller
 Route::post('manage-product/import', [ProductController::class, 'importProduct'])->name('product.import');
-Route::get('manage-product/importform', [ProductController::class, 'importform']);
+Route::get('manage-product/importform', [ProductController::class, 'importform'])->name('manage-product.import');;
 Route::post('manage-product/botMigrasiUpload', [ProductController::class, 'botMigrasiUpload']);
 Route::get('manage-product/creates', [ProductController::class, 'create']);
 Route::get('/product', [ProductController::class, 'index']);
