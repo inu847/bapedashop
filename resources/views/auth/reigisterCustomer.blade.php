@@ -23,7 +23,7 @@
                         </a>
                         <h6 class="mb-4">Register</h6>
 
-                        <form method="POST" action="{{route('user.store')}}" enctype="multipart/form-data">
+                        <form method="POST" action="{{route('register.customer')}}" enctype="multipart/form-data">
                             @csrf
 
                             <label class="form-group has-float-label mb-4">
@@ -35,15 +35,7 @@
                                     </span>
                                 @enderror
                             </label>
-                            <label class="form-group has-float-label mb-4">
-                                <input id="nama_toko" type="text" class="form-control @error('nama_toko') is-invalid @enderror" name="nama_toko" value="{{ old('nama_toko') }}" required autocomplete="nama_toko" autofocus/>
-                                <span>Nama Toko</span>
-                                @error('nama_toko')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </label>
+                            
                             <label class="form-group has-float-label mb-4">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus/>
                                 <span>Email</span>
@@ -62,25 +54,7 @@
                                     </span>
                                 @enderror
                             </label>
-                            <i><small class="text-muted">//* berisi data toko yang didaftarkan, seperti:surat izin usaha, foto tempat usaha </small></i>
-                            <label class="form-group has-float-label mb-4 mt-1">
-                                <input id="file_penunjang" type="file" class="form-control @error('file_penunjang') is-invalid @enderror" name="file_penunjang" value="{{ old('file_penunjang') }}" required autocomplete="file_penunjang" autofocus/>
-                                <span>File Penunjang</span>
-                                @error('file_penunjang')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </label>
-                            <label class="form-group has-float-label mb-4">
-                                <input id="ktp" type="file" class="form-control @error('ktp') is-invalid @enderror" name="ktp" value="{{ old('ktp') }}" required autocomplete="ktp" autofocus/>
-                                <span>Ktp</span>
-                                @error('ktp')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </label>
+                            
                             <label class="form-group has-float-label mb-4">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="password" autofocus/>
                                 <span>Password</span>

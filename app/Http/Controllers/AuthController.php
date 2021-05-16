@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function index()
+    public function customer()
     {
         return view('auth.customer');
     }
 
-    public function login(Request $request)
+    public function loginCustomer(Request $request)
     {
         $this->validate($request, [
             'email' => 'required',
@@ -28,13 +28,8 @@ class AuthController extends Controller
         if (Auth::guard('customer')->attempt($input)) {
             return redirect()->route('customer.index');
         }else{
-            dd("GAGAL");
+            return redirect()->back()->with('status', 'GAGAL LOGIN!!');
         }
-    }
-    
-    public function register(Request $request)
-    {
-        
     }
 
     public function logout()
@@ -44,4 +39,38 @@ class AuthController extends Controller
 
         return redirect()->route('customer.index');
     }
+
+
+    public function admin()
+    {
+        return view('admin.login');
+    }
+
+    public function loginAdmin(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required',
+            'password' => 'required',
+           ]);
+        
+        $input = $request->all();
+        unset($input['_token']);
+        
+        // dd($input);
+        if (Auth::guard('admin')->attempt($input)) {
+            return redirect()->route('admin.index');
+        }else{
+            return redirect()->back()->with('status', 'GAGAL LOGIN!!');
+        }
+    }
+
+    public function logoutAdmin()
+    {
+        $user = Auth::guard('admin');
+        $user->logout();
+
+        return redirect()->route('admin.index');
+    }
+
+
 }

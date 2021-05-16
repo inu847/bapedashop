@@ -13,7 +13,7 @@ use App\Http\Controllers\LinkGrabCurlController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RegisterController;
-
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,18 +25,26 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
+// Route::get('tes', function () {
+//     return view('layouts.admin');
+// });
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // REGISTER
-Route::get('register/user', [RegisterController::class, 'registerUser'])->name('formRegister.user');
-Route::get('register/customer', [RegisterController::class, 'registerCustomer'])->name('formRegister.customer');
-Route::post('register/user', [RegisterController::class, 'registerUser'])->name('register.user');
-Route::post('register/customer', [RegisterController::class, 'registerCustomer'])->name('register.customer');
+Route::get('register/user', [RegisterController::class, 'formRegisterUser'])->name('formRegister.user');
+Route::get('register/customer', [RegisterController::class, 'formRegisterCustomer'])->name('formRegister.customer');
+Route::post('register/form-user', [RegisterController::class, 'registerUser'])->name('register.user');
+Route::post('register/form-customer', [RegisterController::class, 'registerCustomer'])->name('register.customer');
 
 // Login Customer
-Route::get('login/customer', [AuthController::class, 'index'])->name('login_customer');
-Route::post('do_login_customer', [AuthController::class, 'login'])->name('do_login_customer');
+Route::get('login/customer', [AuthController::class, 'customer'])->name('login_customer');
+Route::post('do_login_customer', [AuthController::class, 'loginCustomer'])->name('do_login_customer');
 Route::post('do_logout_customer', [AuthController::class, 'logout'])->name('do_logout_customer');
+// Login Admin
+Route::get('login/admin', [AuthController::class, 'admin'])->name('login_admin');
+Route::post('do_login_admin', [AuthController::class, 'loginadmin'])->name('do_login_admin');
+Route::post('do_logout_admin', [AuthController::class, 'logout'])->name('do_logout_admin');
 
 Route::get('grabbingProduct', [LinkGrabCurlController::class, 'grabbingProduct']);
 Route::get('grabbingProduct2', [LinkGrabCurlController::class, 'grabbingProduct2']);
@@ -54,6 +62,18 @@ Route::resource('cart', BuyerController::class);
 Route::post('keranjang', [BuyerController::class, 'cart'])->name('cart.buyer');
 
 Auth::routes();
+
+// ADMIN
+
+Route::post('user/admin/registrasi', [AdminController::class, 'registrasi'])->name('registrasi.admin');
+Route::get('user/admin/registrasi', [AdminController::class, 'formRegistrasi'])->name('admin.registrasi');
+Route::get('user/seller', [AdminController::class, 'userSeller'])->name('admin.seller');
+Route::put('user/seller/{id}', [AdminController::class, 'setujuiAkunSeller'])->name('active.seller');
+Route::get('user/customer', [AdminController::class, 'userCustomer'])->name('admin.customer');
+Route::put('user/seller/{id}', [AdminController::class, 'setujuiAkunCustomer'])->name('active.customer');
+Route::get('user/admin', [AdminController::class, 'userAdmin'])->name('admin.admin');
+Route::resource('admin', AdminController::class);
+
 // CUSTOMER
 Route::post('customer/account/hapus-alamat/{id}', [CustomerController::class, 'hapusAlamatCustomer'])->name('hapusAlamatCustomer');
 Route::post('customer/account/tambah-alamat', [CustomerController::class, 'alamatCustomer'])->name('alamatCustomer');

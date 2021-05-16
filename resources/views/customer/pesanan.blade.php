@@ -116,9 +116,9 @@
                         <p class="mb-0 text-muted text-small w-15 w-sm-50">Rp.{{$pesanan->row_total}}</p>
                         <p class="mb-0 text-muted text-small w-15 w-sm-50">{{$pesanan->created_at->diffForHumans()}}</p>
                         <div class="w-15 w-sm-50">
-                            @if ( $pesanan->status == 'process' )
+                            @if ( $pesanan->status == 'process' || $pesanan->status == 'belum dibayar')
                                 <span class="badge badge-pill badge-primary">{{ Str::upper($pesanan->status) }}</span>
-                            @elseif ($pesanan->status == 'success')
+                            @elseif ($pesanan->status == 'success' || $pesanan->status == 'dibayar')
                                 <span class="badge badge-pill badge-success">{{ Str::upper($pesanan->status) }}</span>
                             @elseif ($pesanan->status == 'on hold')
                                 <span class="badge badge-pill badge-danger">{{ Str::upper($pesanan->status) }}</span>

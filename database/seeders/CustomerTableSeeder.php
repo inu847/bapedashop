@@ -16,7 +16,6 @@ class CustomerTableSeeder extends Seeder
     {
         DB::table('customers')->insert([
             'name' => 'Zua',
-            'nama_toko' => 'zua',
             'phone' => '089601351252',
             'email' => 'zua@gmail.com',
             'status' => 'active',

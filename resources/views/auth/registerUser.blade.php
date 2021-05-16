@@ -23,7 +23,7 @@
                         </a>
                         <h6 class="mb-4">Register</h6>
 
-                        <form method="POST" action="{{route('user.store')}}" enctype="multipart/form-data">
+                        <form method="POST" action="{{route('register.user')}}" enctype="multipart/form-data">
                             @csrf
 
                             <label class="form-group has-float-label mb-4">
