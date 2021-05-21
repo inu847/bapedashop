@@ -14,6 +14,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StreamController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,7 +49,10 @@ Route::post('do_login_admin', [AuthController::class, 'loginadmin'])->name('do_l
 Route::post('do_logout_admin', [AuthController::class, 'logout'])->name('do_logout_admin');
 
 Route::get('grabbingProduct', [LinkGrabCurlController::class, 'grabbingProduct']);
-Route::get('grabbingProduct2', [LinkGrabCurlController::class, 'grabbingProduct2']);
+
+Route::get('youtube', [StreamController::class, 'formYoutube']);
+Route::post('youtube/idVidio', [StreamController::class, 'idVidio'])->name('idVidioYt');
+Route::get('youtube/watch', [StreamController::class, 'youtube']);
 
 // Buyer Controller
 Route::post('/deleteOrder', [BuyerController::class, 'deleteOrder'])->name('deleteOrder.verivikasi');
