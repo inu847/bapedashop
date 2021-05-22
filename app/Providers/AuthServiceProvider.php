@@ -25,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('halaman-product-seller', function($user){
+            return count(array_intersect(["active"], [$user->status]));
+        });
     }
 }

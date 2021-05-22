@@ -183,7 +183,7 @@
 
         $.ajax({
             type: 'POST',
-            url: '/addtocartajax',
+            url: '/buyer/addtocart',
             data: {
                 "_token": "{{ csrf_token() }}",
                 id: getid,

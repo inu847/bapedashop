@@ -22,11 +22,11 @@ class ProductController extends Controller
 
         $this->middleware('auth');
 
-        // $this->middleware(function($request, $next){
+        $this->middleware(function($request, $next){
 
-        // if(Gate::allows('manage-order')) return $next($request);
-        //     abort(403, 'Anda tidak memiliki cukup hak akses');
-        // });
+        if(Gate::allows('halaman-product-seller')) return $next($request);
+            abort(403, 'Akun Anda Sedang Dalam Tahap Pemeriksaan');
+        });
     }
 
     public function index(Request $request)

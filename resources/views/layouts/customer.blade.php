@@ -27,9 +27,9 @@
 <body id="app-container" class="menu-hidden show-spinner">
     <nav class="navbar fixed-top">
         <div class="d-flex align-items-center navbar-left">
-            <form action="{{ route('filter.toko')}}" class="ml-3">
+            <form action="{{ route('customers.index')}}" class="ml-3">
                 <div class="input-group">
-                    <input placeholder="Search..." value="{{Request::get('keyword')}}" name="keyword" type="text" class="form-control">
+                    <input placeholder="Search..." value="{{Request::get('keywoard')}}" name="keywoard" type="text" class="form-control">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit" value="Filter">Button</button>
                     </div>

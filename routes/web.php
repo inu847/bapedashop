@@ -33,95 +33,102 @@ use App\Http\Controllers\StreamController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// REGISTER
-Route::get('register/user', [RegisterController::class, 'formRegisterUser'])->name('formRegister.user');
-Route::get('register/customer', [RegisterController::class, 'formRegisterCustomer'])->name('formRegister.customer');
-Route::post('register/form-user', [RegisterController::class, 'registerUser'])->name('register.user');
-Route::post('register/form-customer', [RegisterController::class, 'registerCustomer'])->name('register.customer');
-
-// Login Customer
-Route::get('login/customer', [AuthController::class, 'customer'])->name('login_customer');
-Route::post('do_login_customer', [AuthController::class, 'loginCustomer'])->name('do_login_customer');
-Route::post('do_logout_customer', [AuthController::class, 'logout'])->name('do_logout_customer');
-// Login Admin
-Route::get('login/admin', [AuthController::class, 'admin'])->name('login_admin');
-Route::post('do_login_admin', [AuthController::class, 'loginadmin'])->name('do_login_admin');
-Route::post('do_logout_admin', [AuthController::class, 'logout'])->name('do_logout_admin');
-
+// FEATURE & TOOLS
 Route::get('grabbingProduct', [LinkGrabCurlController::class, 'grabbingProduct']);
-
 Route::get('youtube', [StreamController::class, 'formYoutube']);
 Route::post('youtube/idVidio', [StreamController::class, 'idVidio'])->name('idVidioYt');
 Route::get('youtube/watch', [StreamController::class, 'youtube']);
 
-// Buyer Controller
-Route::post('/deleteOrder', [BuyerController::class, 'deleteOrder'])->name('deleteOrder.verivikasi');
-Route::post('/user/{id}', [BuyerController::class, 'verivikasiPassword'])->name('verivikasi.password');
-Route::post('suggestion/{id}', [BuyerController::class, 'suggestion'])->name('create.suggestion');
-Route::post('/addtocartajax', [BuyerController::class, 'ajaxaddtocart']);
-Route::get('capps', [BuyerController::class, 'cariToko'])->name('filter.toko');
-Route::get('scan', [BuyerController::class, 'finishOrder'])->name('order.finish');
-Route::get('lowongan-pekerjaan/{id}', [BuyerController::class, 'job'])->name('buyer.job');
-Route::get('scan-qr', [BuyerController::class, 'qrGenerator'])->name('order.qrcode');
-Route::resource('cart', BuyerController::class);
-Route::post('keranjang', [BuyerController::class, 'cart'])->name('cart.buyer');
+// REGISTER
+Route::prefix('register')->group(function () {
+    Route::get('user', [RegisterController::class, 'formRegisterUser'])->name('formRegister.user');
+    Route::get('customer', [RegisterController::class, 'formRegisterCustomer'])->name('formRegister.customer');
+    Route::post('form-user', [RegisterController::class, 'registerUser'])->name('register.user')->middleware('throttle:5,1440');
+    Route::post('form-customer', [RegisterController::class, 'registerCustomer'])->name('register.customer')->middleware('throttle:5,1440');    
+});
 
-Auth::routes();
-
-// ADMIN
-
-Route::post('user/admin/registrasi', [AdminController::class, 'registrasi'])->name('registrasi.admin');
-Route::get('user/admin/registrasi', [AdminController::class, 'formRegistrasi'])->name('admin.registrasi');
-Route::get('user/seller', [AdminController::class, 'userSeller'])->name('admin.seller');
-Route::put('user/seller/{id}', [AdminController::class, 'setujuiAkunSeller'])->name('active.seller');
-Route::get('user/customer', [AdminController::class, 'userCustomer'])->name('admin.customer');
-Route::put('user/seller/{id}', [AdminController::class, 'setujuiAkunCustomer'])->name('active.customer');
-Route::get('user/admin', [AdminController::class, 'userAdmin'])->name('admin.admin');
-Route::resource('admin', AdminController::class);
+// Buyer
+Route::prefix('buyer')->group(function () {
+    Route::post('deleteOrder', [BuyerController::class, 'deleteOrder'])->name('deleteOrder.verivikasi');
+    Route::post('user/{id}', [BuyerController::class, 'verivikasiPassword'])->name('verivikasi.password');
+    Route::post('suggestion/{id}', [BuyerController::class, 'suggestion'])->name('create.suggestion');
+    Route::post('addtocart', [BuyerController::class, 'ajaxaddtocart']);
+    Route::get('capps', [BuyerController::class, 'cariToko'])->name('filter.toko');
+    Route::get('scan', [BuyerController::class, 'finishOrder'])->name('order.finish');
+    Route::get('lowongan-pekerjaan/{id}', [BuyerController::class, 'job'])->name('buyer.job');
+    Route::get('scan-qr', [BuyerController::class, 'qrGenerator'])->name('order.qrcode');
+    Route::resource('cart', BuyerController::class);
+    Route::post('keranjang', [BuyerController::class, 'cart'])->name('cart.buyer'); 
+});
 
 // CUSTOMER
-Route::post('customer/account/hapus-alamat/{id}', [CustomerController::class, 'hapusAlamatCustomer'])->name('hapusAlamatCustomer');
-Route::post('customer/account/tambah-alamat', [CustomerController::class, 'alamatCustomer'])->name('alamatCustomer');
-Route::get('customer/account/alamat', [CustomerController::class, 'formalamatCustomer'])->name('formalamatCustomer');
-Route::get('customer/account', [CustomerController::class, 'accountCustomer'])->name('accountCustomer');
-Route::get('customer/pesanan', [CustomerController::class, 'pesananSaya'])->name('pesanan.saya');
-Route::any('/customer/sell', [CustomerController::class, 'sellCustomer'])->name('sellCustomer');
-Route::post('/addtocartcustomer', [CustomerController::class, 'addToKeranjang']);
+Route::prefix('customers')->group(function () {
+    Route::get('/', [HomeController::class, 'customer'])->name('customers.index');
+    Route::post('account/hapus-alamat/{id}', [CustomerController::class, 'hapusAlamatCustomer'])->name('hapusAlamatCustomer');
+    Route::post('account/tambah-alamat', [CustomerController::class, 'alamatCustomer'])->name('alamatCustomer');
+    Route::get('account/alamat', [CustomerController::class, 'formalamatCustomer'])->name('formalamatCustomer');
+    Route::get('account', [CustomerController::class, 'accountCustomer'])->name('accountCustomer');
+    Route::get('pesanan', [CustomerController::class, 'pesananSaya'])->name('pesanan.saya');
+    Route::any('sell', [CustomerController::class, 'sellCustomer'])->name('sellCustomer');
+    Route::post('addtocartcustomer', [CustomerController::class, 'addToKeranjang']);
+    // Login Customer
+    Route::get('login', [AuthController::class, 'customer'])->name('login_customer');
+    Route::post('do_login_customer', [AuthController::class, 'loginCustomer'])->name('do_login_customer');
+    Route::post('do_logout_customer', [AuthController::class, 'logout'])->name('do_logout_customer');
+});
 Route::resource('customer', CustomerController::class);
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+// ADMIN
+Route::prefix("admins")->group(function(){
+    Route::post('registrasi', [AdminController::class, 'registrasi'])->name('registrasi.admin');
+    Route::get('registrasi', [AdminController::class, 'formRegistrasi'])->name('admin.registrasi');
+    Route::get('seller', [AdminController::class, 'userSeller'])->name('admin.seller');
+    Route::put('seller/{id}', [AdminController::class, 'setujuiAkunSeller'])->name('active.seller');
+    Route::get('customer', [AdminController::class, 'userCustomer'])->name('admin.customer');
+    Route::put('customer/{id}', [AdminController::class, 'setujuiAkunCustomer'])->name('active.customer');
+    Route::get('akun', [AdminController::class, 'userAdmin'])->name('admin.admin');
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    // Login Admin
+    Route::get('login', [AuthController::class, 'admin'])->name('login_admin');
+    Route::post('do_login_admin', [AuthController::class, 'loginadmin'])->name('do_login_admin');
+    Route::post('do_logout_admin', [AuthController::class, 'logout'])->name('do_logout_admin');
+});
 
-// Dashboard Controller
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+// Seller
+Auth::routes();
+Route::prefix('seller')->group(function () {
+    // Dashboard Controller
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
-// Product Controller
-Route::post('manage-product/import', [ProductController::class, 'importProduct'])->name('product.import');
-Route::get('manage-product/importform', [ProductController::class, 'importform'])->name('manage-product.import');;
-Route::post('manage-product/botMigrasiUpload', [ProductController::class, 'botMigrasiUpload']);
-Route::get('manage-product/creates', [ProductController::class, 'create']);
-Route::get('/product', [ProductController::class, 'index']);
-Route::resource('manage-product', ProductController::class);
+    // Product Controller
+    Route::post('manage-product/import', [ProductController::class, 'importProduct'])->name('product.import');
+    Route::get('manage-product/importform', [ProductController::class, 'importform'])->name('manage-product.import');;
+    Route::post('manage-product/botMigrasiUpload', [ProductController::class, 'botMigrasiUpload']);
+    Route::get('manage-product/creates', [ProductController::class, 'create']);
+    Route::get('/product', [ProductController::class, 'index']);
+    Route::resource('manage-product', ProductController::class);
 
-// Manage Order Controller
-Route::post('manage-order/verivikasidelete/{id}', [ManageOrderController::class, 'deleteOrder'])->name('verivikasi.delete');
-Route::post('manage-order/verivikasipesanan', [ManageOrderController::class, 'verivikasiOrder'])->name('verivikasi.pesanan');
-Route::post('manage-order/verivikasiByGet', [ManageOrderController::class, 'verivikasiByGet'])->name('verivikasi.byGet');
-Route::get('manage-order/verivikasi', [ManageOrderController::class, 'formVerivikasiOrder'])->name('verivikasi.order');
-Route::resource('manage-order', ManageOrderController::class);
-Route::post('status/{id}', [ManageOrderController::class, 'status'])->name('tools.status');
+    // Manage Order Controller
+    Route::post('manage-order/verivikasidelete/{id}', [ManageOrderController::class, 'deleteOrder'])->name('verivikasi.delete');
+    Route::post('manage-order/verivikasipesanan', [ManageOrderController::class, 'verivikasiOrder'])->name('verivikasi.pesanan');
+    Route::post('manage-order/verivikasiByGet', [ManageOrderController::class, 'verivikasiByGet'])->name('verivikasi.byGet');
+    Route::get('manage-order/verivikasi', [ManageOrderController::class, 'formVerivikasiOrder'])->name('verivikasi.order');
+    Route::resource('manage-order', ManageOrderController::class);
+    Route::post('status/{id}', [ManageOrderController::class, 'status'])->name('tools.status');
 
-// User Controller
-Route::get('setting/alamat', [UserController::class, 'showAlamat'])->name('setting.alamat');
-Route::post('setting/alamat', [UserController::class, 'alamat'])->name('add.alamat');
-Route::post('setting/alamat/{id}', [UserController::class, 'hapusAlamat'])->name('alamat.destroy');
-Route::resource('user', UserController::class);
+    // User Controller
+    Route::get('setting/alamat', [UserController::class, 'showAlamat'])->name('setting.alamat');
+    Route::post('setting/alamat', [UserController::class, 'alamat'])->name('add.alamat');
+    Route::post('setting/alamat/{id}', [UserController::class, 'hapusAlamat'])->name('alamat.destroy');
+    Route::resource('user', UserController::class);
 
-// Tools Controller
-Route::get('/member', [ToolsController::class, 'member'])->name('tools.member');
-Route::get('/superMember', [ToolsController::class, 'superMember'])->name('tools.superMember');
-Route::post('/actionled', [ToolsController::class, 'actionled']);
-Route::resource('tools', ToolsController::class);
+    // Tools Controller
+    Route::get('/member', [ToolsController::class, 'member'])->name('tools.member');
+    Route::get('/superMember', [ToolsController::class, 'superMember'])->name('tools.superMember');
+    Route::post('/actionled', [ToolsController::class, 'actionled']);
+    Route::resource('tools', ToolsController::class);
 
-// Job Controller
-Route::post('manage-job/{id}', [JobController::class, 'ubahStatus'])->name('job.status');
-Route::resource('manage-job', JobController::class);
+    // Job Controller
+    Route::post('manage-job/{id}', [JobController::class, 'ubahStatus'])->name('job.status');
+    Route::resource('manage-job', JobController::class);
+});

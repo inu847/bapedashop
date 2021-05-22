@@ -19,7 +19,7 @@ def getprod(userid):
     worksheet.write(0, 3, 'image')
     worksheet.write(0, 3, 'stok')
     for page in range(0,2011,30):
-        URL = 'http://127.0.0.1:8000/grabbingProduct2?username='+str(userid)+'&page='+str(page)
+        URL = 'http://127.0.0.1:8000/grabbingProduct?username='+str(userid)+'&page='+str(page)
         print("[ INFO ]__main__ :"+URL)
         r = requests.get(URL)
         soup = BeautifulSoup(r.content, 'html5lib')
@@ -56,7 +56,9 @@ def getprod(userid):
                 elif y == 1:
                     worksheet.write(x, y, description)
                 elif y == 2:
-                    worksheet.write(x, y, str(price))
+                    lengthPrice = len(price)-5
+                    resultsPrice = price[:lengthPrice]
+                    worksheet.write(x, y, str(resultsPrice))
                 elif y == 3:
                     worksheet.write(x, y, img)
                 elif y == 4:

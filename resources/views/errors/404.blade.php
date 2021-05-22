@@ -5,7 +5,7 @@
 @endsection
 
 @section('exceptions')
-    <h4>{{$exception->getMessage()}}</h4>
+    <h4>Halaman Tidak Ditemukan</h4>
 @endsection
 
 @section('status')

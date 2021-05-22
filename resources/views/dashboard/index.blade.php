@@ -171,7 +171,7 @@
                                         <input type="hidden" value="{{$get_order = Auth::user()->orderId->where('buyer_id', $order->id)->first()}}">
                                         <input type="hidden" value="{{$prod = \App\Models\Product::find($get_order->prod_id)}}">
 
-                                        <img src="{{ asset('storage/'. $prod->images) }}" alt="Marble Cake" class="list-thumbnail border-0" style="width: 130px;"/>
+                                        <img src="{{productImages($prod->images)}}" alt="Marble Cake" class="list-thumbnail border-0" style="width: 130px;"/>
                                         @if ( $order->status == 'process' )
                                             <span class="badge badge-pill badge-theme-1 position-absolute badge-top-right">{{ Str::upper($order->status) }}</span>
                                         @elseif ($order->status == 'success')

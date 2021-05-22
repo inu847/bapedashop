@@ -43,7 +43,11 @@
                                     </div>
                                 </div>
                                 <footer>
-                                    <a class="btn btn-primary btn-block mb-1" href="javascript:void(0)" id="addtocartcustomer" data-id="{{ $product->id }}"><i class="iconsminds-add-cart"></i>Add To cart </a>
+                                    @if (Auth::guard('customer')->check() == true)
+                                        <a class="btn btn-primary btn-block mb-1" href="javascript:void(0)" id="addtocartcustomer" data-id="{{ $product->id }}"><i class="iconsminds-add-cart"></i>Add To cart </a>
+                                    @else
+                                        <a class="btn btn-primary btn-block mb-1" href="{{ route('login_customer')}}" id="addtocartcustomer"><i class="iconsminds-add-cart"></i>Add To cart </a>
+                                    @endif
                                 </footer>
                             </div>
                         </div>
@@ -65,7 +69,7 @@
 
     $.ajax({
         type: 'POST',
-        url: '/addtocartcustomer',
+        url: '/customers/addtocartcustomer',
         data: {
             "_token": "{{ csrf_token() }}",
             product_id: getid,

@@ -10,7 +10,11 @@
             <img src="{{asset('img/LOGO 4.png')}}" alt="" style="height: 70px;"/>
         </div>
         <div class="panel mw320">
-
+            @if(session('status'))
+                <div class="alert alert-danger">
+                    {{session('status')}}
+                </div>
+            @endif
             <form method="POST" action="{{ route('do_login_admin') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="panel-body pn mv10">

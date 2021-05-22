@@ -12,7 +12,11 @@ class AuthController extends Controller
 {
     public function customer()
     {
-        return view('auth.customer');
+        if(\Auth::guard('customer')->check() == true){
+            return redirect()->route('customer.index');
+        }else{
+            return view('auth.customer');
+        }
     }
 
     public function loginCustomer(Request $request)
@@ -20,13 +24,20 @@ class AuthController extends Controller
         $this->validate($request, [
             'email' => 'required',
             'password' => 'required',
-           ]);
+        ]);
         
         $input = $request->all();
         unset($input['_token']);
         
         if (Auth::guard('customer')->attempt($input)) {
-            return redirect()->route('customer.index');
+            if(Auth::guard('customer')->user()->status == 'active'){
+                return redirect()->route('customer.index');
+            }else{
+                $user = Auth::guard('customer');
+                $user->logout();
+
+                return redirect()->route('login_customer')->with('status', 'Akun Anda Dinonaktikan');
+            }
         }else{
             return redirect()->back()->with('status', 'GAGAL LOGIN!!');
         }
@@ -43,7 +54,11 @@ class AuthController extends Controller
 
     public function admin()
     {
-        return view('admin.login');
+        if(\Auth::guard('admin')->check() == true){
+            return redirect()->route('admin.index');
+        }else{
+            return view('admin.login');
+        }
     }
 
     public function loginAdmin(Request $request)
@@ -51,14 +66,21 @@ class AuthController extends Controller
         $this->validate($request, [
             'email' => 'required',
             'password' => 'required',
-           ]);
+        ]);
         
         $input = $request->all();
         unset($input['_token']);
         
         // dd($input);
         if (Auth::guard('admin')->attempt($input)) {
-            return redirect()->route('admin.index');
+            if(Auth::guard('admin')->user()->status == 'active'){
+                return redirect()->route('admin.index');
+            }else{
+                $user = Auth::guard('admin');
+                $user->logout();
+
+                return redirect()->route('login_admin')->with('status', 'Akun Anda Dinonaktikan');
+            }
         }else{
             return redirect()->back()->with('status', 'GAGAL LOGIN!!');
         }

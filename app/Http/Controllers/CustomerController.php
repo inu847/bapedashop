@@ -14,11 +14,9 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $products = Product::paginate(50)->where('status', 'publish');
 
-        return view('customer.index', ['products' => $products]);
+    public function __construct(){
+        $this->middleware('customer');
     }
 
     /**
