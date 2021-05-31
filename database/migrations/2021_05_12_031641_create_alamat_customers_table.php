@@ -15,8 +15,6 @@ class CreateAlamatCustomersTable extends Migration
     {
         Schema::create('alamat_customers', function (Blueprint $table) {
             $table->id();
-            $table->string("provinsi");
-            $table->string("kabupaten");
             $table->string("desa");
             $table->string("kecamatan");
             $table->string("rt");
@@ -24,7 +22,12 @@ class CreateAlamatCustomersTable extends Migration
             $table->string("kode_pos");
             $table->string("alamat");
             $table->enum("status", ["alamat_utama", "alamat_toko", "alamat_pengembalian"]);
+
             // Relationship one to many
+            $table->unsignedBigInteger("province_id");
+            $table->foreign("province_id")->references("id")->on("provinces")->onDelete('cascade');
+            $table->unsignedBigInteger("city_id");
+            $table->foreign("city_id")->references("id")->on("cities")->onDelete('cascade');         
             $table->unsignedBigInteger("customer_id");
             $table->foreign("customer_id")->references("id")->on("customers")->onDelete('cascade');
             $table->timestamps();

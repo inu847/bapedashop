@@ -6,6 +6,7 @@ use App\Models\AlamatCustomer;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Keranjang;
+use App\Models\Province;
 
 class CustomerController extends Controller
 {
@@ -24,6 +25,14 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function index()
+    {
+        $products = Product::paginate(30);
+
+        return view('customer.index', ['products' => $products]);
+    }
+
     public function create()
     {
         $carts = \Auth::guard('customer')->user()->keranjang->where('status', null);
@@ -176,8 +185,8 @@ class CustomerController extends Controller
         $alamat_utama = \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_utama')->count();
         $alamat_toko = \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_toko')->count();
         $alamat_pengembalian = \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_pengembalian')->count();
-        
-        return view('customer.alamat', ['alamats' => $alamats, 'alamat_utama' => $alamat_utama, 'alamat_toko' => $alamat_toko, 'alamat_pengembalian' => $alamat_pengembalian]);
+        $provinces = Province::get();
+        return view('customer.alamat', ['provinces' => $provinces, 'alamats' => $alamats, 'alamat_utama' => $alamat_utama, 'alamat_toko' => $alamat_toko, 'alamat_pengembalian' => $alamat_pengembalian]);
     }
 
     public function alamatCustomer(Request $request)

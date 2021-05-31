@@ -15,8 +15,6 @@ class CreateAlamatTable extends Migration
     {
         Schema::create('alamats', function (Blueprint $table) {
             $table->id();
-            $table->string("provinsi");
-            $table->string("kabupaten");
             $table->string("desa");
             $table->string("kecamatan");
             $table->string("rt");
@@ -25,6 +23,10 @@ class CreateAlamatTable extends Migration
             $table->string("alamat");
             $table->enum("status", ["alamat_utama", "alamat_toko", "alamat_pengembalian"]);
             // Relationship one to many
+            $table->unsignedBigInteger("province_id");
+            $table->foreign("province_id")->references("id")->on("provinces")->onDelete('cascade');
+            $table->unsignedBigInteger("city_id");
+            $table->foreign("city_id")->references("id")->on("cities")->onDelete('cascade');         
             $table->unsignedBigInteger("user_id");
             $table->foreign("user_id")->references("id")->on("users");
             $table->timestamps();

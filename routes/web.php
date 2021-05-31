@@ -15,6 +15,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StreamController;
+use App\Http\Controllers\PembayaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,10 +35,10 @@ use App\Http\Controllers\StreamController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // FEATURE & TOOLS
-Route::get('grabbingProduct', [LinkGrabCurlController::class, 'grabbingProduct']);
 Route::get('youtube', [StreamController::class, 'formYoutube']);
 Route::post('youtube/idVidio', [StreamController::class, 'idVidio'])->name('idVidioYt');
 Route::get('youtube/watch', [StreamController::class, 'youtube']);
+// Route::get('grabbingProduct', [LinkGrabCurlController::class, 'grabbingProduct']);
 
 // REGISTER
 Route::prefix('register')->group(function () {
@@ -75,6 +76,10 @@ Route::prefix('customers')->group(function () {
     Route::get('login', [AuthController::class, 'customer'])->name('login_customer');
     Route::post('do_login_customer', [AuthController::class, 'loginCustomer'])->name('do_login_customer');
     Route::post('do_logout_customer', [AuthController::class, 'logout'])->name('do_logout_customer');
+    // PEMBAYARAN
+    Route::get('pembayaran/{id}', [PembayaranController::class, 'bayar'])->name('customer.pembayaran');
+    Route::get('cekOngkir', [PembayaranController::class, 'cekOngkir'])->name('cekOngkir.pembayaran');
+    
 });
 Route::resource('customer', CustomerController::class);
 

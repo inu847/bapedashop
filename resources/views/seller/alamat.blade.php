@@ -20,7 +20,6 @@
                 {{-- <div class="col-3 ml-auto mb-3">
                     <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="simple-icon-plus"> Tambah Alamat Baru</i></button>
                 </div> --}}
-                
 
                 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -35,11 +34,22 @@
                                 <form action="{{ route('add.alamat') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group row">
-                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Provinsi</label>
+                                        <label for="province" class="col-sm-2 col-form-label">Provinsi</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputEmail3" placeholder="Masukkan Provinsi Anda" name="provinsi">
+                                            <select name="provinsi" id="province" runat="server" clientidmode="static" class="form-control">
+                                                <option value="" selected disabled>Chose 1</option>
+                                                @foreach ($provinces as $province)
+                                                    <option value="{{$province->id}}" id="{{ $citys = city($province->id) }}">{{$province->province}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="txtZip">Province ID</label>
+                                        <input type="text" id="results">
+                                    </div>
+
                                     <div class="form-group row">
                                         <label for="inputPassword3" class="col-sm-2 col-form-label">Kabupaten</label>
                                         <div class="col-sm-10">
@@ -216,3 +226,12 @@
         </div>
     @endif
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+	$(function(){
+		$("#province").change(function(){
+			var displaycourse=$("#province option:selected").val();
+			$("#results").val(displaycourse);
+		})
+	})
+</script>

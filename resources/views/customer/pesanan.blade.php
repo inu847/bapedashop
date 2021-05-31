@@ -106,7 +106,7 @@
     </div>
     @foreach ($pesanan_saya as $pesanan)
         <input type="hidden" value="{{ $order = keranjang($pesanan->prod_id) }}">
-        {{-- <a href="{{ route('manage-order.show', [$order->id]) }}"> --}}
+        <a href="{{ route('customer.pembayaran', [$pesanan->id]) }}">
             <div class="card d-flex flex-row mb-3">
                 <img src="{{productImages($order->images)}}" alt="{{ $order->product_name }}" class="list-thumbnail responsive border-0 card-img-left" style="width: 150px;"/>
                 <div class="pl-2 d-flex flex-grow-1 min-width-zero">

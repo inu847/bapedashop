@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class LinkGrabCurlController extends Controller
 {
@@ -20,18 +21,24 @@ class LinkGrabCurlController extends Controller
                 $url = 'https://shopee.co.id/api/v4/search/search_items?by=pop&limit=30&match_id=' . $userId . '&newest=' . $page . '&order=desc&page_type=shop&scenario=PAGE_OTHERS&version=2';
                 $hasilcurl = h_apiShopee($url);
                 $loop = $hasilcurl;
-                $data = array();
-
+                $newCollection = array();
+                // $datas = array();
                 foreach ($loop->items as $i => $v) {
-                    $data[] = $v->item_basic;
+                    $data = $v->item_basic;
+                    $results = getProductDetail($userId, $data->itemid);
+                    $newCollection[] = new Collection(["item basic" => $results, 
+                                                        "product name" => $data->name, 
+                                                        "price" => $data->price, 
+                                                        "image" => $data->image,
+                                                        "stock" => $data->stock]);
                 }
-
-                return view('grab', ["hasil" =>  $data, 'userId' => $userId]);
+                return $newCollection;
+                // return view('grab', ["hasil" =>  $data, 'userId' => $userId]);
             }else{
-                return view('grab');
+                // return view('grab');
             }
         }else{
-            return view('grab');
+            // return view('grab');
         }
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\Buyer;
 use App\Models\Alamat;
-use App\Models\Keranjang;
+use App\Models\City;
 use App\Models\Product;
 
 function orderId()
@@ -94,7 +94,6 @@ function detailProduct($itemId, $userId)
     ));
     $response = curl_exec($curl);
     curl_close($curl);
-    // return $response;
     return json_decode($response);
 }
 
@@ -104,7 +103,8 @@ function getProductDetail($userId, $itemId)
     $hasilcurl = h_apiShopee($url);
     $loop = $hasilcurl;
     $results = array();
-    $results = $loop->item->description;
+    // dd($loop->item);
+    $results[] = $loop->item;
     return $results;
 }
 
@@ -131,4 +131,10 @@ function keranjang($id)
     $carts = Product::find($id);
 
     return $carts;
+}
+
+function city($id)
+{
+    $cities = City::where('province_id', $id)->get();
+    return $cities;
 }

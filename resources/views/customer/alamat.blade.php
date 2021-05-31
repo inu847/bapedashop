@@ -37,7 +37,12 @@
                                     <div class="form-group row">
                                         <label for="inputEmail3" class="col-sm-2 col-form-label">Provinsi</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputEmail3" placeholder="Masukkan Provinsi Anda" name="provinsi">
+                                            <select name="provinsi" id="province" runat="server" clientidmode="static" class="form-control">
+                                                <option value="" selected disabled>Chose 1</option>
+                                                @foreach ($provinces as $province)
+                                                    <option value="{{$province->id}}" id="{{ $citys = city($province->id) }}">{{$province->province}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">

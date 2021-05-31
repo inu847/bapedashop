@@ -8,7 +8,8 @@ use App\Models\User;
 use App\Models\Buyer;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Alamat;
-use App\Models\Role;
+use App\Models\City;
+use App\Models\Province;
 
 class UserController extends Controller
 {
@@ -116,15 +117,15 @@ class UserController extends Controller
         $alamat_utama = \Auth::user()->alamatId->where('status', 'alamat_utama')->count();
         $alamat_toko = \Auth::user()->alamatId->where('status', 'alamat_toko')->count();
         $alamat_pengembalian = \Auth::user()->alamatId->where('status', 'alamat_pengembalian')->count();
-        
-        return view('seller.alamat', ['alamats' => $alamats, 'alamat_utama' => $alamat_utama, 'alamat_toko' => $alamat_toko, 'alamat_pengembalian' => $alamat_pengembalian]);
+        $provinces = Province::get();
+        return view('seller.alamat', ['alamats' => $alamats, 'alamat_utama' => $alamat_utama, 'alamat_toko' => $alamat_toko, 'alamat_pengembalian' => $alamat_pengembalian, 'provinces' => $provinces]);
     }
     
     public function alamat(Request $request)
     {
         \Validator::make($request->all(), [
-            'provinsi' => 'required', 'string', 'min:3', 'max:50',
-            'kabupaten' => 'required', 'string', 'min:3', 'max:50',
+            'provinsi' => 'required',
+            'kabupaten' => 'required',
             'desa' => 'required', 'string', 'min:3', 'max:50',
             'kecamatan' => 'required', 'string', 'min:3', 'max:50',
             'rt' => 'required', 'string', 'min:1', 'max:5',
