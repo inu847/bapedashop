@@ -19,7 +19,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {        
+    {
         // 
     }
 
@@ -76,18 +76,18 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {       
+    {
         $user = User::findOrFail($id);
 
         $user->name = $request->get('name');
 
-        if($request->file('profil')){
-            if($user->profil && file_exists(storage_path('app/public/' . $user->profil))){
-                \Storage::delete('public/'.$user->profil);
+        if ($request->file('profil')) {
+            if ($user->profil && file_exists(storage_path('app/public/' . $user->profil))) {
+                \Storage::delete('public/' . $user->profil);
                 $file = $request->file('profil')->store('profiles', 'public');
                 $user->profil = $file;
-            }else{
-                if($request->file('profil')){
+            } else {
+                if ($request->file('profil')) {
                     $file = $request->file('profil')->store('profiles', 'public');
                     $user->profil = $file;
                 }
@@ -120,7 +120,7 @@ class UserController extends Controller
         $provinces = Province::get();
         return view('seller.alamat', ['alamats' => $alamats, 'alamat_utama' => $alamat_utama, 'alamat_toko' => $alamat_toko, 'alamat_pengembalian' => $alamat_pengembalian, 'provinces' => $provinces]);
     }
-    
+
     public function alamat(Request $request)
     {
         \Validator::make($request->all(), [
@@ -134,7 +134,7 @@ class UserController extends Controller
             'alamat' => 'required', 'string', 'min:8',
             'status' => 'required'
         ])->validate();
-        
+
         $user = \Auth::user();
         $alamat = new Alamat();
         $alamat->provinsi = $request->get('provinsi');
@@ -158,4 +158,16 @@ class UserController extends Controller
         return redirect()->back()->with('status', 'Delete Alamat Success!!');
     }
 
+    public function getkabupaten(Request $request)
+    {
+        $id = $request->post('idprov');
+        $city = City::where('province_id', '=', $id)->get();
+        $msg = "";
+        $msg = "200OK";
+        $output = array(
+            'message' => $msg,
+            'data' => $city
+        );
+        return  $output;
+    }
 }

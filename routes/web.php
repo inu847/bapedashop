@@ -45,7 +45,7 @@ Route::prefix('register')->group(function () {
     Route::get('user', [RegisterController::class, 'formRegisterUser'])->name('formRegister.user');
     Route::get('customer', [RegisterController::class, 'formRegisterCustomer'])->name('formRegister.customer');
     Route::post('form-user', [RegisterController::class, 'registerUser'])->name('register.user')->middleware('throttle:5,1440');
-    Route::post('form-customer', [RegisterController::class, 'registerCustomer'])->name('register.customer')->middleware('throttle:5,1440');    
+    Route::post('form-customer', [RegisterController::class, 'registerCustomer'])->name('register.customer')->middleware('throttle:5,1440');
 });
 
 // Buyer
@@ -59,7 +59,7 @@ Route::prefix('buyer')->group(function () {
     Route::get('lowongan-pekerjaan/{id}', [BuyerController::class, 'job'])->name('buyer.job');
     Route::get('scan-qr', [BuyerController::class, 'qrGenerator'])->name('order.qrcode');
     Route::resource('cart', BuyerController::class);
-    Route::post('keranjang', [BuyerController::class, 'cart'])->name('cart.buyer'); 
+    Route::post('keranjang', [BuyerController::class, 'cart'])->name('cart.buyer');
 });
 
 // CUSTOMER
@@ -79,12 +79,11 @@ Route::prefix('customers')->group(function () {
     // PEMBAYARAN
     Route::get('pembayaran/{id}', [PembayaranController::class, 'bayar'])->name('customer.pembayaran');
     Route::get('cekOngkir', [PembayaranController::class, 'cekOngkir'])->name('cekOngkir.pembayaran');
-    
 });
 Route::resource('customer', CustomerController::class);
 
 // ADMIN
-Route::prefix("admins")->group(function(){
+Route::prefix("admins")->group(function () {
     Route::post('registrasi', [AdminController::class, 'registrasi'])->name('registrasi.admin');
     Route::get('registrasi', [AdminController::class, 'formRegistrasi'])->name('admin.registrasi');
     Route::get('seller', [AdminController::class, 'userSeller'])->name('admin.seller');
@@ -126,6 +125,8 @@ Route::prefix('seller')->group(function () {
     Route::post('setting/alamat', [UserController::class, 'alamat'])->name('add.alamat');
     Route::post('setting/alamat/{id}', [UserController::class, 'hapusAlamat'])->name('alamat.destroy');
     Route::resource('user', UserController::class);
+
+    Route::post('setting/getkabupaten', [UserController::class, 'getkabupaten']);
 
     // Tools Controller
     Route::get('/member', [ToolsController::class, 'member'])->name('tools.member');
