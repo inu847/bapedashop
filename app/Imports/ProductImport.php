@@ -17,10 +17,10 @@ class ProductImport implements ToModel,WithHeadingRow
     {
         return new Product([
             'nama_product' => $row['nama_product'],
-            'deskripsi' => $row['deskripsi'],
+            'deskripsi' => $row['description'],
             'price' => $row['price'],
             'images' => $row['image'],
-            'stok' => '20',
+            'stok' => $row['stock'],
             'status' => 'publish',
             'user_id' => Auth::user()->id,
         ]);

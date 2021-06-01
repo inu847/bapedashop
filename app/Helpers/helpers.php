@@ -133,8 +133,16 @@ function keranjang($id)
     return $carts;
 }
 
+function province($id)
+{
+    $province = App\Models\Province::find($id)->province;
+    return $province;
+}
+
 function city($id)
 {
-    $cities = City::where('province_id', $id)->get();
-    return $cities;
+    $type = City::find($id)->type;
+    $cities = City::find($id)->city;
+    $city = $type . " " . $cities;
+    return $city;
 }

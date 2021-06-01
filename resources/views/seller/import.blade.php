@@ -6,8 +6,8 @@
 
 @section('content')
     <div class="card">
-        <h4 class="mb-3">Import Excel</h4>
         <div class="card-body">
+            <h4 class="mb-3">Import Excel</h4>
             <form action="{{ route('product.import') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">

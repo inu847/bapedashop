@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Keranjang;
 use App\Models\Province;
+use App\Models\City;
 
 class CustomerController extends Controller
 {
@@ -140,7 +141,6 @@ class CustomerController extends Controller
 
     public function sellCustomer(Request $request)
     {
-        
         foreach($request->get('quantity') as $key => $value){
             $prod_id = $request->get('prod_id')[$key];
             $new_order = Keranjang::findOrFail($prod_id);
@@ -150,8 +150,8 @@ class CustomerController extends Controller
             $new_order->row_total = $request->get('row_total')[$key];
             
             if ($quantity) {
+                $new_order->alamat_id = \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_utama')->first()->id;
                 $new_order->total_quantity = $request->get('total_quantity');
-                $new_order->alamat_id = $request->get('alamat_id');
                 $rp = str_replace("Rp","" , $request->get('subtotal'));
                 $koma = str_replace(".","" , $rp);
                 $result = str_replace(",","" , $koma);
@@ -192,8 +192,8 @@ class CustomerController extends Controller
     public function alamatCustomer(Request $request)
     {
         \Validator::make($request->all(), [
-            'provinsi' => 'required', 'string', 'min:3', 'max:50',
-            'kabupaten' => 'required', 'string', 'min:3', 'max:50',
+            'province' => 'required',
+            'city' => 'required',
             'desa' => 'required', 'string', 'min:3', 'max:50',
             'kecamatan' => 'required', 'string', 'min:3', 'max:50',
             'rt' => 'required', 'string', 'min:1', 'max:5',
@@ -202,11 +202,11 @@ class CustomerController extends Controller
             'alamat' => 'required', 'string', 'min:8',
             'status' => 'required'
         ])->validate();
-        
+
         $user = \Auth::guard('customer')->user();
         $alamat = new AlamatCustomer();
-        $alamat->provinsi = $request->get('provinsi');
-        $alamat->kabupaten = $request->get('kabupaten');
+        $alamat->province_id = $request->get('province');
+        $alamat->city_id = $request->get('city');
         $alamat->desa = $request->get('desa');
         $alamat->kecamatan = $request->get('kecamatan');
         $alamat->rt = $request->get('rt');
@@ -224,5 +224,18 @@ class CustomerController extends Controller
         $alamat->delete();
 
         return redirect()->back()->with('status', 'Delete Alamat Success!!');
+    }
+
+    public function getkabupaten(Request $request)
+    {
+        $id = $request->post('idprov');
+        $city = City::where('province_id', '=', $id)->get();
+        $msg = "";
+        $msg = "200OK";
+        $output = array(
+            'message' => $msg,
+            'data' => $city
+        );
+        return  $output;
     }
 }

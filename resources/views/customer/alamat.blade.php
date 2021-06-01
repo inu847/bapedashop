@@ -37,10 +37,13 @@
                                     <div class="form-group row">
                                         <label for="inputEmail3" class="col-sm-2 col-form-label">Provinsi</label>
                                         <div class="col-sm-10">
-                                            <select name="provinsi" id="province" runat="server" clientidmode="static" class="form-control">
-                                                <option value="" selected disabled>Chose 1</option>
+                                            <select name="province" id="province" runat="server" clientidmode="static" class="form-control">
+                                                <option value="" selected disabled>Chose provinces</option>
                                                 @foreach ($provinces as $province)
-                                                    <option value="{{$province->id}}" id="{{ $citys = city($province->id) }}">{{$province->province}}</option>
+                                                    <option value="{{ $province->id }}"
+                                                        id="{{ $citys = city($province->id) }}">
+                                                        {{ $province->province }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -48,7 +51,10 @@
                                     <div class="form-group row">
                                         <label for="inputPassword3" class="col-sm-2 col-form-label">Kabupaten</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputPassword3" placeholder="Masukkan Kabupaten Anda" name="kabupaten">
+                                            <select name="city" id="kabupaten" runat="server" clientidmode="static"
+                                                class="form-control">
+                                                <option value="" selected disabled>Chose provinces</option>
+                                            </select>    
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -170,14 +176,14 @@
                                 
                                 <div class="row">
                                     <p class="text-muted col-sm-2">Provinsi </p>
-                                    <span class="col-sm-3">{{$alamat->provinsi}}</span>
+                                    <span class="col-sm-3">{{ province($alamat->province_id) }}</span>
     
                                     <p class="text-muted col-sm-2">RT </p>
                                     <span class="col-sm-3">{{$alamat->rt}}</span>
                                 </div>
                                 <div class="row">
-                                    <p class="text-muted col-sm-2">Kabupaten </p>
-                                    <span class="col-sm-3">{{$alamat->kabupaten}}</span>
+                                    <p class="text-muted col-sm-2">Kota/Kabupaten </p>
+                                    <span class="col-sm-3">{{ city($alamat->city_id) }}</span>
     
                                     <p class="text-muted col-sm-2">RW </p>
                                     <span class="col-sm-3">{{$alamat->rw}}</span>
@@ -221,3 +227,40 @@
         </div>
     @endif
 @endsection
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(function() {
+        $("#province").change(function() { 
+            var displaycourse = $("#province option:selected").val();
+            $("#results").val(displaycourse);
+            getkabupaten(displaycourse)
+        })
+    })
+
+    function getkabupaten(idprov) {
+    //kabupaten
+     $.ajax({
+            type: 'POST',
+            url: '/customers/setting/getkabupaten',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                idprov: idprov
+            },
+            async: false,
+            dataType: 'json',
+            success: function(response) {
+                console.log(response.data)
+                var i,getp,data;
+                getp = response.data;
+                for(i = 0;i < getp.length;i++){
+                    data += "<option value='" + getp[i].id + "'>" + getp[i].city + "</option>"
+                }
+                $("#kabupaten").html(data);
+            },
+            error: function(response) {
+                console.log(response)
+            }
+        });
+    }
+
+</script>

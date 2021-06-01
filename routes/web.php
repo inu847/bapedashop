@@ -72,13 +72,15 @@ Route::prefix('customers')->group(function () {
     Route::get('pesanan', [CustomerController::class, 'pesananSaya'])->name('pesanan.saya');
     Route::any('sell', [CustomerController::class, 'sellCustomer'])->name('sellCustomer');
     Route::post('addtocartcustomer', [CustomerController::class, 'addToKeranjang']);
+    Route::post('setting/getkabupaten', [CustomerController::class, 'getkabupaten']);
     // Login Customer
     Route::get('login', [AuthController::class, 'customer'])->name('login_customer');
     Route::post('do_login_customer', [AuthController::class, 'loginCustomer'])->name('do_login_customer');
     Route::post('do_logout_customer', [AuthController::class, 'logout'])->name('do_logout_customer');
     // PEMBAYARAN
     Route::get('pembayaran/{id}', [PembayaranController::class, 'bayar'])->name('customer.pembayaran');
-    Route::get('cekOngkir', [PembayaranController::class, 'cekOngkir'])->name('cekOngkir.pembayaran');
+    Route::get('ongkir', [PembayaranController::class, 'ongkir'])->name('ongkir.pembayaran');
+    Route::post('cekOngkir', [PembayaranController::class, 'cekOngkir'])->name('cekOngkir.pembayaran');
 });
 Route::resource('customer', CustomerController::class);
 

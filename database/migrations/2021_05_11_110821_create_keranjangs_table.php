@@ -22,7 +22,7 @@ class CreateKeranjangsTable extends Migration
             $table->enum("status", ["belum dibayar", "dibayar", "process", "dikirim", "terkirim", "selesai", "on hold"])->nullable();
             // Relationship one to many
             $table->unsignedBigInteger("alamat_id")->nullable();
-            $table->foreign("alamat_id")->references("id")->on("customers")->onDelete('cascade');
+            $table->foreign("alamat_id")->references("id")->on("alamat_customers")->onDelete('cascade');
             $table->unsignedBigInteger("prod_id");
             $table->foreign("prod_id")->references("id")->on("products")->onDelete('cascade');
             $table->unsignedBigInteger("customer_id");

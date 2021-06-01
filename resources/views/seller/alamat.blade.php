@@ -50,11 +50,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="txtZip">Province ID</label>
-                                        <input type="text" id="results">
-                                    </div>
-
                                     <!--<div class="form-group row">
                                         <label for="inputPassword3" class="col-sm-2 col-form-label">Kabupaten</label>
                                         <div class="col-sm-10">
@@ -69,7 +64,6 @@
                                             <select name="kabupaten" id="kabupaten" runat="server" clientidmode="static"
                                                 class="form-control">
                                                 <option value="" selected disabled>Chose provinces</option>
-                                               
                                             </select>
                                         </div>
                                     </div>
@@ -207,14 +201,14 @@
 
                                 <div class="row">
                                     <p class="text-muted col-sm-2">Provinsi </p>
-                                    <span class="col-sm-3">{{ $alamat->provinsi }}</span>
+                                    <span class="col-sm-3">{{ province($alamat->province_id) }}</span>
 
                                     <p class="text-muted col-sm-2">RT </p>
                                     <span class="col-sm-3">{{ $alamat->rt }}</span>
                                 </div>
                                 <div class="row">
-                                    <p class="text-muted col-sm-2">Kabupaten </p>
-                                    <span class="col-sm-3">{{ $alamat->kabupaten }}</span>
+                                    <p class="text-muted col-sm-2">Kota/Kabupaten </p>
+                                    <span class="col-sm-3">{{ city($alamat->city_id) }}</span>
 
                                     <p class="text-muted col-sm-2">RW </p>
                                     <span class="col-sm-3">{{ $alamat->rw }}</span>

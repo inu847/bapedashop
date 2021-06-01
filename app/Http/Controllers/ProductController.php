@@ -213,6 +213,6 @@ class ProductController extends Controller
     {
         Excel::import(new ProductImport, $request->file('files'));
 
-        return "import success";
+        return redirect()->back()->with('status', "import success");
     }
 }

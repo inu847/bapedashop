@@ -85,17 +85,22 @@ class PembayaranController extends Controller
            
     }
 
-    // API KEY RAJA ONGKIR = 32acfec0aa49b3c9121d6bb185b8b59b
-    public function cekOngkir()
+    public function ongkir()
     {
-        // $daftarProvinsi = RajaOngkir::kota()->find(75);
-        
+        $alamats = \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_utama')->first();
+        // dd($alamats);
+        return view('customer.ongkir', ['alamats' => $alamats]);
+    }
+    // API KEY RAJA ONGKIR = 32acfec0aa49b3c9121d6bb185b8b59b
+    public function cekOngkir(Request $request)
+    {
         $daftarProvinsi = RajaOngkir::ongkosKirim([
-            'origin'        => 75,     // ID kota/kabupaten asal
-            'destination'   => 155,      // ID kota/kabupaten tujuan
+            'origin'        => 75,     // ID kota/kabupaten asal Blitar
+            'destination'   => \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_utama')->first()->city_id,      // ID kota/kabupaten tujuan
             'weight'        => 1300,    // berat barang dalam gram
-            'courier'       => 'jne'    // kode kurir pengiriman: ['jne', 'tiki', 'pos'] untuk starter
-        ]);
-        dd($daftarProvinsi);
+            'courier'       => $request->post('courier')    // kode kurir pengiriman: ['jne', 'tiki', 'pos'] untuk starter
+        ])->get();
+
+        return response()->json($daftarProvinsi);
     }
 }

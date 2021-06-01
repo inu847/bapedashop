@@ -137,8 +137,8 @@ class UserController extends Controller
 
         $user = \Auth::user();
         $alamat = new Alamat();
-        $alamat->provinsi = $request->get('provinsi');
-        $alamat->kabupaten = $request->get('kabupaten');
+        $alamat->province_id = $request->get('provinsi');
+        $alamat->city_id = $request->get('kabupaten');
         $alamat->desa = $request->get('desa');
         $alamat->kecamatan = $request->get('kecamatan');
         $alamat->rt = $request->get('rt');

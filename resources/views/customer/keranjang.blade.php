@@ -64,7 +64,6 @@
                 <form action="{{ route('sellCustomer') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" value="PUT" name="_method">
-                    <input type="hidden" value="{{ $alamat->id }}" name="alamat_id">
                     <table class="table">
                         <thead class="thead-light">
                             <tr>
