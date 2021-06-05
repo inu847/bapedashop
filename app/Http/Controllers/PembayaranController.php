@@ -9,7 +9,7 @@ use Kavist\RajaOngkir\Facades\RajaOngkir;
 
 class PembayaranController extends Controller
 {
-    public function bayar($id)
+    public function bayar(Request $request, $id)
     {
         $order = Keranjang::findOrFail($id);
         // dd($order);
@@ -25,7 +25,7 @@ class PembayaranController extends Controller
         $params = array(
             'transaction_details' => array(
                 'order_id' => $order->id,
-                'gross_amount' => $order->row_total,
+                'gross_amount' => $order->row_total + $request->get('ongkir'),
             ),
             // 'item_details' => array(
             //     "id" => $order->id,
@@ -46,61 +46,65 @@ class PembayaranController extends Controller
         return view('customer.pembayaran', ['token' => $snapToken]);
     }
 
-    public function pembayaranApi()
-    {
-        $order = Keranjang::findOrFail($id);
+    // public function pembayaranApi()
+    // {
+    //     $order = Keranjang::findOrFail($id);
 
-        if($error==0){
-            DB::commit();
-            $status = 'success';
-            $message = 'Transaction success';
-            $data = [
-            'order_id' => $order->id,
-            'total_bill' => $total_bill,
-            'invoice_number' => $order->invoice_number,
-            ];
-        }
+    //     if($error==0){
+    //         DB::commit();
+    //         $status = 'success';
+    //         $message = 'Transaction success';
+    //         $data = [
+    //         'order_id' => $order->id,
+    //         'total_bill' => $total_bill,
+    //         'invoice_number' => $order->invoice_number,
+    //         ];
+    //     }
 
-        if($error==0){
-            DB::commit();
-            $status = 'success';
-            $message = 'Transaction success';
-            /* MULAI MIDTRANS */
-            \Veritrans_Config::$serverKey = "SERVER KEY MIDTRANS";
-            \Veritrans_Config::$isProduction = false;
-            \Veritrans_Config::$isSanitized = true;
-            \Veritrans_Config::$is3ds = true;
-            $transaction_data = [
-            'transaction_details' => [
-            'order_id' => $order->invoice_number,
-            'gross_amount' => $total_bill,
-            ]
-            ];
-            $payment_link = \Veritrans_Snap::createTransaction($transaction_data)->redirect_url;
-            $data = [
-            'payment_link' => $payment_link,
-            ];
-            /* SELESAI MIDTRANS */
-           }
+    //     if($error==0){
+    //         DB::commit();
+    //         $status = 'success';
+    //         $message = 'Transaction success';
+    //         /* MULAI MIDTRANS */
+    //         \Veritrans_Config::$serverKey = "SERVER KEY MIDTRANS";
+    //         \Veritrans_Config::$isProduction = false;
+    //         \Veritrans_Config::$isSanitized = true;
+    //         \Veritrans_Config::$is3ds = true;
+    //         $transaction_data = [
+    //         'transaction_details' => [
+    //         'order_id' => $order->invoice_number,
+    //         'gross_amount' => $total_bill,
+    //         ]
+    //         ];
+    //         $payment_link = \Veritrans_Snap::createTransaction($transaction_data)->redirect_url;
+    //         $data = [
+    //         'payment_link' => $payment_link,
+    //         ];
+    //         /* SELESAI MIDTRANS */
+    //        }
            
-    }
+    // }
 
-    public function ongkir()
+    public function ongkir($id)
     {
         $alamats = \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_utama')->first();
-        // dd($alamats);
-        return view('customer.ongkir', ['alamats' => $alamats]);
+        $product = Keranjang::findOrFail($id);
+
+        // dd($product->subtotal);
+        return view('customer.ongkir', ['alamats' => $alamats, 'product' => $product]);
     }
+
     // API KEY RAJA ONGKIR = 32acfec0aa49b3c9121d6bb185b8b59b
     public function cekOngkir(Request $request)
     {
+        // dd($request->all());
         $daftarProvinsi = RajaOngkir::ongkosKirim([
             'origin'        => 75,     // ID kota/kabupaten asal Blitar
             'destination'   => \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_utama')->first()->city_id,      // ID kota/kabupaten tujuan
             'weight'        => 1300,    // berat barang dalam gram
             'courier'       => $request->post('courier')    // kode kurir pengiriman: ['jne', 'tiki', 'pos'] untuk starter
         ])->get();
-
+        // dd(json($daftarProvinsi));
         return response()->json($daftarProvinsi);
     }
 }

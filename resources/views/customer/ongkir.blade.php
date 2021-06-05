@@ -24,20 +24,41 @@
                     <option value="pos">POS</option>
                 </select>
             </div>
-        </div>
-    </div>
-    
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <div id="view-ongkir">
-
+            <div class="form-group">
+                <label for="">Service</label>
+                <select name="courier" id="service_ongkir" class="form-control">
+                    <option value="" selected disabled>Pilih Jasa Kirim</option>
+                    
+                </select>
             </div>
         </div>
     </div>
+    
+    <div id="view-ongkir">
+
+    </div>
+
+            <div class="card mt-5">
+                <div class="card body">
+                    <div id="view">
+                        
+                    </div>
+                </div>
+            </div>
+            
 @endsection
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
+    $(function() {
+        $("#service_ongkir").change(function() { 
+            var displaycourse = $("#service_ongkir option:selected").val();
+            // $("#get_ongkir").val(displaycourse);
+            var resultOngkir = '<p>Rp.{{ (int)$product->row_total + (int)'+displaycourse+'}} </p>'
+            $("#view-ongkir").html(resultOngkir);
+        })
+    })
+
     $(function() {
         $("#ongkir").change(function() { 
             var displaycourse = $("#ongkir option:selected").val();
@@ -47,7 +68,6 @@
     })
 
     function getOngkir(courier) {
-    //kabupaten
      $.ajax({
             type: 'POST',
             url: '/customers/cekOngkir',
@@ -59,25 +79,22 @@
             dataType: 'json',
             success: function(response) {
                 var i, x, data = response[0]
-                console.log(data)
+                // console.log(data)
                 // console.log(data.name)
-                // console.log(data.costs)
                 var costs = data.costs
-                var view
+                var view = ""
                 for(i = 0;i < costs.length;i++){
                     var limit = costs[i].cost[0]
-                    console.log(limit.value)
-                    console.log(limit.etd)
-                    // var templateString = '<div class="card d-none"><div class="card-body"><ul><li>'+limit.value+'</li><li></li><li></li></ul><form action="" method="POST" enctype="multipart/form-data">@csrf<input type="hidden" name="courier" value=""><input type="hidden" name="etd"><input type="hidden" name="ongkos_kirim"></form></div></div>';
-                    // view += templateString
+                    var service = costs[i].service
+                    var harga = limit.value
+                    view += '<option value="'+harga+'">'+service +' '+ limit.etd+'</option>'
                 }
                 console.log(view)
-                $("#view-ongkir").html(view);
+                $("#service_ongkir").html('<option value="" selected disabled>Pilih Service</option>'+view);
             },
             error: function(response) {
                 console.log(response)
             }
         });
     }
-
 </script>

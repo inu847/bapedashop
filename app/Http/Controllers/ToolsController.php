@@ -12,17 +12,17 @@ class ToolsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
+    // public function __construct()
+    // {
 
-        $this->middleware('auth');
+    //     $this->middleware('auth');
 
-        // $this->middleware(function($request, $next){
+    //     // $this->middleware(function($request, $next){
 
-        // if(Gate::allows('manage-order')) return $next($request);
-        //     abort(403, 'Anda tidak memiliki cukup hak akses');
-        // });
-    }
+    //     // if(Gate::allows('manage-order')) return $next($request);
+    //     //     abort(403, 'Anda tidak memiliki cukup hak akses');
+    //     // });
+    // }
 
     public function index()
     {
@@ -206,5 +206,40 @@ class ToolsController extends Controller
 
         header('Content-Type:application/json');
         echo json_encode($output);
+    }
+
+    public function whatsapp()
+    {
+        return view('seller.whatsapp');
+    }
+
+    public function whatsappPusher(Request $request)
+    {
+        $json = [
+        "token" => "f66ef8c2ee5b95b9d45d63e67b6492ae",
+        "source" => +6283102821945,
+        "destination" => +6289513873873,
+        "type" => "text",
+        "channel" => "whatsapp",
+        "body" => [
+            "text" => "Coba"
+            ]
+        ];
+
+        // return json_encode($json);
+        $client = new \GuzzleHttp\Client();
+        $response = $client->request('POST', 'http://waping.es/api/send', 
+                                    ["headers" => ["Content-Type"=>"application/json"],
+                                    'json'=>$json
+                                    ]
+                                );
+        echo $response->getStatusCode();
+        echo $response->getBody();
+    }
+
+    public function tesapi()
+    {
+        $data = [1, 2, 3, 4, 5, 6];
+        return $data;
     }
 }

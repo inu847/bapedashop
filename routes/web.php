@@ -79,7 +79,7 @@ Route::prefix('customers')->group(function () {
     Route::post('do_logout_customer', [AuthController::class, 'logout'])->name('do_logout_customer');
     // PEMBAYARAN
     Route::get('pembayaran/{id}', [PembayaranController::class, 'bayar'])->name('customer.pembayaran');
-    Route::get('ongkir', [PembayaranController::class, 'ongkir'])->name('ongkir.pembayaran');
+    Route::get('ongkir/{id}', [PembayaranController::class, 'ongkir'])->name('ongkir.pembayaran');
     Route::post('cekOngkir', [PembayaranController::class, 'cekOngkir'])->name('cekOngkir.pembayaran');
 });
 Route::resource('customer', CustomerController::class);
@@ -139,4 +139,7 @@ Route::prefix('seller')->group(function () {
     // Job Controller
     Route::post('manage-job/{id}', [JobController::class, 'ubahStatus'])->name('job.status');
     Route::resource('manage-job', JobController::class);
+
+    Route::get('whatsapp', [ToolsController::class, 'whatsapp'])->name('whatsapp');
+    Route::get('whatsapp.pusher', [ToolsController::class, 'whatsappPusher'])->name('whatsapp.pusher');
 });
