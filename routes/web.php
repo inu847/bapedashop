@@ -78,7 +78,7 @@ Route::prefix('customers')->group(function () {
     Route::post('do_login_customer', [AuthController::class, 'loginCustomer'])->name('do_login_customer');
     Route::post('do_logout_customer', [AuthController::class, 'logout'])->name('do_logout_customer');
     // PEMBAYARAN
-    Route::get('pembayaran/{id}', [PembayaranController::class, 'bayar'])->name('customer.pembayaran');
+    Route::post('pembayaran', [PembayaranController::class, 'bayar'])->name('customer.pembayaran');
     Route::get('ongkir/{id}', [PembayaranController::class, 'ongkir'])->name('ongkir.pembayaran');
     Route::post('cekOngkir', [PembayaranController::class, 'cekOngkir'])->name('cekOngkir.pembayaran');
 });
