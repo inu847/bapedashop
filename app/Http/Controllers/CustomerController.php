@@ -167,8 +167,9 @@ class CustomerController extends Controller
 
     public function pesananSaya()
     {
-        $pesanan_saya = \Auth::guard('customer')->user()->keranjang->where('status');
-        
+        $pesanan_saya = \Auth::guard('customer')->user()->keranjang;
+        // $status = \Auth::guard('customer')->user()->transaksi;
+        // dd($status);
         return view('customer.pesanan', ['pesanan_saya' => $pesanan_saya]);
     }
 

@@ -42,7 +42,7 @@ Route::get('youtube/watch', [StreamController::class, 'youtube']);
 
 // REGISTER
 Route::prefix('register')->group(function () {
-    Route::get('user', [RegisterController::class, 'formRegisterUser'])->name('formRegister.user');
+    Route::get('seller', [RegisterController::class, 'formRegisterUser'])->name('formRegister.user');
     Route::get('customer', [RegisterController::class, 'formRegisterCustomer'])->name('formRegister.customer');
     Route::post('form-user', [RegisterController::class, 'registerUser'])->name('register.user')->middleware('throttle:5,1440');
     Route::post('form-customer', [RegisterController::class, 'registerCustomer'])->name('register.customer')->middleware('throttle:5,1440');
@@ -81,6 +81,8 @@ Route::prefix('customers')->group(function () {
     Route::post('pembayaran', [PembayaranController::class, 'bayar'])->name('customer.pembayaran');
     Route::get('ongkir/{id}', [PembayaranController::class, 'ongkir'])->name('ongkir.pembayaran');
     Route::post('cekOngkir', [PembayaranController::class, 'cekOngkir'])->name('cekOngkir.pembayaran');
+    Route::post('transaksi/create', [PembayaranController::class, 'updateStatusPesanan'])->name('transaksi.update');
+    Route::put('transaksi/cancel/{id}', [PembayaranController::class, 'batalkanTransaksi'])->name('transaksi.cancel');
 });
 Route::resource('customer', CustomerController::class);
 
@@ -102,6 +104,9 @@ Route::prefix("admins")->group(function () {
 
 // Seller
 Auth::routes();
+Route::match(["GET", "POST"], "/register", function(){
+    return redirect("/register/seller");
+})->name("register");
 Route::prefix('seller')->group(function () {
     // Dashboard Controller
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
@@ -134,6 +139,7 @@ Route::prefix('seller')->group(function () {
     Route::get('/member', [ToolsController::class, 'member'])->name('tools.member');
     Route::get('/superMember', [ToolsController::class, 'superMember'])->name('tools.superMember');
     Route::post('/actionled', [ToolsController::class, 'actionled']);
+    Route::post('generateApiKey/{id}', [ToolsController::class, 'generateApiKey'])->name('generateApiKey.tools');
     Route::resource('tools', ToolsController::class);
 
     // Job Controller

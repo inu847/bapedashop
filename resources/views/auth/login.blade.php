@@ -28,7 +28,7 @@
                                 {{session('status')}}
                             </div>
                         @endif
-                        <h6 class="mb-4">Login</h6>
+                        <h6 class="mb-4">Login Seller</h6>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 

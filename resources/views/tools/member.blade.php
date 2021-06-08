@@ -29,8 +29,7 @@ Member
                 <div id="loadingclick"></div>
                 <div class="col-md-12 col-lg-4 mb-4 col-item">
                     <div class="card">
-                        <div
-                            class="card-body pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column">
+                        <div class="card-body pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column">
                             <div class="price-top-part">
                                 <i class="iconsminds-power large-icon"></i>
                                 <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">LED 1</h5>
@@ -91,11 +90,22 @@ Member
                     </div>
                 </div>
             </div>
+            <div class="mb-5">
+                <form action="{{ route('generateApiKey.tools', [$member->id]) }}" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    @csrf
+                    <div class="col-md-9">
+                        <input type="text" class="form-control " value="{{ $member->api_key }}" disabled>
+                    </div>
+                    <button type="submit" class="btn btn-info col-md-2">Generate</button>
+                </div>
+            </form>
+            </div>
         </div>
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="{{ asset('js/jquery.min.js') }}"></script>
 <script>
     function doclickled(e) {
         let id = e.dataset.id
@@ -104,7 +114,7 @@ Member
 
         $.ajax({
             type: 'POST',
-            url: '/actionled',
+            url: '/seller/actionled',
             data: {
                 "_token": "{{ csrf_token() }}",
                 id: id,

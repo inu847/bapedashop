@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tools;
+use App\Models\Role;
+use Illuminate\Support\Str;
 
 class ToolsController extends Controller
 {
@@ -12,17 +14,17 @@ class ToolsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function __construct()
-    // {
+    public function __construct()
+    {
 
-    //     $this->middleware('auth');
+        $this->middleware('auth');
 
-    //     // $this->middleware(function($request, $next){
+        // $this->middleware(function($request, $next){
 
-    //     // if(Gate::allows('manage-order')) return $next($request);
-    //     //     abort(403, 'Anda tidak memiliki cukup hak akses');
-    //     // });
-    // }
+        // if(Gate::allows('manage-order')) return $next($request);
+        //     abort(403, 'Anda tidak memiliki cukup hak akses');
+        // });
+    }
 
     public function index()
     {
@@ -56,11 +58,7 @@ class ToolsController extends Controller
             }
         }
 
-        
-
-
         return view('tools.index', ['roles' => $roles, 'tools' => $tools]);
-        
     }
 
     /**
@@ -141,7 +139,7 @@ class ToolsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // 
     }
 
     /**
@@ -161,8 +159,9 @@ class ToolsController extends Controller
     public function member()
     {
         $member = \Auth::user()->roles;
+        
         if($member->role == 'member' or $member->role == 'super member'){
-            return view('tools.member');
+            return view('tools.member', ['member' => $member]);
         }else{
             return redirect()->back();
         }
@@ -237,9 +236,12 @@ class ToolsController extends Controller
         echo $response->getBody();
     }
 
-    public function tesapi()
+    public function generateApiKey($id)
     {
-        $data = [1, 2, 3, 4, 5, 6];
-        return $data;
+        $tools = Role::findOrFail($id);
+        $tools->api_key = Str::random(60);
+        $tools->save();
+
+        return redirect()->back();
     }
 }

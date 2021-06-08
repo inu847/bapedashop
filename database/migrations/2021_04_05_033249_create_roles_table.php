@@ -19,7 +19,12 @@ class CreateRolesTable extends Migration
             $table->string('ktp');
             // hanya admin yang bisa mengubah role
             $table->enum("role", ["trial" ,"member", "super member"]);
-            // relationship one to many
+            $table->string("api_key")->nullable();
+            $table->integer("field 1")->nullable();
+            $table->integer("field 2")->nullable();
+            $table->integer("field 3")->nullable();
+            $table->integer("field 4")->nullable();
+            $table->integer("field 5")->nullable();
             $table->unsignedBigInteger("user_id");
             $table->foreign("user_id")->references("id")->on("users")->onDelete('cascade');
             $table->timestamps();

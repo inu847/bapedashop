@@ -19,7 +19,7 @@ class CreateKeranjangsTable extends Migration
             $table->string("quantity")->nullable();
             $table->string("total_quantity")->nullable();
             $table->string("subtotal")->nullable();
-            $table->enum("status", ["belum dibayar", "dibayar", "process", "dikirim", "terkirim", "selesai", "on hold"])->nullable();
+            $table->string("status")->nullable();
             // Relationship one to many
             $table->unsignedBigInteger("alamat_id")->nullable();
             $table->foreign("alamat_id")->references("id")->on("alamat_customers")->onDelete('cascade');

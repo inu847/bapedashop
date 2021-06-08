@@ -26,4 +26,9 @@ class Customer extends Authenticatable
     {
         return $this->hasMany('App\Models\AlamatCustomer');
     }
+
+    function transaksi()
+    {
+        return $this->hasMany('App\Models\Transaksi');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -34,5 +35,16 @@ class HomeController extends Controller
         }
 
         return view('customer.index', ['products' => $products]);
+    }
+
+    public function apiIot(Request $request)
+    {
+        $api_key = $request->get('token');
+        $field = $request->get('field');
+
+        if ($api_key) {
+            $api_key_user = User::where('enkripsi_token', $api_key);
+            
+        }
     }
 }

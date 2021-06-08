@@ -5,11 +5,44 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Keranjang;
 use App\Models\Product;
+use App\Models\Transaksi;
 use Exception;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
 
 class PembayaranController extends Controller
 {
+    public function ongkir($id)
+    {
+        $alamats = \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_utama')->first();
+        $product = Keranjang::findOrFail($id);
+        $expire_d = (int)$product->created_at->format('d')+1;
+        $expire_my = $product->created_at->format('my');
+        $expire = (int)$expire_d.(int)$expire_my;
+        $start = (int)$product->created_at->format('d');
+        $start_my = $product->created_at->format('my');
+        $start = (int)$start.(int)$start_my;
+        if($product->status == "pending" and (int)$start < (int)$expire){
+            $transaksi = Transaksi::where('order_id', $id)->first();
+            return view('customer.pembayaran', ['transaksi' => $transaksi]);
+        };
+        
+        return view('customer.ongkir', ['alamats' => $alamats, 'product' => $product]);
+    }
+
+    // API KEY RAJA ONGKIR = 32acfec0aa49b3c9121d6bb185b8b59b
+    public function cekOngkir(Request $request)
+    {
+        // dd($request->all());
+        $daftarProvinsi = RajaOngkir::ongkosKirim([
+            'origin'        => 75,     // ID kota/kabupaten asal Blitar
+            'destination'   => \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_utama')->first()->city_id,      // ID kota/kabupaten tujuan
+            'weight'        => 1300,    // berat barang dalam gram
+            'courier'       => $request->post('courier')    // kode kurir pengiriman: ['jne', 'tiki', 'pos'] untuk starter
+        ])->get();
+        // dd(json($daftarProvinsi));
+        return response()->json($daftarProvinsi);
+    }
+
     public function bayar(Request $request)
     {
         $order = Keranjang::findOrFail($request->get('id'));
@@ -47,55 +80,43 @@ class PembayaranController extends Controller
         //   }
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         $data = array(
-            'link' => "https://app.sandbox.midtrans.com/snap/v2/vtweb/".$snapToken
+            'token' => $snapToken
         );
         return $data;
     }
 
-    public function ongkir($id)
-    {
-        $alamats = \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_utama')->first();
-        $product = Keranjang::findOrFail($id);
+    public function updateStatusPesanan(Request $request)
+    {   
+        $transaksi = new Transaksi();
+        $transaksi->status_message = $request->get('status_message');
+        $transaksi->transaction_id = $request->get('transaction_id');
+        $transaksi->gross_amount = $request->get('gross_amount');
+        $transaksi->payment_type = $request->get('payment_type');
+        $transaksi->transaction_status = $request->get('transaction_status');
+        $transaksi->bank = $request->get('bank');
+        $transaksi->va_number = $request->get('va_number');
+        $transaksi->fraud_status = $request->get('fraud_status');
+        $transaksi->pdf_url = $request->get('pdf_url');
+        $transaksi->order_id = $request->get('order_id');
+        $transaksi->customer_id = \Auth::guard('customer')->user()->id;
+        $transaksi->save();
 
-        $order = Keranjang::findOrFail($product->id);
-        \Midtrans\Config::$serverKey = 'SB-Mid-server-1gMTDRgG6CVPjAKkhH9wPvqy';
-        \Midtrans\Config::$isProduction = false;
-        \Midtrans\Config::$isSanitized = true;
-        \Midtrans\Config::$is3ds = true;
-        $params = array(
-            'transaction_details' => array(
-                'order_id' => $order->id,
-                'gross_amount' => "50000",
-            ),
-            'customer_details' => array(
-                'first_name' => \Auth::guard('customer')->user()->name,
-                // 'last_name' => 'pratama',
-                'email' => \Auth::guard('customer')->user()->email,
-                'phone' => \Auth::guard('customer')->user()->phone,
-            ),
+        $update_pesanan = Keranjang::findOrFail($request->get('order_id'));
+        $update_pesanan->status = $request->get('transaction_status');
+        $update_pesanan->save();
+
+        $data = array(
+            'redirect' => route('pesanan.saya')
         );
-
-        try{
-            $snapToken = \Midtrans\Snap::getSnapToken($params);
-        }catch(Exception $e){
-            $message = $e->getMessage();
-        }
-
-        
-        return view('customer.ongkir', ['alamats' => $alamats, 'product' => $product, 'token' => $snapToken]);
+        return $data;
     }
 
-    // API KEY RAJA ONGKIR = 32acfec0aa49b3c9121d6bb185b8b59b
-    public function cekOngkir(Request $request)
+    public function batalkanTransaksi($id)
     {
-        // dd($request->all());
-        $daftarProvinsi = RajaOngkir::ongkosKirim([
-            'origin'        => 75,     // ID kota/kabupaten asal Blitar
-            'destination'   => \Auth::guard('customer')->user()->alamatCustomer->where('status', 'alamat_utama')->first()->city_id,      // ID kota/kabupaten tujuan
-            'weight'        => 1300,    // berat barang dalam gram
-            'courier'       => $request->post('courier')    // kode kurir pengiriman: ['jne', 'tiki', 'pos'] untuk starter
-        ])->get();
-        // dd(json($daftarProvinsi));
-        return response()->json($daftarProvinsi);
+        $transaksi = Keranjang::findOrFail($id);
+        $transaksi->status = 'cancel';
+        $transaksi->save();
+
+        return redirect()->route('pesanan.saya');
     }
 }

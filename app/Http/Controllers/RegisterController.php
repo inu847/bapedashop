@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Customer;
+use App\Models\Iot;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -34,7 +36,7 @@ class RegisterController extends Controller
         $new_user->status = "inactive";
         $new_user->password = \Hash::make($request->get('password'));
         $new_user->save();
-
+        
         $new_roles = new Role();
         if($request->file('file_penunjang')){
             $file = $request->file('file_penunjang')->store('file_penunjangs', 'public');
@@ -44,7 +46,7 @@ class RegisterController extends Controller
             $file = $request->file('ktp')->store('ktps', 'public');
             $new_roles->ktp = $file;
         }
-        
+        $new_roles->api_key = Str::random(60);
         $new_roles->role = "trial";
         $new_user->roles()->save($new_roles);
         
