@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LinkGrabCurlController;
-use App\Http\Controllers\ToolsController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +26,6 @@ Route::get('user', [BuyerController::class, 'getToko']);
 Route::post('scanIotBarcodeGenerate/scan/withSuperAdmin/{id}', [BuyerController::class, 'scanIot']);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('grabbingProductShopee', [LinkGrabCurlController::class, 'grabbingProduct']);
-Route::get('tesapi', [ToolsController::class, 'tesapi']);
+// API IOT
+Route::get('capps/iot', [HomeController::class, 'apiKey']);
+Route::post('capps/iot/update', [HomeController::class, 'updateIot'])->name('update.iot');

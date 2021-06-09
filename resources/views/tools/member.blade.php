@@ -1,7 +1,7 @@
 @extends('layouts.global')
 
 @section('title')
-Member
+Member Area
 @endsection
 
 @section('content')
@@ -27,68 +27,29 @@ Member
             </div>
             <div class="row equal-height-container">
                 <div id="loadingclick"></div>
-                <div class="col-md-12 col-lg-4 mb-4 col-item">
-                    <div class="card">
-                        <div class="card-body pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column">
-                            <div class="price-top-part">
-                                <i class="iconsminds-power large-icon"></i>
-                                <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">LED 1</h5>
-                            </div>
-                            <div class="pl-3 pr-3 pt-3 pb-0 d-flex price-feature-list flex-column flex-grow-1 text-center">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <a href="javascript:void(0)" data-id="0" onclick="doclickled(this)" data-field="field1" data-type="OFF" class="btn btn-primary btn-sm p-4">OFF</a>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="javascript:void(0)" data-id="1" onclick="doclickled(this)" data-field="field1" data-type="ON" class="btn btn-danger btn-sm p-4">ON</a>
+                @for ($i = 1; $i < 4; $i++)
+                    <div class="col-md-12 col-lg-4 mb-4 col-item">
+                        <div class="card">
+                            <div class="card-body pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column">
+                                <div class="price-top-part">
+                                    <i class="iconsminds-power large-icon"></i>
+                                    <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">LED {{$i}}</h5>
+                                </div>
+                                <div class="pl-3 pr-3 pt-3 pb-0 d-flex price-feature-list flex-column flex-grow-1 text-center">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <a href="javascript:void(0)" data-id="0" onclick="doclickled(this)" data-field="field{{$i}}" data-value="0" class="btn btn-primary btn-sm p-4">OFF</a>
+                                        </div>
+                                        <div class="col-6">
+                                            <a href="javascript:void(0)" data-id="1" onclick="doclickled(this)" data-field="field{{$i}}" data-value="1" class="btn btn-danger btn-sm p-4">ON</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-12 col-lg-4 mb-4 col-item">
-                    <div class="card">
-                        <div
-                            class="card-body pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column">
-                            <div class="price-top-part">
-                                <i class="iconsminds-power large-icon"></i>
-                                <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">LED 2</h5>
-                            </div>
-                            <div class="pl-3 pr-3 pt-3 pb-0 d-flex price-feature-list flex-column flex-grow-1 text-center">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <a href="javascript:void(0)" data-id="0" onclick="doclickled(this)" data-field="field2" data-type="OFF" class="btn btn-primary btn-sm p-4">OFF</a>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="javascript:void(0)" data-id="1" onclick="doclickled(this)" data-field="field2" data-type="ON" class="btn btn-danger btn-sm p-4">ON</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12 col-lg-4 mb-4 col-item">
-                    <div class="card">
-                        <div
-                            class="card-body pt-5 pb-5 d-flex flex-lg-column flex-md-row flex-sm-row flex-column">
-                            <div class="price-top-part">
-                                <i class="iconsminds-power large-icon"></i>
-                                <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">LED 3</h5>
-                            </div>
-                            <div class="pl-3 pr-3 pt-3 pb-0 d-flex price-feature-list flex-column flex-grow-1 text-center">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <a href="javascript:void(0)" data-id="0" onclick="doclickled(this)" data-field="field2" data-type="OFF" class="btn btn-primary btn-sm p-4">OFF</a>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="javascript:void(0)" data-id="1" onclick="doclickled(this)" data-field="field2" data-type="ON" class="btn btn-danger btn-sm p-4">ON</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endfor    
+
             </div>
             <div class="mb-5">
                 <form action="{{ route('generateApiKey.tools', [$member->id]) }}" method="POST" enctype="multipart/form-data">
@@ -105,8 +66,8 @@ Member
     </div>
 </div>
 
-<script src="{{ asset('js/jquery.min.js') }}"></script>
-<script>
+{{-- THINKSPEAK --}}
+{{-- <script>
     function doclickled(e) {
         let id = e.dataset.id
         let type = e.dataset.type
@@ -138,6 +99,40 @@ Member
             }
         });
     }
-</script>
+</script> --}}
 
+{{-- API WEB CAPSS --}}
+<script>
+    function doclickled(e) {
+        let api = '{{ $member->api_key }}'
+        let value = e.dataset.value
+        let field = e.dataset.field
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/capps/iot/update',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                api_key: api,
+                field: field,
+                value: value,
+            },
+            async: false,
+            dataType: 'json',
+            beforeSend: function() {
+                $ld =  `<div class="text-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>`;
+                $('#loadingclick').html($ld);
+            },
+            success: function(response) {
+                // Untuk notifikasi response silahkan ubah sesuai kebutuhan
+                $('#loadingclick').html("");
+                alert(response.message)
+            }
+        });
+    }
+</script>
 @endsection

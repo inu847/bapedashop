@@ -159,7 +159,7 @@ class ToolsController extends Controller
     public function member()
     {
         $member = \Auth::user()->roles;
-        
+
         if($member->role == 'member' or $member->role == 'super member'){
             return view('tools.member', ['member' => $member]);
         }else{
@@ -170,8 +170,9 @@ class ToolsController extends Controller
     public function superMember()
     {
         $member = \Auth::user()->roles;
+
         if($member->role == 'super member'){
-            return view('tools.superMember');
+            return view('tools.superMember', ['member' => $member]);
         }else{
             return redirect()->back();
         }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\User;
+use App\Models\Role;
 
 class HomeController extends Controller
 {
@@ -37,14 +37,30 @@ class HomeController extends Controller
         return view('customer.index', ['products' => $products]);
     }
 
-    public function apiIot(Request $request)
+    // API IOT
+    public function apiKey(Request $request)
     {
-        $api_key = $request->get('token');
-        $field = $request->get('field');
+        $api_key = $request->get('api_key');
+        $field = "field".$request->get('field');
+        $tools = Role::where('api_key', $api_key)->first();
+        return $tools->$field;
+    }
 
-        if ($api_key) {
-            $api_key_user = User::where('enkripsi_token', $api_key);
-            
+    public function updateIot(Request $request)
+    {
+        $api_key = $request->get('api_key');
+        $update_field = Role::where('api_key', $api_key)->first();
+        $field = $request->get('field');
+        $value = $request->get('value');
+        if ($field) {
+            $update_field->$field = $value;
         }
+        $update_field->save();
+
+        $output = array(
+            'status' => 1,
+            'message' => "success updated ".$field." => ".$value,
+        );
+        return $output;
     }
 }

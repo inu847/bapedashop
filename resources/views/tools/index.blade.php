@@ -119,8 +119,9 @@
                                             <a href="{{ route('tools.member') }}" class="btn btn-primary btn-lg">MEMBER AREA<i
                                                 class="simple-icon-arrow-right"></i></a>
                                         @elseif ($roles->role == "super member")
-                                            <a href="{{ route('tools.member') }}" class="btn btn-primary btn-lg">MEMBER AREA<i
-                                                class="simple-icon-arrow-right"></i></a>
+                                            <div class="text-center">
+                                                <p class="text-muted">CLAIMED</p>
+                                            </div>
                                         @elseif ($roles->role == "trial")
                                             <a href="{{ route('tools.create') }}" class="btn btn-link btn-empty btn-lg">PURCHASE <i
                                                 class="simple-icon-arrow-right"></i></a>

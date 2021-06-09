@@ -45,4 +45,7 @@ void loop() {
   delay(30000);    //Send a request every 30 seconds
 }
 
-//String url = "http://localhost/bapedashop/public/api/tesapi";
+// API CAPSS
+// API KEY DISESUAIKAN DENGAN API DI HALAMAN MEMBER/SUPER MEMBER
+// field=1 sama dengan membaca data di field1
+// String url = http://127.0.0.1:8000/api/capps/iot?api_key=jRLXn2O3tQadlAelO2ofSb9HZ7qHKuxVhHo9g2FzG8hHcQqA4aCoYodq9rKI&field=1
