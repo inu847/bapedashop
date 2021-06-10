@@ -96,10 +96,15 @@ Route::prefix("admins")->group(function () {
     Route::put('customer/{id}', [AdminController::class, 'setujuiAkunCustomer'])->name('active.customer');
     Route::get('akun', [AdminController::class, 'userAdmin'])->name('admin.admin');
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+
     // Login Admin
     Route::get('login', [AuthController::class, 'admin'])->name('login_admin');
     Route::post('do_login_admin', [AuthController::class, 'loginadmin'])->name('do_login_admin');
     Route::post('do_logout_admin', [AuthController::class, 'logout'])->name('do_logout_admin');
+
+    // Feature Chat
+    Route::get('chat', [AdminController::class, 'chat'])->name('admin.chat');
+    Route::post('chat/post', [AdminController::class, 'postChatAdmin'])->name('post.chatadmin');
 });
 
 // Seller
@@ -142,6 +147,10 @@ Route::prefix('seller')->group(function () {
     Route::post('generateApiKey/{id}', [ToolsController::class, 'generateApiKey'])->name('generateApiKey.tools');
     Route::resource('tools', ToolsController::class);
 
+    // Feature Chat
+    Route::get('chat', [UserController::class, 'chat'])->name('seller.chat');
+    Route::post('chat/post', [UserController::class, 'postChatSeller'])->name('post.chatSeller');
+    
     // Job Controller
     Route::post('manage-job/{id}', [JobController::class, 'ubahStatus'])->name('job.status');
     Route::resource('manage-job', JobController::class);

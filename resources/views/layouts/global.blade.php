@@ -203,6 +203,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('seller.chat') }}">
+                            <i class="simple-icon-bubbles"></i> 
+                            <span>Chat</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('manage-job.index') }}">
                             <i class="simple-icon-grid"></i> 
                             <span>Jobs</span>
@@ -260,7 +266,6 @@
     <script src="{{ asset('js/dore.script.js') }}"></script>
     <script src="{{ asset('js/scripts.single.theme.js') }}"></script>
     <script src="https://css-tricks.foxycart.com/files/foxycart_includes.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ asset('js/vue.js')}}"></script>
 </body>
 
 </html>

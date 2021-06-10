@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\Keranjang;
 use App\Models\User;
 use App\Models\Customer;
+use App\Models\ChatSeller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
@@ -85,5 +86,28 @@ class AdminController extends Controller
         $new_admin->save();
 
         return redirect()->route('admin.admin')->with('status', 'Registrasi Berhasil');
+    }
+
+    public function chat()
+    {
+        $chats = ChatSeller::get();
+        
+        return view('admin.chat', ['chats' => $chats]);
+    }
+
+    public function postChatAdmin(Request $request)
+    {
+        $seller = new ChatSeller();
+        $seller->message_seller = $request->get('message');
+        $seller->seller_id = \Auth::user()->id;
+        $seller->admin_id = 1;
+        $seller->save();
+        $output = array(
+            'message' => $seller->message_seller,
+            'seller_id' => $seller->seller_id,
+            'timestamp' => $seller->created_at->format('H:i'),
+        );
+
+        return $output;
     }
 }

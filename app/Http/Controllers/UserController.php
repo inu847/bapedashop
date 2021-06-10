@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Buyer;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Alamat;
+use App\Models\ChatSeller;
 use App\Models\City;
 use App\Models\Province;
 
@@ -169,5 +170,28 @@ class UserController extends Controller
             'data' => $city
         );
         return  $output;
+    }
+
+    public function chat()
+    {
+        $chats = \Auth::user()->chat;
+
+        return view('seller.chat', ['chats' => $chats]);
+    }
+
+    public function postChatSeller(Request $request)
+    {
+        $seller = new ChatSeller();
+        $seller->message_seller = $request->get('message');
+        $seller->user_id = \Auth::user()->id;
+        $seller->admin_id = 1;
+        $seller->save();
+        $output = array(
+            'message' => $seller->message_seller,
+            'seller_id' => $seller->seller_id,
+            'timestamp' => $seller->created_at->format('H:i'),
+        );
+
+        return $output;
     }
 }

@@ -3626,12 +3626,13 @@ $.dore = function (element, options) {
             }
             $(".chat-app .scroll").css("height", (window.innerHeight - elementsHeight) + "px");
 
-            if (chatAppScroll) {
-              $(".chat-app .scroll").scrollTop(
-                $(".chat-app .scroll").prop("scrollHeight")
-              );
-              chatAppScroll.update();
-            }
+            // if (chatAppScroll) {
+            //   $(".chat-app .scroll").scrollTop(
+            //     $(".chat-app .scroll").prop("scrollHeight")
+            //   );
+            //   chatAppScroll.update();
+            // }
+            
             if (window.innerWidth < 576) {
               if (chatAppScroll) {
                 chatAppScroll.destroy();

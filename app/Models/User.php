@@ -94,6 +94,11 @@ class User extends Authenticatable
         return $this->enkripsi_token;
     }
 
+    public function chat()
+    {
+        return $this->hasMany('App\Models\ChatSeller');
+    }
+
     // public function roleId()
     // {
     //     return $this->hasMany('App\Models\Role');
