@@ -13,4 +13,9 @@ class ChatSeller extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    function admin()
+    {
+        return $this->belongsTo('App\Models\Admin');
+    }
 }

@@ -174,9 +174,16 @@ class UserController extends Controller
 
     public function chat()
     {
+        $get_ids = ChatSeller::select('user_id')->groupBy('user_id')->where('user_id', \Auth::user()->id)->get();
+        
+        $messages = array();
+        foreach($get_ids as $get_id){
+            $messages[] = ChatSeller::latest()->where('user_id', \Auth::user()->id)->first();
+        }
+        
         $chats = \Auth::user()->chat;
-
-        return view('seller.chat', ['chats' => $chats]);
+        
+        return view('seller.chat', ['chats' => $chats, 'messages' => $messages]);
     }
 
     public function postChatSeller(Request $request)
@@ -184,7 +191,7 @@ class UserController extends Controller
         $seller = new ChatSeller();
         $seller->message_seller = $request->get('message');
         $seller->user_id = \Auth::user()->id;
-        $seller->admin_id = 1;
+        $seller->admin_id = $request->get('admin_id');
         $seller->save();
         $output = array(
             'message' => $seller->message_seller,

@@ -104,6 +104,7 @@ Route::prefix("admins")->group(function () {
 
     // Feature Chat
     Route::get('chat', [AdminController::class, 'chat'])->name('admin.chat');
+    Route::get('chat/show', [AdminController::class, 'showChat'])->name('show.chatadmin');
     Route::post('chat/post', [AdminController::class, 'postChatAdmin'])->name('post.chatadmin');
 });
 

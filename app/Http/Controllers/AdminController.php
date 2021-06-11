@@ -87,25 +87,38 @@ class AdminController extends Controller
 
         return redirect()->route('admin.admin')->with('status', 'Registrasi Berhasil');
     }
-
+    
     public function chat()
     {
-        $chats = ChatSeller::get();
-        
+        $get_ids = ChatSeller::select('user_id')->groupBy('user_id')->where('admin_id', \Auth::guard('admin')->user()->id)->get();
+        // dd($get_ids);
+        $chats = array();
+        foreach($get_ids as $get_id){
+            $chats[] = ChatSeller::latest()->where('admin_id', \Auth::guard('admin')->user()->id)->where('user_id', $get_id->user_id)->first();
+        }
+
+        // dd($chats);
         return view('admin.chat', ['chats' => $chats]);
+    }
+
+    public function showChat(Request $request)
+    {
+        $chats = ChatSeller::where('user_id', $request->get('user_id'))->get();
+        
+        return view('admin.chatshow', ['chats' => $chats]);
     }
 
     public function postChatAdmin(Request $request)
     {
         $seller = new ChatSeller();
-        $seller->message_seller = $request->get('message');
-        $seller->seller_id = \Auth::user()->id;
-        $seller->admin_id = 1;
+        $seller->message_admin = $request->get('message');
+        $seller->user_id = $request->get('seller_id');
+        $seller->admin_id = \Auth::guard('admin')->user()->id;
         $seller->save();
         $output = array(
-            'message' => $seller->message_seller,
-            'seller_id' => $seller->seller_id,
-            'timestamp' => $seller->created_at->format('H:i'),
+            'message' => $seller->message_admin,
+            'seller_id' => $seller->admin_id,
+            'timestamp' => $seller->created_at->diffForHumans(),
         );
 
         return $output;

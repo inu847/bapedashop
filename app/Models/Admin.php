@@ -16,4 +16,9 @@ class Admin extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function chat()
+    {
+        return $this->hasMany('App\Models\ChatSeller');
+    }
 }

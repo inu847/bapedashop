@@ -2,21 +2,34 @@
 <html>
 
 <head>
+    <!-- Meta and Title -->
     <meta charset="utf-8">
-    <title> @yield('title')</title>
+    <title>@yield('title')</title>
     <meta name="keywords" content="HTML5, Bootstrap 3, Admin Template, UI Theme"/>
     <meta name="description" content="AdminK - A Responsive HTML5 Admin UI Framework">
     <meta name="author" content="ThemeREX">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="{{asset('img/LOGO 4.png')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('admin/skin/css/angular-material.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('admin/fonts/icomoon/icomoon.css')}}">    
-    <link rel="stylesheet" type="text/css" href="{{asset('admin/fonts/animatedsvgicons/css/codropsicons.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('admin/js/plugins/c3charts/c3.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('admin/allcp/forms/css/forms.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('admin/js/utility/malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('admin/skin/default_skin/less/theme.css')}}">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+
+    <!-- Angular material -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/skin/css/angular-material.min.css')}}">
+    
+    <!-- Icomoon -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/fonts/icomoon/icomoon.css')}}">    
+    
+    <!-- AnimatedSVGIcons -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/fonts/animatedsvgicons/css/codropsicons.css')}}">
+
+    <!-- CSS - allcp forms -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/allcp/forms/css/forms.css')}}">
+
+    <!-- Plugins -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/js/utility/malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.min.css')}}">
+
+    <!-- CSS - theme -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin/skin/default_skin/less/theme.css')}}">
     
     <!-- IE8 HTML5 support -->
     <!--[if lt IE 9]>
@@ -26,23 +39,17 @@
 
 </head>
 
-<body class="sales-stats-page sb-top sb-top-lg">
+<body class="sb-l-o sb-l-m">
 
 <!-- Body Wrap -->
 <div id="main">
 
     <!-- Header  -->
-    <header class="navbar navbar-fixed-top bg-info phn">
-        <div class="navbar-logo-wrapper">
-            <a class="navbar-logo-img" href="{{ route('admin.index') }}">
-                <img src="{{asset('img/LOGO 4.png')}}" alt="" height="40px">
-            </a>
-        </div>
-        <span id="sidebar_top_toggle" class="ad ad-lines navbar-nav navbar-left showing-sm"></span>
+    <header class="navbar navbar-fixed-top ">
         <ul class="nav navbar-nav navbar-left">
             <li class="dropdown dropdown-fuse hidden-xs">
                 <div class="navbar-btn btn-group phn">
-                    <button class="btn-hover-effects dropdown-toggle btn bg-light" data-toggle="dropdown" aria-expanded="false">
+                    <button class="btn-hover-effects dropdown-toggle btn" data-toggle="dropdown" aria-expanded="false">
                         <span class="fa fa-chevron-down"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
@@ -65,98 +72,25 @@
         <form class="navbar-form navbar-left search-form square" role="search">
             <div class="input-group add-on">
 
-                <input type="text" class="form-control btn-hover-effects bg-light" placeholder="Search..." onfocus="this.placeholder=''"
+                <input type="text" class="form-control btn-hover-effects" placeholder="Search..." onfocus="this.placeholder=''"
                        onblur="this.placeholder='Search...'">
-                <button class="btn btn-default text-info hidden-xs hidden-sm" type="submit">
+                <button class="btn btn-default text-info-darker hidden-xs hidden-sm" type="submit">
                     <i class="glyphicon glyphicon-search"></i>
                 </button>
 
             </div>
         </form>
-        <ul class="nav navbar-nav navbar-right bg-info darker mn pv10">
-            <li class="dropdown dropdown-fuse navbar-user">
-                @if (Auth::guard("admin")->user()->name)
-                    <a href="#" class="dropdown-toggle mln" data-toggle="dropdown">
-                        @if (Auth::guard("admin")->user()->profil)
-                            <img src="{{asset('storage'. Auth::guard("admin")->user()->profile)}}" alt="avatar">
-                        @else
-                            <img src="{{asset('img/image-not-found.png')}}" alt="avatar">
-                        @endif
-                        
-                        <span class="hidden-xs">
-                            <span class="name">{{Auth::guard("admin")->user()->name}}</span>
-                        </span>
-                        <span class="fa fa-caret-down hidden-xs"></span>
-                    </a>
-                @endif
-                <ul class="dropdown-menu list-group keep-dropdown w230" role="menu">
-                    <li class="dropdown-header clearfix">
-                        <div class="pull-left">
-                            <select id="user-status">
-                                <optgroup label="Current Status:">
-                                    <option value="1-1">Away</option>
-                                    <option value="1-2">Busy</option>
-                                    <option value="1-3" selected="selected">Online</option>
-                                    <option value="1-4">Offline</option>
-                                </optgroup>
-                            </select>
-                        </div>
-
-                        <div class="pull-right">
-                            <select id="user-role">
-                                <optgroup label="Logged in As:">
-                                    <option value="1-1" selected="selected">Admin</option>
-                                    <option value="1-2">Editor</option>
-                                    <option value="1-3">User</option>
-                                </optgroup>
-                            </select>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <span class="fa fa-envelope"></span>
-                        <a href="#" class="">
-                            Messages
-                            <span class="label label-info">3</span>
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <span class="fa fa-user"></span>
-                        <a href="#" class="">
-                            Friends
-                            <span class="label label-info">6</span>
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <span class="fa fa-cog"></span>
-                        <a href="#" class="">
-                            Account Settings 
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <span class="fa fa-bell"></span>
-                        <a href="#" class="">
-                             Activity
-                        </a>
-                    </li>
-                    <li class="dropdown-footer text-center">
-                        <a href="#" class="btn btn-warning">
-                            logout 
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right pr15">
+        <ul class="nav navbar-nav navbar-right">
             <li class="hidden-xs">
                 <div class="navbar-btn btn-group phn">
-                    <button class="btn-hover-effects topbar-dropmenu-toggle btn bg-light">
+                    <button class="btn-hover-effects topbar-dropmenu-toggle btn">
                         <span class="fa fa-magic fs20 text-dark"></span>
                     </button>
                 </div>
             </li>
             <li class="dropdown dropdown-fuse">
                 <div class="navbar-btn btn-group">
-                    <button class="btn-hover-effects dropdown-toggle btn of-v bg-light" data-toggle="dropdown">
+                    <button class="dropdown-toggle btn btn-hover-effects" data-toggle="dropdown">
                         <span class="fa fa-envelope fs20 text-danger"></span>
                         <span class="fs14 visible-xl">
                             6
@@ -264,8 +198,9 @@
                                     </div>
                                     <div id="nav-tab3" class="tab-pane alerts-widget" role="tabpanel">
                                         <div class="media">
-                                            <a class="media-left" href="#"> <span
-                                                    class="fa fa-shopping-cart"></span> </a>
+                                            <a class="media-left" href="#"> 
+                                                <span class="fa fa-shopping-cart"></span> 
+                                            </a>
 
                                             <div class="media-body">
                                                 <h5 class="media-heading">New Product Order
@@ -289,8 +224,8 @@
                                             </div>
                                         </div>
                                         <div class="media">
-                                            <a class="media-left" href="#"> 
-                                                <span class="fa fa-comments"></span>
+                                            <a class="media-left" href="#"> <span
+                                                    class="fa fa-comments"></span>
                                             </a>
 
                                             <div class="media-body">
@@ -350,8 +285,8 @@
             </li>
             <li class="dropdown dropdown-fuse">
                 <div class="navbar-btn btn-group">
-                    <button class="btn-hover-effects dropdown-toggle btn of-v bg-light" data-toggle="dropdown">
-                        <span class="fa fa-bell fs20 text-info"></span>
+                    <button class="dropdown-toggle btn btn-hover-effects" data-toggle="dropdown">
+                        <span class="fa fa-bell fs20 text-info-darker"></span>
                         <span class="fs14 visible-xl">
                             8
                         </span>
@@ -415,7 +350,7 @@
             </li>
             <li class="dropdown dropdown-fuse">
                 <div class="navbar-btn btn-group">
-                    <button class="btn-hover-effects dropdown-toggle btn bg-light" data-toggle="dropdown">
+                    <button class="btn-hover-effects dropdown-toggle btn" data-toggle="dropdown">
                         <img src="assets/img/sprites/uk.png" alt="">
                     </button>
                     <ul class="dropdown-menu" role="menu">
@@ -431,43 +366,138 @@
                     </ul>
                 </div>
             </li>
+                @if (Auth::guard("admin")->user())
+                    <li class="dropdown dropdown-fuse navbar-user">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        @if (Auth::guard("admin")->user()->profil)
+                            <img class="btn-hover-effects" src="{{asset('storage'. Auth::guard("admin")->user()->profile)}}" alt="avatar">
+                        @else
+                            <img src="{{asset('img/image-not-found.png')}}" alt="avatar">
+                        @endif
+                            
+                        <span class="hidden-xs">
+                            <span class="name">{{Auth::guard("admin")->user()->name}}</span>
+                        </span>
+                        <span class="fa fa-caret-down hidden-xs"></span>
+                    </a>
+                    <ul class="dropdown-menu list-group keep-dropdown w230" role="menu">
+                        <li class="dropdown-header clearfix">
+                            <div class="pull-left">
+                                <select id="user-status">
+                                    <optgroup label="Current Status:">
+                                        <option value="1-1">Away</option>
+                                        <option value="1-2">Busy</option>
+                                        <option value="1-3" selected="selected">Online</option>
+                                        <option value="1-4">Offline</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <div class="pull-right">
+                                <select id="user-role">
+                                    <optgroup label="Logged in As:">
+                                        <option value="1-1" selected="selected">Admin</option>
+                                        <option value="1-2">Editor</option>
+                                        <option value="1-3">User</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="fa fa-envelope"></span>
+                            <a href="#" class="">
+                                Messages
+                                <span class="label label-info">3</span>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="fa fa-user"></span>
+                            <a href="#" class="">
+                                Friends
+                                <span class="label label-info">6</span>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="fa fa-cog"></span>
+                            <a href="#" class="">
+                                Account Settings 
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <span class="fa fa-bell"></span>
+                            <a href="#" class="">
+                                Activity
+                            </a>
+                        </li>
+                        <li class="dropdown-footer text-center">
+                            <a href="#" class="btn btn-warning">
+                                logout 
+                            </a>
+                        </li>
+                    @else
+                        <a href="#" class="btn btn-warning">
+                            Login 
+                        </a>
+                    @endif
+                </ul>
+            </li>
         </ul>
     </header>
     <!-- /Header -->
 
-        <!-- Sidebar  -->
-    <aside id="sidebar_left" class="">
+    <!-- Sidebar  -->
+    <aside id="sidebar_left" class="nano affix">
 
         <!-- Sidebar Left Wrapper  -->
         <div class="sidebar-left-content nano-content">
 
+            <!-- Sidebar Header -->
+            <header class="sidebar-header">
+
+                <!-- Sidebar - Logo -->
+                <div class="sidebar-widget logo-widget">
+                    <div class="media">
+                        <a class="logo-image" href="index.html">
+                            <img src="assets/img/logo.png" alt="" class="img-responsive">
+                        </a>
+
+                        <div class="logo-slogan">
+                            <div>Admin<span class="text-info">K</span></div>
+                        </div>
+                    </div>
+                </div>
+
+            </header>
+            <!-- /Sidebar Header -->
+
             <!-- Sidebar Menu  -->
             <ul class="nav sidebar-menu">
-
-                <li class="active">
-                    <a class="accordion-toggle" href="#">
+                <li class="sidebar-label pt30">Navigation</li>
+                <li>
+                    <a class="accordion-toggle " href="#">
                         <span class="caret"></span>
-                        <span class="sb-menu-icon fa fa-dashboard"></span>
-                        <span class="sidebar-title">Dashboards</span>
+                        <span class="sidebar-title">Dashboard</span>
+                        <span class="sb-menu-icon fa fa-home"></span>
                     </a>
                     <ul class="nav sub-nav">
-                        <li>
+                        <li class="">
                             <a href="index.html">
                                 Layout 1 
                             </a>
                         </li>
-                        <li class="active">
+                        <li>
                             <a href="index2.html">
                                 Layout 2 
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="">
+                <li class="sidebar-label pt25">Tools</li>
+                <li>
                     <a class="accordion-toggle" href="#">
                         <span class="caret"></span>
-                        <span class="sb-menu-icon fa fa-bar-chart-o"></span>
-                        <span class="sidebar-title">Sales stats</span>
+                        <span class="sidebar-title">Sales Statistics</span>
+                        <span class="sb-menu-icon fa fa-share-square-o"></span>
                     </a>
                     <ul class="nav sub-nav">
                         <li>
@@ -475,52 +505,52 @@
                                 Overview 
                             </a>
                         </li>
-                        <li class="">
+                        <li>
                             <a href="sales-stats-products.html">
                                 Products 
                             </a>
                         </li>
-                        <li class="">
+                        <li>
                             <a href="sales-stats-purchases.html">
                                 Purchases 
                             </a>
                         </li>
-                        <li class="">
+                        <li>
                             <a href="sales-stats-clients.html">
                                 Clients 
                             </a>
                         </li>
-                        <li class="">
+                        <li>
                             <a href="sales-stats-general-settings.html">
                                 General Settings 
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="">
-                    <a class="accordion-toggle" href="#">
+                </li>                
+                <li>
+                    <a class="accordion-toggle menu-open" href="#">
                         <span class="caret"></span>
+                        <span class="sidebar-title">Layout Templates</span>
                         <span class="sb-menu-icon fa fa-desktop"></span>
-                        <span class="sidebar-title">Templates</span>
                     </a>
                     <ul class="nav sub-nav">
                         <li>
-                            <a class="accordion-toggle" href="#">
+                            <a class="accordion-toggle menu-open" href="#">
                                 <span class="caret"></span>
-                                Sidebars
+                                <span class="sidebar-title">Sidebars</span>
                             </a>
                             <ul class="nav sub-nav">
-                                <li>
+                                <li class="">
                                     <a href="sidebar-left-static.html">
                                         Left Static 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="sidebar-left-fixed.html">
                                         Left Fixed 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="active">
                                     <a href="sidebar-left-minified.html">
                                         Left Minified 
                                     </a>
@@ -528,17 +558,17 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="accordion-toggle" href="#">
+                            <a class="accordion-toggle " href="#">
                                 <span class="caret"></span>
-                                Navigation
+                                <span class="sidebar-title">Navigation</span>
                             </a>
                             <ul class="nav sub-nav">
-                                <li>
+                                <li class="">
                                     <a href="navigation-static.html">
                                         Static 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="navigation-fixed.html">
                                         Fixed 
                                     </a>
@@ -546,17 +576,17 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="accordion-toggle" href="#">
+                            <a class="accordion-toggle " href="#">
                                 <span class="caret"></span>
-                                Top Panel
+                                <span class="sidebar-title">Top Panel</span>
                             </a>
                             <ul class="nav sub-nav">
-                                <li>
+                                <li class="">
                                     <a href="top-panel.html">
                                         Default 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="top-panel-menu.html">
                                         With Menu 
                                     </a>
@@ -564,22 +594,22 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="accordion-toggle" href="#">
+                            <a class="accordion-toggle " href="#">
                                 <span class="caret"></span>
-                                Content
+                                <span class="sidebar-title">Content</span>
                             </a>
                             <ul class="nav sub-nav">
-                                <li>
+                                <li class="">
                                     <a href="content-blank.html">
                                         Blank 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="content-fixed.html">
                                         Fixed 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="content-hero.html">
                                         Hero Content 
                                     </a>
@@ -587,37 +617,37 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="accordion-toggle" href="#">
+                            <a class="accordion-toggle " href="#">
                                 <span class="caret"></span>
-                                Content Chutes
+                                <span class="sidebar-title">Content Chutes</span>
                             </a>
                             <ul class="nav sub-nav">
-                                <li>
+                                <li class="">
                                     <a href="chute-left.html">
                                         Left Static 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="chute-left-fixed.html">
                                         Left Fixed 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="chute-right.html">
                                         Right Static 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="chute-right-fixed.html">
                                         Right Fixed 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="chute-both.html">
                                         Left &amp; Right Static 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="chute-both-fixed.html">
                                         Left &amp; Right Fixed 
                                     </a>
@@ -625,12 +655,12 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="accordion-toggle" href="#">
+                            <a class="accordion-toggle " href="#">
                                 <span class="caret"></span>
-                                Boxed Frontpage
+                                <span class="sidebar-title">Boxed Frontpage</span>
                             </a>
                             <ul class="nav sub-nav">
-                                <li>
+                                <li class="">
                                     <a href="boxed-default.html">
                                         Default 
                                     </a>
@@ -642,38 +672,38 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="">
+                        <li>
                             <a class="accordion-toggle" href="#">
                                 <span class="caret"></span>
-                                Horizontal Navigation
+                                <span class="sidebar-title">Horizontal Navigation</span>
                             </a>
                             <ul class="nav sub-nav">
-                                <li class="">
+                                <li>
                                     <a href="horizontal-navigation-small-menu.html">
                                         Small Menu
                                     </a>
                                 </li>
-                                <li class="">
+                                <li>
                                     <a href="horizontal-navigation-medium-menu.html">
                                         Medium Menu
                                     </a>
                                 </li>
-                                <li class="">
+                                <li>
                                     <a href="horizontal-navigation-large-menu.html">
                                         Large Menu
                                     </a>
                                 </li>
-                                <li class="">
+                                <li>
                                     <a href="horizontal-navigation-top-panel.html">
                                         With Top panel
                                     </a>
                                 </li>
-                                <!-- <li class="">
+                                <li>
                                     <a href="horizontal-navigation-collapsing-top-panel.html">
                                         Collapsing Top panel
                                     </a>
-                                </li> -->
-                                <li class="">
+                                </li>
+                                <li>
                                     <a href="horizontal-navigation-boxed.html">
                                         Boxed Layout
                                     </a>
@@ -683,23 +713,23 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="accordion-toggle" href="#">
+                    <a class="accordion-toggle " href="#">
                         <span class="caret"></span>
+                        <span class="sidebar-title">Management Tools</span>
                         <span class="sb-menu-icon fa fa-wrench"></span>
-                        <span class="sidebar-title">Tools</span>
                     </a>
                     <ul class="nav sub-nav">
-                        <li>
+                        <li class="">
                             <a href="management-tools-panels.html">
                                 Panels 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="management-tools-modals.html">
                                 Modals 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="management-tools-dock.html">
                                 Dock 
                             </a>
@@ -707,135 +737,172 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="accordion-toggle" href="#">
+                    <a class="accordion-toggle " href="#">
                         <span class="caret"></span>
-                        <span class="sb-menu-icon fa fa-check-square-o"></span>
                         <span class="sidebar-title">Forms</span>
+                        <span class="sb-menu-icon fa fa-list-ul"></span>
                     </a>
                     <ul class="nav sub-nav">
-                        <li>
+                        <li class="">
                             <a href="forms-elements.html">
                                 Elements 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="forms-widgets.html">
                                 Widgets 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="forms-layouts.html">
                                 Layouts 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="forms-wizard.html">
-                                Wizard 
+                                 Wizard 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="forms-validation.html">
                                 Validation 
                             </a>
                         </li>
                     </ul>
                 </li>
+                <li class="sidebar-label pt25">Elements</li>
                 <li>
-                    <a class="accordion-toggle" href="#">
+                    <a class="accordion-toggle " href="#">
                         <span class="caret"></span>
-                        <span class="sb-menu-icon fa fa-cogs"></span>
                         <span class="sidebar-title">Widgets</span>
+                        <span class="sb-menu-icon fa fa-cogs"></span>
                     </a>
                     <ul class="nav sub-nav">
-                        <li>
+                        <li class="">
                             <a href="widgets-panels.html">
                                 Panels 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="widgets-scrollers-tiles.html">
                                 Scrollers &amp; Tiles
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="widgets-tools.html">
                                 Tools 
                             </a>
                         </li>
                     </ul>
                 </li>
+                <li class="">
+                    <a href="email-layouts.html">
+                        <span class="sidebar-title">Email Layouts</span>
+                        <span class="sb-menu-icon fa fa-envelope"></span>
+                    </a>
+                </li>
                 <li>
-                    <a class="accordion-toggle" href="#">
+                    <a class="accordion-toggle " href="#">
                         <span class="caret"></span>
-                        <span class="sb-menu-icon fa fa-user"></span>
                         <span class="sidebar-title">User Interface</span>
+                        <span class="sb-menu-icon fa fa-star-half-full "></span>
                     </a>
                     <ul class="nav sub-nav">
-                        <li>
-                            <a href="{{ route('admin.seller') }}">
-                                 Seller
+                        <li class="">
+                            <a href="user-interface-alerts.html">
+                                Alerts 
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('admin.customer') }}">
-                                Customer
+                        <li class="">
+                            <a href="user-interface-buttons.html">
+                                Buttons 
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('admin.admin') }}">
-                                Admin
+                        <li class="">
+                            <a href="user-interface-typography.html">
+                                Typography 
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="user-interface-panels.html">
+                                Panels 
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="user-interface-progress-bars.html">
+                                Progress Bars 
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="user-interface-tabs.html">
+                                Tabs 
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="user-interface-icons.html">
+                                Icons 
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="user-interface-grid.html">
+                                Grid 
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="user-interface-progress-loader.html">
+                                Page Progress Loader 
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a class="accordion-toggle" href="#">
+                    <a class="accordion-toggle " href="#">
                         <span class="caret"></span>
-                        <span class="sb-menu-icon fa fa-file-text-o"></span>
                         <span class="sidebar-title">User Forms</span>
+                        <span class="sb-menu-icon fa fa-tasks"></span>
                     </a>
                     <ul class="nav sub-nav">
-                        <li>
+                        <li class="">
                             <a href="user-forms-standart-inputs.html">
                                 Standart Inputs 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="user-forms-additional-inputs.html">
                                 Additional Inputs
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="user-forms-editors.html">
                                 Editors 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="user-forms-treeview.html">
                                 Treeview 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="user-forms-nestable.html">
                                 Nestable 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="user-forms-image-tools.html">
                                 Image Tools
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="user-forms-file-uploaders.html">
                                 File Uploaders 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="user-forms-notifications.html">
                                 Notifications 
                             </a>
                         </li>
-                        <li>
+                        <li class="">
                             <a href="user-forms-content-sliders.html">
                                 Content Sliders 
                             </a>
@@ -843,29 +910,29 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="accordion-toggle" href="#">
+                    <a class="accordion-toggle " href="#">
                         <span class="caret"></span>
-                        <span class="sb-menu-icon fa fa-sitemap"></span>
                         <span class="sidebar-title">Plugins</span>
+                        <span class="sb-menu-icon fa fa-crop"></span>
                     </a>
                     <ul class="nav sub-nav">
                         <li>
-                            <a class="accordion-toggle" href="#">
+                            <a class="accordion-toggle " href="#">
                                 <span class="caret"></span>
-                                Maps
+                                <span class="sidebar-title">Maps</span>
                             </a>
                             <ul class="nav sub-nav">
-                                <li>
+                                <li class="">
                                     <a href="maps-basic.html">
                                         Basic
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="maps-vector.html">
                                         Vector
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="maps-full.html">
                                         Full
                                     </a>
@@ -873,22 +940,22 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="accordion-toggle" href="#">
+                            <a class="accordion-toggle " href="#">
                                 <span class="caret"></span>
-                                Charts
+                                <span class="sidebar-title">Charts</span>
                             </a>
                             <ul class="nav sub-nav">
-                                <li>
+                                <li class="">
                                     <a href="charts-highcharts.html">
                                         Highcharts
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="charts-d3.html">
                                         D3 Charts
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="charts-flot.html">
                                         Flot Charts
                                     </a>
@@ -896,27 +963,27 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="accordion-toggle" href="#">
+                            <a class="accordion-toggle " href="#">
                                 <span class="caret"></span>
-                                Tables
+                                <span class="sidebar-title">Tables</span>
                             </a>
                             <ul class="nav sub-nav">
-                                <li>
+                                <li class="">
                                     <a href="tables-basic.html"> 
                                         Basic 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="tables-datatables.html"> 
                                         Data 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="tables-sortable.html"> 
                                         Sortable 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="tables-pricing.html"> 
                                         Pricing 
                                     </a>
@@ -926,16 +993,16 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="accordion-toggle" href="#">
+                    <a class="accordion-toggle " href="#">
                         <span class="caret"></span>
-                        <span class="sb-menu-icon fa fa-book"></span>
                         <span class="sidebar-title">Pages</span>
+                        <span class="sb-menu-icon fa fa-file-text-o"></span>
                     </a>
                     <ul class="nav sub-nav">
                         <li>
-                            <a class="accordion-toggle" href="#">
+                            <a class="accordion-toggle " href="#">
                                 <span class="caret"></span>
-                                Utility
+                                <span class="sidebar-title">Utility</span>
                             </a>
                             <ul class="nav sub-nav">
                                 <li>
@@ -963,7 +1030,7 @@
                                         Coming Soon
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="utility-404-error.html"> 
                                         404 Error 
                                     </a>
@@ -971,77 +1038,96 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="accordion-toggle" href="#">
+                            <a class="accordion-toggle " href="#">
                                 <span class="caret"></span>
-                                Basic
+                                <span class="sidebar-title">Basic</span>
                             </a>
                             <ul class="nav sub-nav">
-                                <li>
+                                <li class="">
                                     <a href="basic-search-results.html">
                                         Search Results 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="basic-profile.html"> 
                                         Profile 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
+                                    <a href="basic-calendar.html">
+                                        Calendar
+                                    </a>
+                                </li>
+                                <li class="">
                                     <a href="basic-timeline.html"> 
                                         Timeline 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="basic-faq-page.html"> 
                                         FAQ Page 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="basic-messages.html"> 
                                         Messages 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="basic-gallery.html"> 
                                         Gallery 
                                     </a>
                                 </li>
-                                <li>
+                                <li class="">
                                     <a href="basic-invoice.html"> 
                                         Invoice 
                                     </a>
                                 </li>
                             </ul>
                         </li>
-
-                        <li>
-                            <a class="new-email" href="email-layouts.html">
-                                <span class="sidebar-title">New Emails</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="basic-calendar.html">
-                                <span class="sidebar-title">Calendar</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="doc/index.html">
-                                <span class="sidebar-title">Documentation</span>
-                            </a>
-                        </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="doc/index.html">
+                        <span class="sidebar-title">Documentation</span>
+                        <span class="sb-menu-icon fa fa-book"></span>
+                    </a>
+                </li>
+
+                <!-- Sidebar Progress Bars -->
+                <li class="sidebar-label pt25 pb20">Stats</li>
+                <li class="sidebar-stat">
+                    <a href="#" class="fs11 pln">
+                        <span class="fs13 pl35 fa fa-calendar-o text-info"></span>
+                        <span class="sidebar-title text-muted text-uppercase">September earnings</span>
+                        <span class="pull-right mr30 text-muted">$1158</span>
+
+                        <div id="high-column4" class="mt10 pl5 pr10" style="height: 150px;"></div>
+                    </a>
+                </li>
+                <li class="sidebar-stat pt10">
+                    <a href="#" class="fs11 pln">
+                        <span class="fs13 pl35 fa fa-calendar text-info"></span>
+                        <span class="sidebar-title text-muted text-uppercase">August earnings</span>
+                        <span class="pull-right mr30 text-muted">$1001</span>
+
+                        <div id="high-column5" class="mt10 pl5 pr10" style="height: 150px;"></div>
+                    </a>
+                </li>
+
             </ul>
+            <!-- /Sidebar Menu  -->
+
         </div>
+        <!-- /Sidebar Left Wrapper  -->
+
     </aside>
+    <!-- /Sidebar -->
 
     <!-- Main Wrapper -->
-    <section id="content_wrapper" class="mb80">
-            
+    <section id="content_wrapper">
 
-        <section class="content_container">
-            
-        <!-- Topbar Menu Wrapper -->
+                <!-- Topbar Menu Wrapper -->
         <div id="topbar-dropmenu-wrapper">
             <div class="topbar-menu row">
                 <div class="col-xs-4 col-sm-2">
@@ -1085,127 +1171,66 @@
         <!-- /Topbar Menu Wrapper -->
 
         <!-- Topbar -->
-        <header id="topbar" class="breadcrumb_style_2">
+        <header id="topbar" class="alt">
             <div class="topbar-left">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-icon breadcrumb-active">
-                        <a href="index.html">
-                            <span class="fa fa-circle-o"></span>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-icon breadcrumb-link">
+                    <li class="breadcrumb-link">
                         <a href="index.html">Home</a>
                     </li>
-                    <li class="breadcrumb-current-item">Dashboard</li>
+                    <li class="breadcrumb-current-item">Sidebar Left Minified</li>
                 </ol>
             </div>
-            <div class="topbar-right">
-                <div class="ib topbar-dropdown">
-                    <label for="topbar-multiple" class="control-label">Reporting Period</label>
-                    <select id="topbar-multiple" class="hidden">
-                        <optgroup label="Filter By:">
-                            <option value="1-1">Last 30 Days</option>
-                            <option value="1-2" selected="selected">Last 60 Days</option>
-                            <option value="1-3">Last Year</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="ml15 ib va-m" id="sidebar_right_toggle">
-                    <div class="navbar-btn btn-group btn-group-number mv0">
-                        <button class="btn btn-sm prn pln">
-                            <i class="fa fa-bar-chart fs22 text-default"></i>
-                        </button>
-
-                    </div>
-                </div>
-            </div>
         </header>
+        <!-- /Topbar -->
 
-            <section id="content" class="animated fadeIn pt35 pb45">
-                <div class="content-left">
-                    <ul class="nav nav-content">
-                        <li class="">
-                            <a href="sales-stats-products.html">
-                                <i class="fa fa-folder"></i>
-                                <span>Products</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="index2.html">
-                                <i class="fa fa-check-square"></i>
-                                <span>Overview</span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="sales-stats-purchases.html">
-                                <i class="fa fa-briefcase"></i>
-                                <span>Orders</span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="sales-stats-clients.html">
-                                <i class="fa fa-group"></i>
-                                <span>Clients</span>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="sales-stats-general-settings.html">
-                                <i class="fa fa-gear"></i>
-                                <span>Settings</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-        {{-- MAIN --}}
-                <div class="content-right table-layout">
-                    <div class="chute chute-center pbn">
-
-                        <div class="row mn">
-                            <div class="col-xs-12">
-                                @yield('content')
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <footer id="content-footer">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <span class="footer-legal">© 2016 All rights reserved. <a href="#">Therms of use</a> and <a href="#">Privacy policy</a></span>
-                    </div>
-                </div>
-            </footer>
+        <!-- Content -->
+        <section id="content" class="table-layout animated fadeIn">
+            @yield('content')
         </section>
+        <!-- /Content -->
+
     </section>
 
 
 </div>
 
-{{-- <script src="{{asset('admin/js/jquery/jquery-1.12.3.min.js')}}"></script> --}}
-<script src="{{asset('admin/js/jquery/jquery_ui/jquery-ui.min.js')}}"></script>
-<script src="{{asset('admin/fonts/animatedsvgicons/js/snap.svg-min.js')}}"></script>
-<script src="{{asset('admin/fonts/animatedsvgicons/js/svgicons-config.js')}}"></script>
-<script src="{{asset('admin/fonts/animatedsvgicons/js/svgicons.js')}}"></script>
-<script src="{{asset('admin/fonts/animatedsvgicons/js/svgicons-init.js')}}"></script>
-<script src="{{asset('admin/js/utility/malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.concat.min.js')}}"></script>
-<script src="{{asset('admin/js/plugins/highcharts/highcharts.js')}}"></script>
-<script src="{{asset('admin/js/plugins/c3charts/d3.min.js')}}"></script>
-<script src="{{asset('admin/js/plugins/c3charts/c3.min.js')}}"></script>
-<script src="{{asset('admin/js/plugins/circles/circles.js')}}"></script>
-<script src="{{asset('admin/js/plugins/jvectormap/jquery.jvectormap.min.js')}}"></script>
-<script src="{{asset('admin/js/plugins/jvectormap/assets/jquery-jvectormap-us-lcc-en.js')}}"></script>
-<script src="{{asset('admin/js/plugins/jvectormap/assets/jquery-jvectormap-world-mill-en.js')}}"></script>
-<script src="{{asset('admin/js/utility/utility.js')}}"></script>
-<script src="{{asset('admin/js/demo/demo.js')}}"></script>
-<script src="{{asset('admin/js/main.js')}}"></script>
-<script src="{{asset('admin/js/demo/widgets_sidebar.js')}}"></script>
-<script src="{{asset('admin/js/pages/dashboard2.js')}}"></script>
-<script src="{{asset('admin/js/demo/charts/highcharts.js')}}"></script>
+<script src="{{ asset('admin/js/jquery/jquery-1.12.3.min.js')}}"></script>
+<script src="{{ asset('admin/js/jquery/jquery_ui/jquery-ui.min.js')}}"></script>
+
+<!-- AnimatedSVGIcons -->
+<script src="{{ asset('admin/fonts/animatedsvgicons/js/snap.svg-min.js')}}"></script>
+<script src="{{ asset('admin/fonts/animatedsvgicons/js/svgicons-config.js')}}"></script>
+<script src="{{ asset('admin/fonts/animatedsvgicons/js/svgicons.js')}}"></script>
+<script src="{{ asset('admin/fonts/animatedsvgicons/js/svgicons-init.js')}}"></script>
+
+<!-- HighCharts Plugin -->
+<script src="{{ asset('admin/js/plugins/highcharts/highcharts.js')}}"></script>
+
+<!-- Scroll -->
+<script src="{{ asset('admin/js/utility/malihu-custom-scrollbar-plugin-master/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+
+<!-- Theme Scripts -->
+<script src="{{ asset('admin/js/utility/utility.js')}}"></script>
+<script src="{{ asset('admin/js/demo/demo.js')}}"></script>
+<script src="{{ asset('admin/js/main.js')}}"></script>
+<script src="{{ asset('admin/js/demo/widgets_sidebar.js')}}"></script>
+<script src="{{ asset('admin/js/pages/dashboard_init.js')}}"></script>
 </body>
 
 </html>
 
+<!DOCTYPE html>
+<html>
 
-
+    {{-- {{ route('admin.index') }}
+    {{asset('img/LOGO 4.png')}}
+    
+<a href="{{ route('admin.seller') }}">
+                                 Seller
+                            </a>
+<a href="{{ route('admin.customer') }}">
+                                Customer
+                            </a>
+<a href="{{ route('admin.admin') }}">
+                                Admin
+                            </a> --}}

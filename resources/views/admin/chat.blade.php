@@ -5,31 +5,209 @@
 @endsection
 
 @section('content')
-    @foreach ($chats as $chat)
- 
-                        <div class="clearfix"></div>
-                            <div class="card d-inline-block mb-3 float-right mr-2">
-                                <div class="position-absolute pt-1 pr-2 r-0">
-                                    <span class="text-extra-small text-muted">{{ $chat->message_seller }}</span>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex flex-row pb-2">
-                                        <a class="d-flex" href="#">
-                                            {{-- @if (Auth::guard('admin')->user()->profil)
-                                                <img alt="Profile Picture" src="{{asset('storage/'. Auth::guard('admin')->user()->profil)}}" class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall"/>
-                                            @else 
-                                                <img alt="Profile Picture" src="{{ asset('img/image-not-found.png')}}" class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall"/>
-                                            @endif --}}
-                                        </a>
-                                        <div class=" d-flex flex-grow-1 min-width-zero">
-                                            <div
-                                                class="m-2 pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
-                                                <div class="min-width-zero">
-                                                    <p class="mb-0 truncate list-item-heading">{{ Auth::guard('admin')->user()->name }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+    <aside class="chute chute-left chute-icon-style chute290 bg-info" data-chute-height="match">
+        <div class="chute-icon"></div>
+        <div class="chute-container">
+            <!-- New Message -->
+            <button id="quick-compose" type="button" class="btn btn-dark light btn-block fw600">New message
+            </button>
 
-                                    @endforeach
+            <!-- Message Menu -->
+            <div class="list-group list-group-links in-bg-chute mt20">
+                <div class="list-group-header"> Mail</div>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-envelope-o"></i>
+                    Inbox
+                    <span class="label badge-warning">4</span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-save"></i>
+                    Drafts
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-file-o"></i>
+                    Sent Items
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-times-circle-o"></i>
+                    Spam
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-trash-o"></i>
+                    Trash
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-spinner"></i>
+                    Email Settings
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-smile-o"></i>
+                    Contacts
+                    <span class="label badge-dark">3</span>
+                </a>
+            </div>
+        </div>
+
+    </aside>
+    <!-- /Column Left -->
+
+    <!-- Column Center -->
+    <div class="chute chute-center pn bg-light">
+
+        <div class="panel m40">
+
+            <!-- Toolbar Header -->
+            <div class="panel-menu br-n pn mtn">
+                <div class="row">
+                    <div class="hidden-xs hidden-sm col-md-3">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default light text-dark">
+                                <i class="fa fa-refresh"></i>
+                            </button>
+                            <button type="button" class="btn btn-default light text-dark">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-9 text-right ta-l-xs">
+                        <button type="button" class="btn btn-dark light visible-xs-inline-block mr10">
+                            Compose
+                        </button>
+                        <span class="hidden-xs va-m text-muted mr15"> <strong>9</strong> messages
+                        </span>
+
+                        <div class="btn-group mr10">
+                            <button type="button" class="btn btn-default light text-dark hidden-xs">
+                                <i class="fa fa-star"></i>
+                            </button>
+                            <button type="button" class="btn btn-default light text-dark hidden-xs">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                            <button type="button" class="btn btn-default light text-dark">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="btn-group mr10">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default light text-dark dropdown-toggle ph8"
+                                        data-toggle="dropdown">
+                                    <span class="fa fa-tags"></span>
+                                    <span class="caret ml5"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="#">Submenu #1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Submenu #2</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Submenu #3</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="fa fa-plus pr5"></span> Create New</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button"
+                                        class="btn btn-default light text-dark dropdown-toggle ph8 br-tp-left"
+                                        data-toggle="dropdown">
+                                    <span class="fa fa-folder"></span>
+                                    <span class="caret ml5"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="#">Submenu #1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Submenu #2</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Submenu #3</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#">
+                                            <span class="fa fa-plus pr5"></span> Create New</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default light text-dark">
+                                <i class="fa fa-chevron-left"></i>
+                            </button>
+                            <button type="button" class="btn btn-default light text-dark">
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message Body -->
+            <div class="table-responsive">
+                <table id="message-table" class="table tc-checkbox-1 allcp-form theme-warning br-t btn-gradient-grey">
+                    <thead>
+                    <tr class="">
+                        <th class="text-center hidden-xs">Select</th>
+                        <th class="hidden-xs">Star</th>
+                        <th>Sender</th>
+                        <th>Subject</th>
+                        <th class="hidden-xs">Attachement</th>
+                        <th class="text-center">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($chats as $chat)
+                            <tr class="message-unread message-show" data-id="{{$chat->user_id}}">
+                                <td class="hidden-xs">
+                                    <label class="option block mn">
+                                        <input type="checkbox" name="inputname" value="FR">
+                                        <span class="checkbox mn"></span>
+                                    </label>
+                                </td>
+                                <td class="hidden-xs">
+                                    <span class="rating block mn pull-left">
+                                        <input class="rating-input" id="r2" type="radio" name="custom">
+                                        <label class="rating-star" for="r2">
+                                            <i class="fa fa-star va-m"></i>
+                                        </label>
+                                    </span>
+                                </td>
+                                <td class="">{{ App\Models\User::findOrFail($chat->user_id)->name }}</td>
+                                @if ($chat->message_seller)
+                                    <td class="">{{ $chat->message_seller }}</td>
+                                @elseif($chat->message_admin)
+                                    <td class="">{{ $chat->message_admin }}</td>
+                                @endif
+                                
+                                <td class="hidden-xs">
+                                    <i class="fa fa-paperclip fs15 text-muted va-b"></i>
+                                </td>
+                                <td class="text-center">{{ $chat->created_at->diffForHumans()}}</td>
+                            </tr>                            
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 @endsection
+
+<script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>
+    <script>
+        $(document).ready(function (){
+            $(".message-show").click(function(e) { 
+                let getid = e.currentTarget.dataset.id;
+                var redirect = 'chat/show?user_id='+getid
+                // console.log(redirect)
+                window.location.href = redirect;
+            })
+        })
+    </script>
