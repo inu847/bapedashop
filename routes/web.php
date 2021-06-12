@@ -28,9 +28,9 @@ use App\Http\Controllers\PembayaranController;
 |
 */
 
-// Route::get('tes', function () {
-//     return view('layouts.admin');
-// });
+Route::get('tes', function () {
+    return view('test');
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -60,6 +60,7 @@ Route::prefix('buyer')->group(function () {
     Route::get('scan-qr', [BuyerController::class, 'qrGenerator'])->name('order.qrcode');
     Route::resource('cart', BuyerController::class);
     Route::post('keranjang', [BuyerController::class, 'cart'])->name('cart.buyer');
+    Route::post('cart/checkout', [BuyerController::class, 'cart'])->name('form.checkout');
 });
 
 // CUSTOMER

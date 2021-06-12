@@ -237,104 +237,8 @@
     {{-- CONTENT --}}
     <main>
         <div class="container-fluid">
-            <div class="row app-row">
-                <div class="col-12 chat-app invisible">
-                    <div class="d-flex flex-row justify-content-between mb-3 chat-heading-container">
-                        <div class="d-flex flex-row chat-heading">
-                            <a class="d-flex" href="#">
-                                <img alt="Profile Picture" src="{{ asset('img/LOGO 4.png') }}"
-                                    class="img-thumbnail border-0 ml-0 mr-4 list-thumbnail align-self-center small">
-                            </a>
-                            <div class=" d-flex min-width-zero">
-                                <div
-                                    class="card-body pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
-                                    <div class="min-width-zero">
-                                        <a href="#">
-                                            <p class="list-item-heading mb-1 truncate">CAPPS</p>
-                                        </a>
-                                        <p class="mb-0 text-warning text-small">online</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="separator mb-5"></div>
-    
-                    <div class="scroll">
-                        <div class="scroll-content">
-
-                            @foreach ($chats as $chat)
-                                @if ($chat->message_seller)
-                                    <div class="clearfix"></div>
-                                    <div class="card d-inline-block mb-3 float-right mr-2">
-                                        <div class="position-absolute pt-1 pr-2 r-0">
-                                            <span class="text-extra-small text-muted">{{ $chat->created_at->format('H:i')}}</span>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="d-flex flex-row pb-2">
-                                                <a class="d-flex" href="#">
-                                                    @if (Auth::user()->profil)
-                                                        <img alt="Profile Picture" src="{{asset('storage/'. Auth::user()->profil)}}" class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall"/>
-                                                    @else 
-                                                        <img alt="Profile Picture" src="{{ asset('img/image-not-found.png')}}" class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall"/>
-                                                    @endif
-                                                </a>
-                                                <div class=" d-flex flex-grow-1 min-width-zero">
-                                                    <div
-                                                        class="m-2 pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
-                                                        <div class="min-width-zero">
-                                                            <p class="mb-0 truncate list-item-heading">{{ \Auth::user()->name }}</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-            
-                                            <div class="chat-text-left">
-                                                <p class="mb-0 text-semi-muted">
-                                                    {{ $chat->message_seller }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @elseif($chat->message_admin)
-                                    <div class="clearfix"></div>
-                                    <div class="card d-inline-block mb-3 float-left mr-2">
-                                        <div class="position-absolute pt-1 pr-2 r-0">
-                                            <span class="text-extra-small text-muted">{{ $chat->created_at->diffForHumans()}}</span>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="d-flex flex-row pb-2">
-                                                <a class="d-flex" href="#">
-                                                    <img alt="Profile Picture" src="{{ asset('img/LOGO 1.png')}}"
-                                                        class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall">
-                                                </a>
-                                                <div class=" d-flex flex-grow-1 min-width-zero">
-                                                    <div
-                                                        class="m-2 pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
-                                                        <div class="min-width-zero">
-                                                            <p class="mb-0 truncate list-item-heading">CAPPS</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-            
-                                            <div class="chat-text-left">
-                                                <p class="mb-0 text-semi-muted">
-                                                    {{ $chat->message_admin }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                                
-                            @endforeach
-
-                            <div id="send_message"></div>
-                            
-                        </div>
-                    </div>
-                </div>
+            <div class="row app-row" id="message_ids">
+                <p class="text-muted">Chats Capps</p>
             </div>
         </div>
     
@@ -346,35 +250,37 @@
             </ul>
     
             <div class="p-4 h-100">
-                <div class="form-group">
-                    <input type="text" class="form-control rounded" placeholder="Search">
-                </div>
+                @if ($messages)
+                    <div class="form-group">
+                        <input type="text" class="form-control rounded" placeholder="Search">
+                    </div>
+                @endif
 
                 <div class="tab-content h-100" id="message-group">
                     <div class="tab-pane fade show active  h-100" id="firstFull" role="tabpanel" aria-labelledby="first-tab">
                         <div class="scroll">   
-
+                            @if (!$messages)
+                                <div class="flex-row mb-1 pb-3 mb-3">
+                                    <p class="text-center text-muted">message empty</p> 
+                                </div>
+                            @endif
                             @foreach ($messages as $message)
                                 @if ($message->admin_id)
-                                <a class="d-flex" id="show-message" data-message_id="{{$message->admin_id}}">
-                                    <div class="d-flex flex-row mb-1 border-bottom pb-3 mb-3">
-                                        <img alt="Profile Picture" src="{{ asset('img/LOGO 1.png') }}"
-                                            class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall">
-                                        <div class="d-flex flex-grow-1 min-width-zero">
-                                            <div
-                                                class="pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
-                                                <div class="min-width-zero">
-                                                    <p class=" mb-0 truncate">CAPPS</p>
-                                                    <p class="mb-1 text-muted text-small">09:25</p>
+                                    <a class="d-flex" id="show-message" data-message_id="{{$message->admin_id}}">
+                                        <div class="d-flex flex-row mb-1 border-bottom pb-3 mb-3">
+                                            <img alt="Profile Picture" src="{{ asset('img/LOGO 1.png') }}"
+                                                class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall">
+                                            <div class="d-flex flex-grow-1 min-width-zero">
+                                                <div
+                                                    class="pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
+                                                    <div class="min-width-zero">
+                                                        <p class=" mb-0 truncate">CAPPS</p>
+                                                        <p class="mb-1 text-muted text-small">09:25</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </a>
-                                @else
-                                    <div class="d-flex flex-row mb-1 border-bottom pb-3 mb-3">
-                                        message empty
-                                    </div>
+                                    </a>  
                                 @endif
                             @endforeach
                             
@@ -384,46 +290,175 @@
             </div>
         </div>
         
-        <div class="chat-input-container d-flex justify-content-between align-items-center">
-            <input class="form-control flex-grow-1" type="text" placeholder="Say something..." id="message">
-            <div>
-                <button type="button" class="btn btn-outline-primary icon-button large">
-                    <i class="simple-icon-paper-clip"></i>
-                </button>
-                <button type="submit" id="btn-send-message" class="btn btn-primary icon-button large">
-                    <i class="simple-icon-arrow-right"></i>
-                </button>
-            </div>
-        </div>
+        <div id="button-send"></div>
+        
     </main>
     {{-- END CONTENT --}}
 
-    <script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script>
-        $(document).ready(function (){
-            $("#btn-send-message").click(function() { 
-                var message = $("#message").val();
-                document.getElementById('message').value = ''
-                send_message(message)
+        $(document).on('click', '#show-message', function(e) {
+            let messageid = e.currentTarget.dataset.message_id;
+            
+            $.ajax({
+                type: 'GET',
+                url: '/seller/chat',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    message_id : messageid,
+                },
+                async: false,
+                dataType: 'json',
+                success: function(response) {
+                    var header = `
+                            <div class="col-12 chat-app" id="data_id" data-send_id="`+messageid+`">
+                                <div class="d-flex flex-row justify-content-between mb-3 chat-heading-container">
+                                    <div class="d-flex flex-row chat-heading">
+                                        <a class="d-flex" href="#">
+                                            <img alt="Profile Picture" src="{{ asset('img/LOGO 4.png') }}"
+                                                class="img-thumbnail border-0 ml-0 mr-4 list-thumbnail align-self-center small">
+                                        </a>
+                                        <div class=" d-flex min-width-zero">
+                                            <div
+                                                class="card-body pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
+                                                <div class="min-width-zero">
+                                                    <a href="#">
+                                                        <p class="list-item-heading mb-1 truncate">CAPPS</p>
+                                                    </a>
+                                                    <p class="mb-0 text-warning text-small">online</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="separator mb-5"></div>
+                
+                                <div class="scroll">
+                                    <div class="scroll-content">
+                                        <div id="view_message"></div>
+
+                                        <div id="send_message"></div>
+                                    </div>
+                                </div>
+                            </div>`
+                    var btn_send = `<div class="chat-input-container d-flex justify-content-between align-items-center">
+                                        <input class="form-control flex-grow-1" type="text" placeholder="Say something..." id="message">
+                                        <div>
+                                            <button type="button" class="btn btn-outline-primary icon-button large">
+                                                <i class="simple-icon-paper-clip"></i>
+                                            </button>
+                                            <button type="submit" id="btn-message" class="btn btn-primary icon-button large">
+                                                <i class="simple-icon-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>`
+
+                    $('#button-send').html(btn_send) 
+                    $('#message_ids').html(header)    
+                                                
+                    for (const key in response) {
+                        if (Object.hasOwnProperty.call(response, key)) {
+                            var message_seller = response[key].message_seller;
+                            var message_admin = response[key].message_admin;
+                            var view_message_seller = `<div class="clearfix"></div>
+                                                <div class="card d-inline-block mb-3 float-right mr-2">
+                                                    <div class="position-absolute pt-1 pr-2 r-0">
+                                                        <span class="text-extra-small text-muted">20:11</span>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex flex-row pb-2">
+                                                            <a class="d-flex" href="#">
+                                                                @if (Auth::user()->profil)
+                                                                    <img alt="Profile Picture" src="{{asset('storage/'. Auth::user()->profil)}}" class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall"/>
+                                                                @else 
+                                                                    <img alt="Profile Picture" src="{{ asset('img/image-not-found.png')}}" class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall"/>
+                                                                @endif
+                                                            </a>
+                                                            <div class=" d-flex flex-grow-1 min-width-zero">
+                                                                <div
+                                                                    class="m-2 pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
+                                                                    <div class="min-width-zero">
+                                                                        <p class="mb-0 truncate list-item-heading">{{ \Auth::user()->name }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                        
+                                                        <div class="chat-text-left">
+                                                            <p class="mb-0 text-semi-muted">
+                                                                `+message_seller+`
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>`
+                                           
+                            var view_message_admin = `<div class="clearfix"></div>
+                                                <div class="card d-inline-block mb-3 float-left mr-2">
+                                                    <div class="position-absolute pt-1 pr-2 r-0">
+                                                        <span class="text-extra-small text-muted">20:11</span>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="d-flex flex-row pb-2">
+                                                            <a class="d-flex" href="#">
+                                                                <img alt="Profile Picture" src="{{ asset('img/LOGO 1.png')}}"
+                                                                    class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall">
+                                                            </a>
+                                                            <div class=" d-flex flex-grow-1 min-width-zero">
+                                                                <div
+                                                                    class="m-2 pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
+                                                                    <div class="min-width-zero">
+                                                                        <p class="mb-0 truncate list-item-heading">CAPPS</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                        
+                                                        <div class="chat-text-left">
+                                                            <p class="mb-0 text-semi-muted">
+                                                                `+message_admin+`
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>`
+                            if (message_admin) {
+                                $('#view_message').append(view_message_admin)
+                            }else if(message_seller){
+                                $('#view_message').append(view_message_seller)
+                            }
+                        }
+                    }
+                        
+                    },
+                    error: function(response) {
+                        console.log(response)
+                    }
+                });
             })
+
+        $(document).on('click', "#btn-message", function () {
+            let message = $("#message").val();
+            send_message(message)
         })
 
-        $(document).on('keypress',function(e) {
+        $(document).on('keypress', "#message" ,function(e) {
             if(e.which == 13) {
                 var message = $("#message").val();
-                document.getElementById('message').value = ''
                 send_message(message)
             }
         });
         
         function send_message(message) {
+            document.getElementById('message').value = ''
+            var admin_id = $('#data_id').attr('data-send_id');
+            
             $.ajax({
                 type: 'POST',
                 url: '/seller/chat/post',
                 data: {
                     "_token": "{{ csrf_token() }}",
                     message : message,
-
+                    admin_id : admin_id,
                 },
                 async: false,
                 dataType: 'json',

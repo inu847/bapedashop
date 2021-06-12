@@ -19,7 +19,7 @@ class BuyerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function cart(Request $request)
     {
         $buyer_id = $request->get('buyer_id');
         $user = $request->get('user_id');
@@ -32,7 +32,6 @@ class BuyerController extends Controller
 
         return view('buyer.cart', ['carts' => $carts, 'buyer_id' => $buyer_id, 'user' => $user]);
     }
-
     public function cariToko(Request $request)
     {
         $user = User::where('status', 'active')->paginate(10);
